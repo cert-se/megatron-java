@@ -1,0 +1,9 @@
+IP:        $ipAddress
+Datornamn: $hostname
+Virustyp:  $additionalItem_infection
+Tid:       $logTimestamp
+
+Loggrad: 
+"Timestamp","Drone","ASN","Geo","Hostname","RBL","C&C","C&C ASN","C&C Geo","C&C DNS","C&C Port","Infection"
+$originalLogEntry
+

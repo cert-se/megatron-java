@@ -1,0 +1,1 @@
+$ipAddress	$hostname	$asn	$additionalItem_asn	$additionalItem_asName	$countryCode	$additionalItem_city	http://maps.google.com/maps?q=$additionalItem_latitude+$additionalItem_longitude&hl=en	$organizationName	$organizationEmailAddresses

@@ -1,0 +1,7 @@
+CERT-SE har tagit del av information som tyder på att en eller flera datorer i ert
+nätverk ingår i botnätet pushdo.
+
+CERT-SE har fått informationen från Zeustracker. För mer information:
+https://zeustracker.abuse.ch/
+http://www.iss.net/threats/pushdoSSLDDoS.html
+

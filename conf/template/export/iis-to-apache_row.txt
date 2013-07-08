@@ -1,0 +1,1 @@
+$ipAddress - - [$logTimestamp] "$additionalItem_httpMethod $url?$additionalItem_uriQuery HTTP/1.1" $additionalItem_httpStatusCode 1111 "-" "$additionalItem_userAgent" 

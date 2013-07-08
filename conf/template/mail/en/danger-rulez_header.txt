@@ -1,0 +1,8 @@
+CERT-SE has received information indicating that one or more computers in your network
+have been involved in password guessing attacks against servers running ssh.
+
+If this information is correct, the involved computers are likely infected with malware.
+
+CERT-SE has received this information from Bruteforceblocker:
+http://danger.rulez.sk/index.php/bruteforceblocker
+

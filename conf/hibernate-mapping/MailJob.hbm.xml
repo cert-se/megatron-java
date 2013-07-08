@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="MailJob"
+		table="mail_job"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="java.lang.Long"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>		
+		<property
+            name="UsePrimaryOrg"
+            column="use_primary_org"
+            type="boolean"
+            not-null="true"
+        />				
+		<property
+			name="Started"
+			column="started"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="Finished"
+			column="finished"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ErrorMsg"
+			column="error_msg"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Comment"
+			column="comment"
+			type="string"
+			not-null="false"
+		/>
+		<many-to-one
+			name="Job"				
+			class="Job"
+			column="job_id"
+			unique="true"		
+		/>		 	
+		<set name="LogEntries" table="mail_job_log_entry_mapping" lazy="true">
+            <key column="mail_job_id" />
+            <many-to-many column="log_entry_id" class="LogEntry"/>
+        </set>        
+	</class>	
+</hibernate-mapping>

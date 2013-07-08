@@ -1,0 +1,6 @@
+CERT-SE har tagit del av information som tyder på att en eller flera webbsidor tillhörande er organisation
+har förvanskats. Informationen som bifogas innehåller tidsstämpel för när förvanskningen rapporterats till
+zone-h.org, länk till den förvanskade sidan samt en länk till en kopia av den förvanskade sidan.
+(För närvarande kan ett fel i logghanteringen resultera i duplicerade loggrader nedan, vi jobbar på att lösa det.)
+
+Följande websidor har ändrats:

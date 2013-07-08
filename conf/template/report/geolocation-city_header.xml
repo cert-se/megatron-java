@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- File Generated: $header_reportStarted -->
+
+<data>
+    <timePeriod>
+        <startDate>$header_startDate</startDate>
+        <endDate>$header_endDate</endDate>
+        <timePeriodLabel>$header_timePeriodLabel</timePeriodLabel>
+    </timePeriod>
+
+    <tallySummary>
+        <noOfBadHostsWithGeolocation>$header_noOfBadHostsWithGeolocation</noOfBadHostsWithGeolocation>
+        <noOfBadHostsWithoutGeolocation>$header_noOfBadHostsWithoutGeolocation</noOfBadHostsWithoutGeolocation>
+        <noOfBadHostsWithOrganization>$header_noOfBadHostsWithOrganization</noOfBadHostsWithOrganization>
+        <noOfBadHostsWithoutOrganization>$header_noOfBadHostsWithoutOrganization</noOfBadHostsWithoutOrganization>
+    </tallySummary>
+    
+    <cityEntries>

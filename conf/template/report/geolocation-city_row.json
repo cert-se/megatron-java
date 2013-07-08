@@ -1,0 +1,6 @@
+{
+"rowId":"$logEntryid",
+"city":"$additionalItem_city",
+"uniqueNoOfBadHosts":"$additionalItem_uniqueNoOfBadHosts",
+"totalNoOfBadHosts":"$additionalItem_totalNoOfBadHosts"
+}

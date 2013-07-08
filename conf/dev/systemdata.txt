@@ -1,0 +1,61 @@
+# This file contains test data which can be used to populate a dev-db.
+# Run Megatron with the switch --import-contacts to import this file.
+
+# Priorities
+!Priority;Name,*Prio
+Your own organization;100
+Organization Category 1;95
+Organization Category 2;90
+Organization Category 3;80
+Organization Category 4;70
+Organization Category 5;65
+Organization Category 6;60
+Organization Category 7;50
+Organization Category 8;45
+Organization Category 9;40
+Organization Category 10;30
+Organization Category 11;20
+ISP;10
+Parked with no prio;0
+
+# Entry type
+!EntryType;*Name
+Default
+Spam (RBL)
+Botnet
+Miscellaneous
+Incident
+
+# Job type
+!JobType;EntryType,*Name,Enabled,SourceDescription,Comment
+Default;default;true;Required by Megatron;Job with a non-matching type will be assigned this type.
+Spam (RBL);rbl-ip-range;True;RBL (IP range);
+Spam (RBL);rbl-syslog-ip-plus-host;true;RBL (IP plus hostname);
+Spam (RBL);rbl-hostname;true;RBL (hostname);
+Botnet;shadowserver-sinkhole-http-drone;true;Shadowserver Sinkhole HTTP Drone;
+Botnet;shadowserver-ddos;true;Shadowserver DDoS;
+Botnet;shadowserver-drone;true;Shadowserver Drone;
+Miscellaneous;dshield;true;DShield;
+Incident;ip-flowing;true;Arbitrary file with IPs;
+Incident;whois-cymru-verbose-with-timestamps;true;whois file;
+Incident;whois-cymru-verbose;true;whois file;
+Incident;timestamp-plus-ip;true;General log file;
+Incident;syslog-ip-plus-host;true;Syslog format;
+Incident;iis-to-apache;true;Web log in IIS-format;
+Incident;web-apache;true;Web log in W3-format;
+
+# Test organizations (Swedish political parties)
+!ASNumber;*Number
+!DomainName;*Name
+!IpRange;*StartAddress,EndAddress
+!Organization;*Name,RegistrationNo,CountryCode,EmailAddresses,DomainNames,IpRanges,ASNumbers,ModifiedBy,Priority
+Socialdemokraterna;;SE;test@example.com;socialdemokraterna.se,sap.se;195.67.28.0-195.67.28.255,212.37.27.8-212.37.27.15,213.80.0.0-213.80.95.255,213.80.95.40-213.80.95.47,80.252.162.192-80.252.162.207,212.209.222.112-212.209.222.119,213.212.40.16-213.212.40.31,83.241.199.96-83.241.199.103,213.134.125.128-213.134.125.135;;Test import;80
+Miljöpartiet de gröna;;SE;test@example.com,foobar@example.com;mp.se;;;Test import;80
+Vänsterpartiet;;SE;test@example.com;vansterpartiet.se;213.115.31.0-213.115.31.15;;Test import;80
+Kristdemokraterna;;SE;test@example.com;kds.se,kristdemokraterna.se;82.182.190.0-82.182.190.255,194.198.96.0-194.198.96.255,213.115.175.252 - 213.115.175.255;;Test import;80
+Centern;;SE;test@example.com;centern.se;193.14.169.64-193.14.169.127,193.15.189.192-193.15.189.255;;Test import;80
+Moderaterna;;SE;test@example.com;moderat.se,.moderaterna.se;192.165.243.0-192.165.243.255,192.176.242.0-192.176.242.255,194.198.105.0-194.198.105.255,194.198.255.0-194.198.255.255,212.181.96.224-212.181.96.231,62.20.85.128-62.20.85.143,213.115.92.240-213.115.92.247,88.131.68.108-88.131.68.111;;Test import;80
+Folkpartiet;;SE;test@example.com;folkpartiet.se;83.241.222.192-83.241.222.223;;Test import;80
+Piratpartiet;;SE;test@example.com;piratpartiet.se;;;Test import;80
+Feministiskt initiativ;;SE;test@example.com;feministisktinitiativ.se;;;Test import;80
+Sverigedemokraterna;;SE;test@example.com;sverigedemokraterna.se;;;Test import;80

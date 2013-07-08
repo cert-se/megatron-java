@@ -1,0 +1,1 @@
+$logTimestamp	$ipAddress	$hostname	$asn	$countryCode	$url	$additionalItem_webServerHost	$additionalItem_httpMethod	$additionalItem_httpVersion	$additionalItem_httpStatusCode	$additionalItem_size	$additionalItem_referer	$additionalItem_userAgent

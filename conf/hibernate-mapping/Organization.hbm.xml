@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="Organization"
+		table="organization"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+
+		<many-to-one name="Priority"
+                    column="prio_id"
+                    class="Priority" 
+        />
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="true"       
+			length="128"
+		/>
+		<property
+			name="Enabled"
+			column="enabled"
+			type="boolean"
+			not-null="true"
+		/>
+		<property
+			name="CountryCode"
+			column="country_code"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="LanguageCode"
+			column="language_code"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="EmailAddresses"
+			column="email_addresses"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Description"
+			column="description"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Comment"
+			column="comment"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="LastModified"
+			column="last_modified"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="ModifiedBy"
+			column="modified_by"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+            name="RegistrationNo"
+            column="registration_no"
+            type="string"
+            not-null="false"
+            length="10"
+        />		
+       <property
+            name="AutoUpdateEmail"
+            column="auto_update_email"
+            type="boolean"
+            not-null="true"
+        /> 
+        <property
+            name="AutoUpdateMatchFields"
+            column="auto_update_match_fields"
+            type="boolean"
+            not-null="true"
+        />        
+		<set name="IpRanges" table="ip_range" inverse="true"  cascade="all">
+            <key column="org_id" />
+            <one-to-many class="IpRange" />
+        </set>
+        <set name="DomainNames" table="domain_name" inverse="true"  cascade="all">
+            <key column="org_id" />
+            <one-to-many class="DomainName" />
+        </set>
+        <set name="ASNumbers" table="asn" inverse="true"  cascade="all">
+            <key column="org_id" />
+            <one-to-many class="ASNumber" />
+        </set>        
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,9 @@
+Job Name: $jobName
+Job Filename: $filename
+Job File Hash:    $fileHash
+Job Started:  $jobStarted
+Export Started:   $exportStarted
+Export Filename:  $exportFilename
+Export Full Filename: $exportFullFilename
+
+

@@ -1,0 +1,9 @@
+CERT-SE har tagit del av information som tyder på att en eller flera datorer i ert 
+nätverk har utfört lösenordsgissningsattacker mot ssh-servrar.
+
+Om informationen stämmer är det troligt att den eller de datorer som utfört attacken 
+har infekterats med skadlig kod.
+
+CERT-SE har fått informationen från Bruteforceblocker:
+http://danger.rulez.sk/index.php/bruteforceblocker
+

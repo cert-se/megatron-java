@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="LogEntry"
+		table="log_entry"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="java.lang.Long"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+
+		<property
+			name="Created"
+			column="created"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="LogTimestamp"
+			column="log_timestamp"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="IpAddress"
+			column="ip_address"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Hostname"
+			column="hostname"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="Port"
+			column="port"
+			type="integer"
+			not-null="false"
+			length="5"
+		/>
+		<property
+			name="Asn"
+			column="asn"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="CountryCode"
+			column="country_code"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="IpAddress2"
+			column="ip_address2"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Hostname2"
+			column="hostname2"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="Port2"
+			column="port2"
+			type="integer"
+			not-null="false"
+			length="5"
+		/>
+		<property
+			name="Asn2"
+			column="asn2"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="CountryCode2"
+			column="country_code2"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="Url"
+			column="url"
+			type="string"
+			not-null="false"
+		/>
+		<property
+            name="IpRangeStart"
+            column="ip_range_start"
+            type="java.lang.Long"
+            not-null="false"
+            length="10"
+        />
+        <property
+            name="IpRangeEnd"
+            column="ip_range_end"
+            type="java.lang.Long"
+            not-null="false"
+            length="10"
+        />
+		<many-to-one 
+		    name="OriginalLogEntry"            
+            class="OriginalLogEntry" 
+            column = "original_log_entry_id"
+            unique="true"
+            cascade="all"
+        />
+		<many-to-one
+			name="Organization"
+			column="org_id"
+            class="Organization"			
+		/>
+		<many-to-one
+			name="Organization2"
+			column="org_id2"
+            class="Organization"			
+		/>		
+		<many-to-one
+			name="Job"				
+			class="Job"
+			column="job_id"												
+		/>
+		
+        <map name="AdditionalItems" table="additional_item" lazy="true" cascade="all">  
+           <key column="log_entry_id" />  
+           <index column="name" type="string"/>  
+           <element column="value" type="string"/>  
+       </map>
+
+        <list name="FreeTexts" table="free_text"  lazy="true" cascade="all">
+    		<key column="log_entry_id"/>
+    		<list-index column="text_index"/>
+    		 <element column="text" type="string"/>
+		</list>
+        
+	</class>	
+</hibernate-mapping>

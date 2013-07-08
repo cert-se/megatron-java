@@ -1,0 +1,9 @@
+IP:        $ipAddress
+Hostname:  $hostname
+Infection: $additionalItem_infection
+Timestamp: $logTimestamp
+
+Log entry: 
+"Timestamp","Drone","ASN","Geo","Hostname","RBL","C&C","C&C ASN","C&C Geo","C&C DNS","C&C Port","Infection"
+$originalLogEntry
+

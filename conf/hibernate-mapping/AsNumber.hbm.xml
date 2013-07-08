@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="ASNumber"
+		table="asn"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+		<property
+			name="OrganizationId"
+			column="org_id"
+			type="integer"
+			not-null="true"
+			length="8"
+		/>
+		<property
+			name="Number"
+			column="asn"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+	</class>	
+</hibernate-mapping>

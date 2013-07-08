@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="Priority"
+		table="prio"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+		
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		
+		<property
+			name="Prio"
+			column="prio"
+			type="integer"
+			not-null="true"
+			length="5"
+		/>
+	</class>	
+</hibernate-mapping>

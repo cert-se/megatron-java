@@ -1,0 +1,15 @@
+CERT-SE har funnit att en eller flera datorer i ert nätverk finns med i en
+RBL-lista (realtime blacklist).
+
+En IP-adress kan hamna i en RBL-lista om skräppost (spam) har skickats från adressen 
+eller om e-postservern är felkonfigurerad. I vissa fall rör det sig om infekterade 
+klientdatorer som ingår i ett botnät, men i allvarligare fall kan e-postservern ha 
+tagits över av "spammare". Det kan också röra sig om så kallat "backscatter" då även 
+korrekt konfigurerade e-postservrar kan hamna i en RBL-lista. Mer info:
+http://en.wikipedia.org/wiki/Backscatter_%28e-mail%29.  
+
+Det finns en antal webbplatser där en IP-adress kan kontrolleras mot ett flertal 
+RBL-listor, exempelvis:
+http://www.mxtoolbox.com/blacklists.aspx 
+http://www.anti-abuse.org/multi-rbl-check/  
+

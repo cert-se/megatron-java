@@ -1,0 +1,7 @@
+IP:       $ipAddress
+Hostname: $hostname
+Time:     [Not available from source] 
+
+Log entry: 
+$originalLogEntry
+

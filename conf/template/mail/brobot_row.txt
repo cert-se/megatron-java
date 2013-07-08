@@ -1,0 +1,5 @@
+URL: hxxp://$url
+IP:  $ipAddress
+ASN: $asn
+Tid: [Saknas från källan]
+

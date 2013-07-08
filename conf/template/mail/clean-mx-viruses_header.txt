@@ -1,0 +1,9 @@
+CERT-SE har tagit del av information som tyder på att en eller flera datorer i ert 
+nätverk hyser webbsidor med skadlig kod. 
+
+Om informationen stämmer bör sidorna stängas ner omedelbart och en utredning startas 
+för att ta reda på hur intrånget gått till. Kontakta CERT-SE om ni behöver hjälp.
+
+CERT-SE har fått informationen från CLEAN MX:
+http://support.clean-mx.de/clean-mx/viruses.php
+

@@ -1,0 +1,10 @@
+CERT-SE har fått information om att en webbserver i ert nät kan ha drabbats av ett
+intrång som angriparen använder för att sprida skadlig kod.
+
+Vi ber om er hjälp att stänga ner den skadliga webbsajten. Vi tar gärna
+emot loggar för att analysera intrånget. Det ger oss också möjlighet att
+se vilka som besökt webbplatsen och som kan vara infekterade. Observera 
+att denna källa är ny för CERT-SE och det kan förekomma falska positiver.   
+
+OBS! Du kan bli infekterad om URL:en besöks. Därför är URL:en omskriven:
+

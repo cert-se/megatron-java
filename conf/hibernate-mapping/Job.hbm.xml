@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="Job"
+		table="job"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="java.lang.Long"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+		<many-to-one name="JobType"
+                    column="job_type_id"
+                    class="JobType" 
+        />
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="Filename"
+			column="filename"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="FileHash"
+			column="file_hash"
+			type="string"
+			not-null="true"
+			length="40"
+		/>
+		<property
+			name="FileSize"
+			column="file_size"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="Started"
+			column="started"
+			type="java.lang.Long"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="Finished"
+			column="finished"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ErrorMsg"
+			column="error_msg"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Comment"
+			column="comment"
+			type="string"
+			not-null="false"
+		/>
+		<property
+            name="ProcessedLines"
+            column="processed_lines"
+            type="java.lang.Long"            
+            length="10"
+        />
+        <set name="LogEntries" table="log_entry" lazy="true" inverse="true" cascade="all" >
+            <key column="job_id" on-delete="cascade"/>
+            <one-to-many class="LogEntry"/>
+        </set>
+
+	</class>	
+</hibernate-mapping>

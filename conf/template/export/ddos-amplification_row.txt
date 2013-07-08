@@ -1,0 +1,1 @@
+$logTimestamp | $asn#padRight6 | $ipAddress#padRight15 | $port | $countryCode | $ipAddress2#padRight15 | $port2

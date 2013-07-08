@@ -1,0 +1,7 @@
+IP:        $ipAddress
+Hostname:  $hostname
+Timestamp: $logTimestamp
+
+Log entry: 
+$originalLogEntry
+

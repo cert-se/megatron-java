@@ -1,0 +1,12 @@
+﻿        <logEntry>
+            <id>$logEntryid</id>
+            <firstSeen>$logTimestamp</firstSeen>
+            <lastSeen>$additionalItem_lastSeen</lastSeen>
+            <timesSeen>$additionalItem_timesSeen</timesSeen>
+            <prioName>$additionalItem_prioName</prioName>
+            <infection>$additionalItem_infection</infection>
+            <latitude>$additionalItem_latitude</latitude>
+            <longitude>$additionalItem_longitude</longitude>
+            <city>$additionalItem_city</city>
+            <debug>http://maps.google.com/maps?q=$additionalItem_latitude+$additionalItem_longitude&hl=en</debug>
+        </logEntry>

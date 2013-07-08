@@ -1,0 +1,10 @@
+{
+"fileGenerated":"$header_reportStarted",
+"startDate":"$header_startDate",
+"endDate":"$header_endDate",
+"timePeriodLabel":"$header_timePeriodLabel",
+"noOfBadHostsWithGeolocation":"$header_noOfBadHostsWithGeolocation",
+"noOfBadHostsWithoutGeolocation":"$header_noOfBadHostsWithoutGeolocation",
+"noOfBadHostsWithOrganization":"$header_noOfBadHostsWithOrganization",
+"noOfBadHostsWithoutOrganization":"$header_noOfBadHostsWithoutOrganization",
+"organizationTypeEntries":[

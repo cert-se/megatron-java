@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="se.sitic.megatron.entity">
+	<class
+		name="JobType"
+		table="job_type"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="native"/>
+		</id>
+		<many-to-one name="EntryType"
+                    column="entry_type_id"
+                    class="EntryType" 
+        />
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="Enabled"
+			column="enabled"
+			type="boolean"
+			not-null="true"
+		/>
+		<property
+			name="SourceDescription"
+			column="source_description"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Comment"
+			column="comment"
+			type="string"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

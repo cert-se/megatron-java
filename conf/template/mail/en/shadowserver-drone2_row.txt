@@ -1,0 +1,9 @@
+IP:        $ipAddress
+Hostname:  $hostname
+Infection: $additionalItem_infection
+Timestamp: $logTimestamp
+
+Loggrad: 
+Timestamp,IP,Port,ASN,Geo,Region,City,Hostname,Type,Infection,Url,Agent,CC,CC_port,CC_ASN,CC_geo,CC_DNS,Count,Proxy
+$originalLogEntry
+

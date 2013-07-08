@@ -1,0 +1,7 @@
+IP:        $ipAddress
+Datornamn: $hostname
+Tid:       $logTimestamp
+
+Loggrad: 
+$originalLogEntry
+

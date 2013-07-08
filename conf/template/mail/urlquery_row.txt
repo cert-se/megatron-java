@@ -1,0 +1,8 @@
+URL: hxxp://$url
+IP:  $ipAddress
+ASN: $asn
+Tid: $logTimestamp 
+
+Informationen kommer från urlQuery.net:
+http://$additionalItem_urlqueryUrl
+

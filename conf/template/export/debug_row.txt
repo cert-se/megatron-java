@@ -1,0 +1,1 @@
+$logTimestamp	$ipAddress	$hostname	$port	$asn	$countryCode	$ipAddress2	$hostname2	$port2	$asn2	$countryCode2	$ipRangeStart	$ipRangeEnd	$url	$freeTextList	$additionalItemList	$logEntryid	$created	$organizationName	$organizationEmailAddresses	$organizationName2	$organizationEmailAddresses2	$originalLogEntry

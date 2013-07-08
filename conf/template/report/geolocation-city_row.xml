@@ -1,0 +1,6 @@
+﻿        <cityEntry>
+            <rowId>$logEntryid</rowId>
+            <city>$additionalItem_city</city>
+            <uniqueNoOfBadHosts>$additionalItem_uniqueNoOfBadHosts</uniqueNoOfBadHosts>
+            <totalNoOfBadHosts>$additionalItem_totalNoOfBadHosts</totalNoOfBadHosts>
+        </cityEntry>

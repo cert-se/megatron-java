@@ -1,0 +1,17 @@
+
+Kontakta oss gärna vid frågor. Vanliga frågor och svar: https://www.cert.se/utskick-faq
+
+  /CERT-SE
+--
+CERT-SE - Sveriges nationella Computer Emergency Response Team med uppgift
+att stödja samhället i arbetet med att hantera och förebygga IT-incidenter.
+
+MSB, Myndigheten för samhällsskydd och beredskap
+Fleminggatan 14
+SE-112 26 Stockholm
+Telefon: 08-678 57 99
+Mailto: cert@cert.se
+https://www.cert.se
+
+PGP: https://www.cert.se/cert_at_cert.se.asc
+1D55 8101 59A6 6787 F37B  705A F892 9D9B AAAA A845

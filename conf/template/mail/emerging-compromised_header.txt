@@ -1,0 +1,6 @@
+CERT-SE har upptäckt att en eller flera datorer i ert nätverk förekommer i 
+en Snort-regel över illasinnade eller komprometterade IP-adresser.  
+
+Snort-regel ("Rules to block known hostile or compromised hosts."):
+http://rules.emergingthreats.net/blockrules/emerging-compromised.rules 
+

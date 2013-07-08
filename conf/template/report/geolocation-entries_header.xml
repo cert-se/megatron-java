@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- File Generated: $header_reportStarted -->
+
+<data>
+    <timePeriod>
+        <startDate>$header_startDate</startDate>
+        <endDate>$header_endDate</endDate>
+        <timePeriodLabel>$header_timePeriodLabel</timePeriodLabel>
+    </timePeriod>
+
+    <infoLabels>
+        <infoLabel>
+            <key>id</key>
+            <value>ID</value>
+        </infoLabel>
+        <infoLabel>
+            <key>firstSeen</key>
+            <value>Första förekomst</value>
+        </infoLabel>
+        <infoLabel>
+            <key>lastSeen</key>
+            <value>Sista förekomst</value>
+        </infoLabel>
+        <infoLabel>
+            <key>timesSeen</key>
+            <value>Antal förekomster</value>
+        </infoLabel>
+        <infoLabel>
+            <key>latitude</key>
+            <value>Latitud</value>
+        </infoLabel>
+		<infoLabel>
+            <key>longitude</key>
+            <value>Longitud</value>
+        </infoLabel>
+		<infoLabel>
+            <key>longitude</key>
+            <value>Longitud</value>
+        </infoLabel>
+        <infoLabel>
+            <key>city</key>
+            <value>Stad</value>
+        </infoLabel>
+    </infoLabels>
+
+    <logEntries>

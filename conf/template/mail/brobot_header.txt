@@ -1,0 +1,30 @@
+CERT-SE har fått information om att en webbserver i ert nät har
+utnyttjats för att utföra tillgänglighetsattacker (DDoS-attacker) mot
+organisationer i USA.
+
+En angripare har lyckats ta sig in i webbservern och där planterat ett
+antal elakartade skript. Baserad på den information som finns
+tillgänglig tycks angriparen ha utnyttjat sårbarheter i ouppdaterade
+instick-moduler till plattformen Joomla.
+
+Obs! Om man öppnar den angivna adressen utan parametrar får man ett
+falsk felmeddelande ("404 Not Found"). Detta betyder alltså *inte* att
+de skadliga skripten saknas.
+
+Förutom skriptet i nedanstående URL finns troligen även andra skript såsom
+confgi.php, indx.php, inedx.php, saerch.php, error.php, stph-hack.php,
+stmdu.php och themess.php i samma katalog på webbservern.
+
+Vi ber er att snarast möjligt ser över det aktuella systemet. Detta
+innebär bland annat att:
+
+* Återställ systemet - installera om hela systemet (operativsystem och
+  uppåt) är det säkraste alternativet
+* Uppdatera Joomla och alla dess insticksmoduler
+* Rensa bort insticksmoduler till Joomla som inte är i bruk
+
+Mer information om att säkra upp din Joomla-installation:
+http://docs.joomla.org/Security_Checklist
+
+Följande maskiner har hittats i ert nät:
+

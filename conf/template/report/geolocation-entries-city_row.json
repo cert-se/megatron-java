@@ -1,0 +1,9 @@
+{
+"id":"$logEntryid",
+"ipAddress":"$additionalItem_ipAddressMasked",
+"firstSeen":"$logTimestamp",
+"lastSeen":"$additionalItem_lastSeen",
+"timesSeen":"$additionalItem_timesSeen",
+"prioName":"$additionalItem_prioName",
+"infection":"$additionalItem_infection"
+}

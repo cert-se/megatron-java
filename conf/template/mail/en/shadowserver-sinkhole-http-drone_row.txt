@@ -1,0 +1,9 @@
+IP:        $ipAddress
+Hostname:  $hostname
+Infection: $additionalItem_type
+Timestamp: $logTimestamp
+
+Log entry: 
+"timestamp","ip","asn","geo","url","type","http_agent","tor","src_port","p0f_genre","p0f_detail","hostname","dst_port","http_host","http_referer","http_referer_asn","http_referer_geo","dst_ip","dst_asn","dst_geo"
+$originalLogEntry
+

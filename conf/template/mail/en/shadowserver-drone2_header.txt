@@ -1,0 +1,6 @@
+CERT-SE has received information indicating that one or more computers in your network 
+are part of a botnet.
+
+CERT-SE has received this information from Shadowserver. For more information see:
+http://www.shadowserver.org/wiki/pmwiki.php/Services/Botnet-Drone-Hadoop
+

@@ -1,0 +1,4 @@
+IP-block:  $ipRangeStart-$ipRangeEnd
+Timestamp: $logTimestamp
+Log entry: $originalLogEntry
+

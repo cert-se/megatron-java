@@ -1,0 +1,13 @@
+{
+"id":"$logEntryid",
+"dbId":"$additionalItem_dbId",
+"ipAddress":"$ipAddress",
+"port":"$port",
+"hostname":"$hostname",
+"asn":"$asn",
+"firstSeen":"$logTimestamp",
+"lastSeen":"$additionalItem_lastSeen",
+"timesSeen":"$additionalItem_timesSeen",
+"prioName":"$additionalItem_prioName",
+"infection":"$additionalItem_infection"
+}

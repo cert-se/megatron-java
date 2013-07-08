@@ -1,0 +1,22 @@
+{
+"fileGenerated":"$header_reportStarted",
+"startDate":"$header_startDate",
+"endDate":"$header_endDate",
+"timePeriodLabel":"$header_timePeriodLabel",
+"days":[$header_dayLabels],
+"noOfBadHostsWithGeolocation":"$header_noOfBadHostsWithGeolocation",
+"noOfBadHostsWithoutGeolocation":"$header_noOfBadHostsWithoutGeolocation",
+"noOfBadHostsWithOrganization":"$header_noOfBadHostsWithOrganization",
+"noOfBadHostsWithoutOrganization":"$header_noOfBadHostsWithoutOrganization",
+"infoLabels":
+{
+"id":"ID",
+"ipAddress":"IP-adress",
+"firstSeen":"Första träff",
+"lastSeen":"Sista träff",
+"timesSeen":"Antal träffar",
+"latitude":"Latitud",
+"longitude":"Longitud",
+"city":"Stad"
+}
+}

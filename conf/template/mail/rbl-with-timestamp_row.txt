@@ -1,0 +1,4 @@
+IP-block: $ipRangeStart-$ipRangeEnd
+Tid:      $logTimestamp
+Loggrad:  $originalLogEntry
+

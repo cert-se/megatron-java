@@ -1,0 +1,24 @@
+logTimestamp: $logTimestamp
+ipAddress: $ipAddress
+hostname: $hostname
+port: $port
+asn: $asn
+countryCode: $countryCode
+ipAddress2: $ipAddress2
+hostname2: $hostname2
+port2: $port2
+asn2: $asn2
+countryCode2: $countryCode2
+ipRangeStart: $ipRangeStart
+ipRangeEnd: $ipRangeEnd
+url: $url
+freeTextListList: $freeTextList
+additionalItemList: $additionalItemList
+logEntryid: $logEntryid
+created: $created
+organizationName: $organizationName
+organizationEmailAddresses: $organizationEmailAddresses
+organizationName2: $organizationName2
+organizationEmailAddresses2: $organizationEmailAddresses2
+originalLogEntry: $originalLogEntry
+

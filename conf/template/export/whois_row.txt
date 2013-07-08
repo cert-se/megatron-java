@@ -1,0 +1,1 @@
+$asn#padRight8| $ipAddress#padRight17| $countryCode | $logTimestamp | $freeTextList | $additionalItemList  

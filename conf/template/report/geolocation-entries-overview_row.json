@@ -1,0 +1,7 @@
+{
+"city":"$additionalItem_city",
+"citySlug":"$additionalItem_citySlug",
+"latitude":"$additionalItem_latitude",
+"longitude":"$additionalItem_longitude",
+"timesSeen":$additionalItem_timesSeen
+}

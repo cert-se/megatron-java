@@ -1,0 +1,6 @@
+CERT-SE har tagit del av information som tyder på att en eller flera datorer i ert
+nätverk ingår i botnätet Conficker.
+
+CERT-SE har fått informationen från Shadowserver. För mer information: 
+http://www.shadowserver.org/wiki/pmwiki.php/Services/Conficker-Drone
+

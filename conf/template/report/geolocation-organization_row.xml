@@ -1,0 +1,6 @@
+﻿        <organizationTypeEntry>
+            <rowId>$logEntryid</rowId>
+            <organizationTypeName>$additionalItem_prioName</organizationTypeName>
+            <uniqueNoOfBadHosts>$additionalItem_uniqueNoOfBadHosts</uniqueNoOfBadHosts>
+            <totalNoOfBadHosts>$additionalItem_totalNoOfBadHosts</totalNoOfBadHosts>
+        </organizationTypeEntry>

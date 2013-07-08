@@ -1,0 +1,6 @@
+{
+"rowId":"$logEntryid",
+"organizationTypeName":"$additionalItem_prioName",
+"uniqueNoOfBadHosts":"$additionalItem_uniqueNoOfBadHosts",
+"totalNoOfBadHosts":"$additionalItem_totalNoOfBadHosts"
+}

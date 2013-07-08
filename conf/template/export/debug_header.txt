@@ -1,0 +1,9 @@
+# Job Name:	$jobName
+# Job Filename:	$filename
+# Job File Hash:	$fileHash
+# Job Started:	$jobStarted
+# Export Started:	$exportStarted
+# Export Filename:	$exportFilename
+# Export Full Filename:	$exportFullFilename
+
+# logTimestamp	ipAddress	hostname	port	asn	countryCode	ipAddress2	hostname2	port2	asn2	countryCode2	url	freeTextList	additionalItemList	originalLogEntry

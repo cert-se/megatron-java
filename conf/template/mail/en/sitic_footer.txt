@@ -1,0 +1,16 @@
+
+Questions? Contact us or see our FAQ: https://www.cert.se/utskick-faq
+
+  /CERT-SE
+--
+CERT-SE, Swedens national Computer Emergency Response Team
+
+MSB, Swedish Civil Contingencies Agency
+Fleminggatan 14
+SE-112 26 Stockholm
+Telefon: 08-678 57 99
+Mailto: cert@cert.se
+https://www.cert.se
+
+PGP: https://www.cert.se/cert_at_cert.se.asc
+1D55 8101 59A6 6787 F37B  705A F892 9D9B AAAA A845

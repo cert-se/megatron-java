@@ -1,0 +1,12 @@
+CERT-SE have found that one or more IP addresses in your network 
+are present in a RBL list (realtime blacklist).
+
+There are several reasons why an IP address ends up in a RBL list. Spam may have been sent from the
+address or the e-mailserver may be misconfigured. Sometimes it might be an infected client that is part
+of a botnet, in more serious cases the e-mailserver may have been hijacked by spammers. It can also be
+caused by backscatter. See: http://en.wikipedia.org/wiki/Backscatter_%28e-mail%29.
+
+Several websites exists where an IP address can be checked against RBL lists. See:
+http://www.mxtoolbox.com/blacklists.aspx 
+http://www.anti-abuse.org/multi-rbl-check/  
+

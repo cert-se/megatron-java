@@ -1,0 +1,1 @@
+$asn#padRight8| $ipAddress#padRight17| $additionalItem_bgpPrefix#padRight19 | $countryCode | $additionalItem_registry#padRight8 | $additionalItem_allocated | $freeText0  

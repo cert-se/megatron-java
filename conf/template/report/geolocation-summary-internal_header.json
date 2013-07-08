@@ -1,0 +1,28 @@
+{
+"fileGenerated":"$header_reportStarted",
+"startDate":"$header_startDate",
+"endDate":"$header_endDate",
+"timePeriodLabel":"$header_timePeriodLabel",
+"days":[$header_dayLabels],
+"noOfBadHostsWithGeolocation":"$header_noOfBadHostsWithGeolocation",
+"noOfBadHostsWithoutGeolocation":"$header_noOfBadHostsWithoutGeolocation",
+"noOfBadHostsWithOrganization":"$header_noOfBadHostsWithOrganization",
+"noOfBadHostsWithoutOrganization":"$header_noOfBadHostsWithoutOrganization",
+"infoLabels":
+{
+"id":"ID",
+"dbId":"Databas-ID",
+"ipAddress":"IP-adress",
+"port":"Port",
+"hostname":"Datornamn",
+"asn":"ASN",
+"firstSeen":"Första träff",
+"lastSeen":"Sista träff",
+"timesSeen":"Antal träffar",
+"latitude":"Latitud",
+"longitude":"Longitud",
+"city":"Stad",
+"prioName":"Organisationstyp",
+"infection":"Infektion"
+}
+}

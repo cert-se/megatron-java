@@ -1,0 +1,1 @@
+$ipAddress#padRight17 | $additionalItem_asn#padRight8 | $countryCode | $hostname#padRight35 | $additionalItem_asName
