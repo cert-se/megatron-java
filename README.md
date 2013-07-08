@@ -1,4 +1,4 @@
 megatron-java
 =============
 
-Megatron - An Abuse Handling System
+Megatron - An Abuse Handling System.

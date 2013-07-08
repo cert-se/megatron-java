@@ -1,0 +1,25 @@
+$SOA 3600 ns0.rfc-ignorant.org admin.rfc-ignorant.org 2009032402 1800 900 1209600 3600
+$NS 3600 rbldnsd.a.rbl-auth.sr.sonic.net rbldnsd.b.rbl-auth.sr.sonic.net ns4.tamu.edu ns5.tamu.edu rfci.bl.xs4all.nl rbldns.cns.mcbone.net
+:127.0.0.4:Not supporting abuse@domain
+0-cash.com
+*.0-cash.com
+0.cz
+*.0.cz
+00-44.com
+*.00-44.com
+000domains.com
+*.000domains.com
+000watch.com
+*.000watch.com
+001.me.uk
+*.001.me.uk
+001isp.com
+*.001isp.com
+007-ride.com
+*.007-ride.com
+007.sh
+*.007.sh
+00753.com
+*.00753.com
+007mundo.com
+*.007mundo.com

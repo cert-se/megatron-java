@@ -1,0 +1,39 @@
+This document describes how to move data from the Megatron production database 
+to a new history database.
+
+* Disable crontab-jobs and rename "megatron.sh".
+
+* Backup XML-files for Flash graphs. 
+
+* Save statistics for database (run "select-count-plus-max.sql").
+  mysql -D megatron -u megatron -p < select-count-plus-max.sql > megatron-count-plus-max.txt
+  
+* Dump Megatron-database:
+  mysqldump -u root -p megatron > megatron-db-dump.sql
+
+* Create history database:
+  - mysql -u root -p
+  - create database megatron_hist_20110608;
+  - use megatron_hist_20110608;
+  - grant all on megatron_hist_20110608.* to megatron@localhost;
+
+* Import dump:
+  mysql -u root -p megatron_hist_20110608 < megatron-db-dump.sql
+
+* Verify history db:
+  mysql -D megatron_hist_20110608 -u megatron -p < select-count-plus-max.sql > megatron_hist-count-plus-max.txt
+  
+* Delete old records from the Megatron-database: 
+  - delete from free_text where log_entry_id < (select max(id) from log_entry where created < UNIX_TIMESTAMP('2011-05-01 00:00:00')); 
+  - delete from additional_item where log_entry_id < (select max(id) from log_entry where created < UNIX_TIMESTAMP('2011-05-01 00:00:00')); 
+  - delete from mail_job_log_entry_mapping where mail_job_id < (select max(id) from mail_job where started < UNIX_TIMESTAMP('2011-05-01 00:00:00'));
+  - delete from mail_job where started < UNIX_TIMESTAMP('2011-05-01 00:00:00');
+  - delete from job where started < UNIX_TIMESTAMP('2011-05-01 00:00:00');
+  - delete from log_entry where created < UNIX_TIMESTAMP('2011-05-01 00:00:00');
+  - delete from original_log_entry where created < UNIX_TIMESTAMP('2011-05-01 00:00:00');
+
+* Optimize the Megatron-database (may be needed after many deletes):
+  - mysqlcheck -u root -p --databases megatron --check
+  - if damaged: mysqlcheck -u root -p --databases megatron --repair
+  - mysqlcheck -u root -p --databases megatron --analyze
+  - mysqlcheck -u root -p --databases megatron --optimize

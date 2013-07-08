@@ -1,0 +1,103 @@
+$TTL 3600
+;
+@		IN	SOA	ns0.rfc-ignorant.org. hostmaster.megacity.org. ( 2009030301
+        30M     ; refresh
+        15M     ; retry
+        14D     ; expire
+        6H      ; minimum
+	)
+
+		IN	NS		a.rbl-auth.sr.sonic.net.
+		IN	NS		b.rbl-auth.sr.sonic.net.
+		IN	MX	0	caprica.megacity.org.
+		IN	A		64.142.22.246
+		IN	TXT		"v=spf1 a mx a:kobol.megacity.org a:caprica.megacity.org mx:arrakis.megacity.org -all"
+
+www		IN	A		64.142.22.246
+		IN	MX	0	caprica.megacity.org.
+
+
+ipwhois	 	365D	TXT	"This zone is no longer in use"
+ipwhois  	365D	NS	localhost.rfc-ignorant.org.
+
+localhost	IN	A		127.0.0.1
+
+rt		IN 	A		64.142.22.246 ;(caprica)
+beta		IN	A		64.142.22.246
+
+ns0		IN	A		64.142.22.246
+rsync		IN	CNAME		ns0
+
+dsn		IN	TXT		"Database of domains rejecting DSN"
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+		IN	NS		ns4.tamu.edu.
+		IN	NS		ns5.tamu.edu.
+		IN	NS		rfci.bl.xs4all.nl.
+		IN	NS		rbldns.cns.mcbone.net.
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+;		IN	NS		master.dto.tudelft.nl.
+
+postmaster	IN	TXT		"Database of domains missing postmaster"
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+		IN	NS		rbldns.cns.mcbone.net.
+		IN	NS		ns4.tamu.edu.
+		IN	NS		ns5.tamu.edu.
+		IN	NS		ns5.dataloss.net.
+		IN	NS		ns6.dataloss.net.
+		IN	NS		rfci.bl.xs4all.nl.
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+;		IN	NS		master.dto.tudelft.nl.
+
+abuse		IN	TXT		"database of domains missing abuse"
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+		IN	NS		rbldns.cns.mcbone.net.
+		IN	NS		ns4.tamu.edu.
+		IN	NS		ns5.tamu.edu.
+		IN	NS		rfci.bl.xs4all.nl.
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+;		IN	NS		master.dto.tudelft.nl.
+
+
+whois		IN	TXT		"domains with bad whois"
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+		IN	NS		rbldns.cns.mcbone.net.
+		IN	NS		ns4.tamu.edu.
+		IN	NS		ns5.tamu.edu.
+		IN	NS		rfci.bl.xs4all.nl.
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+;		IN	NS		master.dto.tudelft.nl.
+
+bogusmx		IN	TXT		"domains with bogus MX records"
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+		IN	NS		rbldns.cns.mcbone.net.
+		IN	NS		ns4.tamu.edu.
+		IN	NS		ns5.tamu.edu.
+;		IN	NS		master.dto.tudelft.nl.
+		IN	NS		rfci.bl.xs4all.nl.
+
+fulldom		IN	TXT		"amalgamation of all domain-based zones"
+		IN	NS		rbldnsd.a.rbl-auth.sr.sonic.net.
+		IN	NS		rbldnsd.b.rbl-auth.sr.sonic.net.
+		IN	NS		rfci.bl.xs4all.nl.
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+;		IN	NS		ns4.tamu.edu.
+;		IN	NS		ns5.tamu.edu.
+
+fullip		IN	TXT		"amalgamation of all IP-based zones"
+		IN	NS		rfci.bl.xs4all.nl.
+;		IN	NS		rbldns1.tudelft.nl.
+;		IN	NS		rbldns2.tudelft.nl.
+;		IN	NS		ns4.tamu.edu.
+;		IN	NS		ns5.tamu.edu.

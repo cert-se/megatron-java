@@ -1,0 +1,39 @@
+geoip.jar:
+  Version: 1.0.1 (compiled from source in GeoIPJava-1.2.5)
+
+log4j.jar:
+  Version: 1.2.15
+  Original Name: log4j-1.2.15.jar
+  
+mysql-connector.jar
+  Version: 5.1.6
+  Original Name: mysql-connector-java-5.1.7-bin.jar
+
+rome.jar
+  Version: 0.9
+  Original Name: rome-0.9.jar
+
+jdom.jar:
+  Version: 1.1
+  Required by: rome.jar
+
+joda-time.jar
+  Version: 1.5.2
+  Original Name: joda-time-1.5.2.jar
+
+mail.jar:
+  Version: 1.4.1
+  Original Name: mail.jar
+
+activation.jar:
+  Version: 1.1.1
+  Original Name: activation.jar
+  Required by: mail.jar
+
+dnsjava.jar:
+  Version: 2.1.3
+  Original Name: dnsjava-2.1.3.jar
+
+commons-net.jar:
+  Version: 2.0
+  Original Name: commons-net-2.0.jar

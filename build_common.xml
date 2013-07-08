@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<!--
+    This file contains Ant code that is shared between projects, e.g. shared 
+    targets, macros etc.
+-->
+
+
+<project name="common">
+
+    <!-- 
+        Creates Version.java from template. Following properties must be set:
+            - version-file: e.g. "${src}/se/sitic/megatron/util/Version.java"
+            - version-package: e.g. "se.sitic.megatron.util"
+    -->
+    <target name="create-version-class">
+        <tstamp>
+            <format property="app.date" pattern="yyyy-MM-dd HH:mm:ss" />
+        </tstamp>
+
+        <copy file="Version.template" tofile="${version-file}" overwrite="true" filtering="true">
+            <filterchain>
+                <filterreader classname="org.apache.tools.ant.filters.ReplaceTokens">
+                    <param type="token" name="package" value="${version-package}" />
+                    <param type="token" name="app.name" value="${app.name}" />
+                    <param type="token" name="app.version" value="${app.version}" />
+                    <param type="token" name="app.date" value="${app.date}" />
+                    <param type="token" name="app.tag" value="${app.tag}" />
+                    <param type="token" name="ant.version" value="${ant.version}" />
+                    <param type="token" name="ant.java.version" value="${ant.java.version}" />
+                </filterreader>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="dist">
+        <echo>Dist ${ant.project.name}...This target does nothing. It needs to be overriden.</echo>
+        <!-- This target does nothing. It needs to be overriden. -->
+    </target>
+    
+    <presetdef name="sitic.javac">
+        <javac destdir="${build-classes}" compiler="modern" target="1.7" source="1.7" debug="on" 
+            debuglevel="lines,source,vars" optimize="off" deprecation="off" includeAntRuntime="false">
+            <src path="${src}" />
+            <classpath refid="compile.classpath" />
+        </javac>
+    </presetdef>
+
+</project>

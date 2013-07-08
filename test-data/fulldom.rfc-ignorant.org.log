@@ -1,0 +1,75 @@
+$TTL 3600
+	    ;
+@  IN      SOA     ns0.rfc-ignorant.org. hostmaster.megacity.org. ( 2009032402
+30M     ; refresh
+15M     ; retry
+14D     ; expire
+60M     ; minimum
+        )
+
+                IN      NS              rbldnsd.a.rbl-auth.sr.sonic.net.
+                IN      NS              rbldnsd.b.rbl-auth.sr.sonic.net.
+                IN      NS              rfci.bl.xs4all.nl.
+
+*._smtp_client  IN      TXT     "spf=deny"
+
+
+
+0--0.com                           IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+*.0--0.com                         IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+0--0.net                           IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+*.0--0.net                         IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+0-cash.com                         IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+*.0-cash.com                       IN A   127.0.0.5
+                                   IN TXT "Inaccurate or missing WHOIS data"
+af                                 IN A   127.0.0.7
+                                   IN TXT "TLD has no WHOIS server or incomplete data in server"
+*.af                               IN A   127.0.0.7
+                                   IN TXT "TLD has no WHOIS server or incomplete data in server"
+cqcorp.com                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqcpmc.com                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqcqham.com                        IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqcqk.com                          IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqcrc.com                          IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqct.org                           IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqcygnet.com                       IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqd.com.cn                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqda.gov.cn                        IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+cqdaze.com                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+fwi.ie                             IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fwi.ie"
+*.fwi.ie                           IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fwi.ie"
+fwt.at                             IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fwt.at"
+*.fwt.at                           IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fwt.at"
+fww.de                             IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fww.de"
+*.fww.de                           IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fww.de"
+fx.ro                              IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fx.ro"
+*.fx.ro                            IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fx.ro"
+fx.to                              IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fx.to"
+*.fx.to                            IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fx.to"
+fx120.net                          IN A   127.0.0.4
+                                   IN TXT "Not supporting abuse@fx120.net"

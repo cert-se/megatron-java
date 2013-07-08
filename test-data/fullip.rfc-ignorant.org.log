@@ -1,0 +1,15 @@
+$TTL 3600
+	    ;
+@  IN      SOA     ns0.rfc-ignorant.org. hostmaster.megacity.org. ( 2009032402
+30M     ; refresh
+15M     ; retry
+14D     ; expire
+60M     ; minimum
+        )
+
+                IN      NS              rfci.bl.xs4all.nl.
+
+*._smtp_client  IN      TXT     "spf=deny"
+
+
+

@@ -1,0 +1,36 @@
+# List of compromised email addresses
+foo@example.com
+bar@sunet.se
+foo@mp.se
+bar@mp.se
+foo@centern.se
+foo@192.71.238.76  
+
+foo@geo.uu.se
+foo@geo.uu.se
+bar@student.uu.se
+bar@student.uu.se
+
+# included
+foo@i.nu
+foo@nu
+foo@.nu
+hubba@www.visitsweden.se
+hubba@www.visitsweden.com
+hubba@binero.com
+hubba@google.se
+hubba@yahoo.se 
+ bubba@yahoo.se 
+    foobar@yahoo.se    
+ 
+# excluded
+foo@n
+foo@n.n
+foo@bar.info
+foo@bar.pro
+foo@
+foo
+foo@hotmail.com
+foo@asaasasasasx.com
+hubba@google.com
+foo@8.8.8.8  

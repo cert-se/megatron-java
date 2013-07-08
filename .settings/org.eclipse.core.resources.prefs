@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//conf/dev/megatron-globals.properties=UTF-8
+encoding//conf/job-type/brobot.properties=UTF-8
+encoding//conf/job-type/brobot2.properties=UTF-8
+encoding//conf/job-type/ddos-amplification.properties=UTF-8
+encoding//conf/job-type/report-geolocation.properties=UTF-8

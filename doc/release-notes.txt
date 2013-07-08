@@ -1,0 +1,336 @@
+v1.0.11 [to be released]
+=======
+* New: The following job types (configurations) are new:
+    - ikyon
+    - brobot
+    - brobot2
+    - ddos-amplification
+
+* Improved: Remove diacritics (accents) from city name (filename for JSON-files
+  in GeolocationJsonReportGenerator).
+
+* Improved: Support for Java 1.5 and 1.6 dropped (have reached end-of-life).
+  Source and target is now 1.7.  
+
+* Bug: Using UTF-8 in megatron.sh (e.g. generated filenames will be in UTF-8). 
+
+* Moved repository to GitHub:
+  - Modified Ant-script (build.xml)
+  - All files have now Unix line endings (except files in doc/ and sql/) 
+  - Documentation improved  
+
+
+v1.0.10
+=======
+* New: Support for MaxMind's ASN database. Add AS number and AS name to a log 
+  entry. See AsnGeoIpDecorator. Works together with old AsnDecorator.
+  
+* New: Support for MaxMind's City database. Add geolocation (latitude, 
+  longitude, city etc.) to a log record. See GeolocationDecorator.    
+  Country lookup can either use the City database (commercial or free),
+  or the Country database (commercial or free). See GeoIpCountryManager.
+
+* New: Support for decorators in file export and mail export.
+
+* New: Support for XML and JSON reports with geolocation data 
+  (see GeolocationXmlReportGenerator, GeolocationJsonReportGenerator). 
+
+* New: Support for customized reports (see report.classNames).
+
+* New: Add country code from hostname (see CountryCodeFromHostnameDecorator).
+  CombinedDecorator uses now this decorator plus CountryCodeDecorator 
+  (IP --> country code) to maximize country hits (e.g. for SE).
+
+* New: Script that sends unsent jobs in batch (see mega-sender.py).
+
+* Bug: Date-header is missing in mail. Solution: Sets date explicit 
+  (setSentDate) in MailSender.
+  
+* Bug: Invalid email address terminates application. Solution: Email addresses
+  are checked before sending.  
+
+* Improved: Better DNS query performance:
+  - New faster implementation of reverse DNS lookup (uses SimpleResolver) 
+  - javadns-class library updated to version 2.1.3.
+  - New properties: DNS servers, time-out, and implementation.  
+
+* Improved: Decorators used in CombinedDecorator are now specified in the
+  property 'decorator.combinedDecorator.classNames'.  
+
+* Improved: All manager-classes that handles a MaxMind database are singletons
+  to reduce memory footprint.
+
+* Improved: Better performance when checking if IP is in quarantine:
+    - Added caching in JobListWriter.isAllQuarantined
+    - Honor --use-org2 in JobListWriter.isAllQuarantined
+
+* Improved: UTF-8 is used in stdout and properties-files:
+    - stdout: file.encoding=UTF-8 is defined in megatron.sh
+    - properties-files: Must be in UTF-8 format if non-ASCII characters are used.
+
+* Improved: Possible to keep temporary files for debugging purpose (see 
+  fileProcessor.deleteTmpFiles).  
+
+* Improved: fileMapperList updated due to changes in filenames from Shadowserver.
+
+* Refactored: JobManager and AbstractExportManager uses the same code.
+  See LogEntryFilterManager and DecoratorManager. 
+  
+* Removed: mega_downloader.py have been removed from the distribution (code too
+  ugly). Available in v1.0.9, which still can be downloaded.  
+
+* New: The following job types (configurations) are new:
+    - malc0de
+    - autoshun
+    - chaley
+    - compromised-accounts
+    - infiltrated
+    - stopforumspam
+    - surfcert-ids
+
+* Improved: The following job types (configurations) are improved:
+    - ip-flowing
+    - shadowserver-cc-ip
+    - rbl-syslog-ip-plus-host
+    - syslog-ip-plus-host
+    - sshbl
+ 
+* Deployment changes: 
+    - Updated jar-files: sitic-megatron.jar, dnsjava.jar
+    - MaxMind's country database (GeoIP.dat) have been moved from "conf/" to 
+      "conf/geoip-db/".
+    - Additional databases (City and AS number) must be downloaded. 
+      See "conf/geoip-db/readme.txt"
+    - New directory: template/report
+    - Convert properties-files to UTF-8 if non-ASCII characters are used.
+    - megatron.sh have been modified.
+
+* Config changes:
+    - Deprecated: geoIp.databaseFile (use geoIp.countryDatabaseFile instead)
+    - Deprecated: flash.outputDir (use report.outputDir instead)
+    - Deprecated: flash.noOfWeeks (use report.statistics.noOfWeeks instead)
+    - Deprecated: fileProcessor.xmlToRowFileProcessor.deleteOutputFile (use fileProcessor.deleteTmpFiles instead)
+    - Deprecated: general.useDnsJava (use dnsJava.useDnsJava instead) 
+    - New: geoIp.countryDatabaseFile  
+    - New: geoIp.asnDatabaseFile
+    - New: geoIp.cityDatabaseFile  
+    - New: geoIp.useCityDatabaseForCountryLookups
+    - New: decorator.preExport.classNames
+    - New: decorator.preMail.classNames
+    - New: decorator.combinedDecorator.classNames
+    - New: countryCodeFromHostnameDecorator.countryCodesToAdd (Note: must be changed to your organization's country)
+    - New: decorator.asnGeoIpDecorator.useAsnInLogEntry
+    - New: decorator.asnGeoIpDecorator.addAsName
+    - New: decorator.geolocationDecorator.fieldsToAdd
+    - New: fileProcessor.deleteTmpFiles
+    - New: report.classNames
+    - New: report.outputDir
+    - New: report.templateDir
+    - New: report.statistics.noOfWeeks
+    - New: report.geolocation.noOfWeeks
+    - New: report.geolocation.generateInternalReport
+    - New: report.geolocation.noOfEntriesInCityReport
+    - New: report.geolocation.jobTypeKillList
+    - New: report.geolocation.organizationTypeKillList
+    - New: report.geolocation.organizationTypeNameMapper
+    - New: dnsJava.useDnsJava
+    - New: dnsJava.useSimpleResolver
+    - New: dnsJava.dnsServers
+    - New: dnsJava.timeOut
+
+
+v1.0.9
+======
+* New: Helper scripts that downloads input files and puts them into the slurp- 
+  directory are now included in the distribution. See the directory 
+  "megatron-python" for more information.
+
+* New: Remove enclosing quotes from parsed value. Offers a more robust way of
+  handling string fields that are empty and not "" in a CVS file. New 
+  property: "parser.removeEnclosingCharsFromValue".
+
+* New: Raise error if debug mail templates are used. New property: 
+  "mail.raiseErrorForDebugTemplate".
+
+* New: Orginal log row may be appended to splitted line. New property: 
+  "lineProcessor.splitter.appendOriginalLogRow".
+  
+* New: Current date may be added if missing in timestamp field. New property: 
+  "parser.addCurrentDateToTimestamp".
+  
+* New: The following job types are new:
+    - dronebl
+    - vs-db
+    - xssed
+    - shadowserver-spam-url
+    - shadowserver-cc-ip
+
+* Fixed: Filters are applied for all splitted lines, not only the first one.
+  Bug in JobManager when LineSplitter is used.
+  
+* Fixed: Some emailed log entries are not marked as such in the database 
+  (entries are not written to the "mail_job_log_entry_mapping"-table). In other
+  words, IP quarantine did not work. See fix in "DbMananger.updateMailJob".  
+  
+* Fixed: Bug in the Organization object model caused a discrepancy between the 
+  database state and the object state when deleting child objects.
+  Hibernate configuration changed: "Organization.hbm.xml".  
+
+* Fixed: Bug in OrganizationHandler that left one empty domain_name-row in the 
+  database when deleting all DomainName-objects for an Organization.
+
+* Fixed: Major remake of "mega_downloader.py".
+
+* Improved: GeoIP.dat updated.
+
+* Improved: The following job types are modified:
+    - shadowserver-drone2: Format changed. Better handling of empty fields by 
+      using removeEnclosingCharsFromValue.
+    - shadowserver-sinkhole-http-drone: Format changed. Better handling of 
+      empty fields by using removeEnclosingCharsFromValue.
+    - inteco-cert-fast-flux.log: Format changed.
+
+
+v1.0.8
+======
+* New: Support for XML-files. An XML-file is converted to a row oriented file 
+  before parsing, diffing etc.
+
+* New: Localized mail templates supported. Language code for the organization
+  determine which template to use.  
+
+* New: Support for a list of file processors. Configurations with a single 
+  file processor (fileProcessor.className) still works.
+
+* New: Support for timestamp in epoch format. 
+
+* Fixed: Source is now 1.5 compatible. Removed @override for interface methods.
+
+* Improved: Job type sshbl handles now timestamp in epoch-format.  
+
+* New: The following job types are new:
+    - danger-rulez
+    - phishtank
+    - malwarepatrol (XML)
+    - blade-defender
+    - clean-mx-viruses (XML)
+    - clean-mx-phishing (XML)
+
+
+v1.0.7
+======
+* Fixed: Log entries with the same log timestamp are not always saved in the
+  mail_job_log_entry_mapping-table, which caused missed quarantined IPs.
+  LogEntry.compareTo is now using id instead of log timestamp.
+
+
+v1.0.6
+======
+* New: The following job types are new:
+    - shadowserver-drone2
+
+* Improved: Job type rbl-hostname can now handle more formats, e.g.
+  ".sitic.se", "*.sitic.se", "sitic.se".
+
+* Improved: Subject modified for notification email (filename is now included).
+
+* Improved: Filename is now included in the summary email.
+
+
+v1.0.5
+======
+* New: The following job types are new:
+    - zeustracker-pushdo
+    - zeustracker-blocklist-domain
+    - zeustracker-blocklist-ip
+
+* Improved: Debug templates contains now all possible variables. 
+
+* Improved: Skips to create a lock-file for some switches, and detects a stale
+  lock-file (megatron.sh).
+
+* Fixed: "Last Seen"-value for IP in job info uses log entry from job that 
+  is processed.
+
+* Fixed: Empty value for an additional item throws NP when used in template.
+
+* Fixed: Multiple free text fields that may be empty are handled incorrect.
+
+* Fixed: Error handling in MailExportManager and JobManager is not null robust.
+
+* Fixed: File size for created export file is always zero in log message. 
+
+* Fixed: Reg-exp in shadowserver-sinkhole-http-drone sometimes assigns 
+  user-agent to type.
+
+
+v1.0.4
+======
+* New: --list-jobs displays all log jobs for a specified period.
+  
+* New: --job-info displays detailed information about a log job.
+  
+* New: The following job types are new: 
+    - inteco-cert-fast-flux
+    - sunet-report
+    - sshbl 
+    - shadowserver-conficker-http-drone
+    - shadowserver-proxy
+    - shadowserver-sandbox-url
+    - shadowserver-scan
+    - ctir-abuse
+  
+* New: UrlToHostnameDecorator extracts hostname from the URL-field and assigns
+  it to the hostname-field, or hostname2-field depending on configuration.
+
+* New: Wildcards in IP-ranges are now supported, e.g. "192.121.x.x".
+  "0" can be used as wildcard, e.g. "192.121.0.0", by setting the property 
+  "parser.expandIpRangeWithZeroOctets" to true. 
+
+* Improved: shadowserver-sinkhole-http-drone now supports the new format from 
+  Shadowserver. Format have been modified twice.
+
+* Improved: notification email is more detailed with IP, hostname, "last seen",
+  and "last emailed".
+  
+* Improved: added number of mails to be sent in output for --mail-dry-run.
+
+* Fixed: matching of IP-ranges fails if range is larger than an organization's
+  IP-range.
+
+* Fixed: from-address in email sets incorrect.
+
+* Fixed: "general.filenameMapperList" contains ".se" specific stuff.
+
+* Fixed: DbManager.searchLogJobs and searchMailJobs converts now date 
+  parameters to seconds.
+
+
+v1.0.3
+======
+* Fixed: Joda Time cannot parse ISO Week number for 2010-01 correct. XML 
+  and RSS files affected. Implemented workaround in TimePeriod.    
+
+* Fixed: Quarantine time in DbManager.existsMailForIp incorrect calculated.
+  Bug reported by <gert.vliek@govcert.nl>.
+
+* Fixed: ipRangeStart is assigned to ipAddress. 
+
+* Improved: Added support for mail.mailJobSummary.subjectTemplate.
+
+
+v1.0.2
+======
+* Improved: --create-xml creates now "megatron-processed-lines-sum.xml".
+
+
+v1.0.1
+======
+* Fixed: --create-xml uses now entry types instead of job types.
+
+* Fixed: logging to stdout.
+
+
+v1.0.0
+======
+* Initial release.

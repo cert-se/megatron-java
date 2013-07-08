@@ -1,0 +1,57 @@
+# Pushdo botnet data
+# ~provided by abuse.ch
+# Timestamp (UTC) | IP address | SRC port | Country | Counter | AS number | AS name
+2010-01-27 13:15:07 | 201.144.217.18 | 35553 | MX | 10 | 8151 | Uninet S.A. de C.V.
+2010-01-27 13:15:07 | 188.27.72.153 | 1874 | RO | 67 | 8708 | RDSNET RCS & RDS S.A.
+2010-01-27 13:15:07 | 92.99.39.152 | 39618 | AE | 25 | 5384 | EMIRATES-INTERNET Emirates Internet
+2010-01-27 13:15:07 | 83.240.209.89 | 50962 | PT | 32 | 15525 | PTPRIMENET PT Prime Autonomous System
+2010-01-27 13:15:07 | 85.114.113.114 | 3049 | PS | 141 | 42314 | FUSION fusion services
+2010-01-27 13:15:07 | 201.248.108.113 | 20790 | VE | 52 | 8048 | CANTV Servicios, Venezuela
+2010-01-27 13:15:08 | 89.239.115.79 | 3063 | PL | 64 | 31608 | GAWEX-AS Gawex Media sp. z o. o.
+2010-01-27 13:15:08 | 190.202.85.2 | 28628 | VE | 520 | 8048 | CANTV Servicios, Venezuela
+2010-01-27 13:15:08 | 196.200.52.236 | 15211 | ML | 14 | 36864 | AFRIBONEMALI-AS
+2010-01-27 13:15:08 | 222.124.143.10 | 14521 | ID | 38 | 17974 | TELKOMNET-AS2-AP PT Telekomunikasi Indonesia
+2010-01-27 13:15:08 | 94.162.237.172 | 10055 | IT | 38 | 24608 | H3G-AS H3G Italy Autonomous System
+2010-01-27 13:15:08 | 190.207.75.85 | 1772 | VE | 16 | 8048 | CANTV Servicios, Venezuela
+2010-01-27 13:15:08 | 114.143.54.103 | 19740 | IN | 4 | 17762 | HTIL-TTML-IN-AP Tata Teleservices Maharashtra Ltd
+2010-01-27 13:15:08 | 78.182.221.92 | 1499 | TR | 16 | 9121 | TTNET TTnet Autonomous System
+2010-01-27 13:15:08 | 58.68.66.251 | 8566 | IN | 1600 | 10201 | DWL-AS-IN Dishnet Wireless Limited. Broadband Wireless
+2010-01-27 13:15:08 | 12.76.221.162 | 8948 | US | 3 | 7018 | ATT-INTERNET4 - AT&T WorldNet Services
+2010-01-27 13:15:08 | 92.36.85.195 | 2661 | RU | 12 | 12958 | MCC OJSC _Moscow Cellular Communications_,
+2010-01-27 13:15:08 | 123.236.232.154 | 37468 | IN | 5 | 18101 | RIL-IDC Reliance Infocom Ltd Internet Data Centre,
+2010-01-27 13:15:08 | 87.119.246.8 | 4486 | RU | 4 | 34449 | MORDOVIA-AS Branch in Mordovian Republic Open Joint-Stock Co
+2010-01-27 13:15:08 | 86.99.192.101 | 61833 | AE | 55 | 5384 | EMIRATES-INTERNET Emirates Internet
+2010-01-27 13:15:08 | 222.254.75.2 | 13107 | VN | 4 | 7643 | VNPT-AS-VN Vietnam Posts and Telecommunications (VNPT)
+2010-01-27 13:15:08 | 41.218.195.238 | 53076 | GH | 5 | 29614 | GHANATEL-AS
+2010-01-27 13:15:08 | 113.193.208.2 | 14816 | IN | 20 | 45528 | TDN Tikona Digital Networks Pvt Ltd.
+2010-01-27 13:15:08 | 41.238.98.190 | 2360 | EG | 19 | 8452 | TEDATA TEDATA
+2010-01-27 13:15:09 | 58.186.227.197 | 1098 | VN | 4 | 18403 | FPT-AS-AP The Corporation for Financing & Promoting Technolo
+2010-01-27 13:15:09 | 189.10.87.63 | 60850 | BR | 19 | 8167 | TELESC - Telecomunicacoes de Santa Catarina SA
+2010-01-27 13:15:09 | 119.63.138.101 | 5686 | PK | 17 | 38193 | TWA-AS-AP Transworld (Pvt.) Ltd.
+2010-01-27 13:15:09 | 117.97.241.22 | 5390 | IN | 4 | 45609 | BHARTI-MOBILITY-AS-AP Bharti Airtel Ltd. AS for GPRS Service
+2010-01-27 13:15:09 | 190.223.195.38 | 1999 | PE | 13 | 12252 | Telmex Peru S.A.
+2010-01-27 13:15:09 | 84.54.84.6 | 5727 | UZ | 31 | 34250 | UZTELECOM-AS ASN of _Uzbektelecom_ Joint-Stock Company
+2010-01-27 13:15:09 | 218.248.80.57 | 23969 | IN | 334 | 9829 | BSNL-NIB National Internet Backbone
+2010-01-27 13:15:09 | 122.168.215.11 | 15824 | IN | 2 | 24560 | AIRTELBROADBAND-AS-AP Bharti Airtel Ltd., Telemedia Services
+2010-01-27 13:15:09 | 201.210.82.209 | 10676 | VE | 14 | 8048 | CANTV Servicios, Venezuela
+2010-01-27 13:15:09 | 59.103.212.233 | 5134 | PK | 9 | 17557 | PKTELECOM-AS-PK Pakistan Telecommunication Company Limited
+2010-01-27 13:15:09 | 77.237.178.145 | 16378 | IR | 61 | 31732 | IR-PARSUN Parsun Network Solutions, IR
+2010-01-27 13:15:10 | 218.110.153.94 | 29987 | JP | 10 | 2527 | SO-NET So-net Entertainment Corporation
+2010-01-27 13:15:10 | 148.215.96.163 | 3323 | MX | 117 | 28526 | Universidad Autonoma del Estado de Mexico
+2010-01-27 13:15:10 | 88.224.69.132 | 3280 | TR | 8 | 9121 | TTNET TTnet Autonomous System
+2010-01-27 13:15:10 | 116.71.213.103 | 3248 | PK | 14 | 17557 | PKTELECOM-AS-PK Pakistan Telecommunication Company Limited
+2010-01-27 13:15:10 | 94.181.115.237 | 1232 | RU | 5 | 34590 | NEOLINK CJSC _Company _ER-Telecom_ Izhevsk
+2010-01-27 13:15:10 | 77.46.146.127 | 1741 | RS | 3 | 8400 | TELEKOM-AS _TELEKOM SRBIJA_ a.d.
+2010-01-27 13:15:10 | 178.90.230.223 | 31340 | KZ | 2 | 9198 | KAZTELECOM-AS JSC Kazakhtelecom
+2010-01-27 13:15:10 | 85.65.41.246 | 4246 | IL | 8 | 1680 | NV-ASN 013 NetVision Ltd.
+2010-01-27 13:15:10 | 122.183.209.2 | 45936 | IN | 798 | 45514 | TELEMEDIA-SMB-AS-AP Bharti Airtel Ltd., TELEMEDIA Services, 
+2010-01-27 13:15:11 | 196.20.124.191 | 63495 | DZ | 125 | 33774 | DJAWEB
+2010-01-27 13:15:11 | 59.161.36.119 | 31690 | IN | 29 | 10199 | TATA-AS Tata Communications Ltd
+2010-01-27 13:15:11 | 95.174.32.59 | 7134 | PL | 31 | 16340 | IS-ASN IS-NET Autonomous System
+2010-01-27 13:15:11 | 219.64.67.29 | 9862 | IN | 14 | 10199 | TATA-AS Tata Communications Ltd
+2010-01-27 13:15:11 | 123.237.45.111 | 14113 | IN | 2 | 18101 | RIL-IDC Reliance Infocom Ltd Internet Data Centre,
+2010-01-27 13:16:24 | 83.252.31.75 | 1366 | SE | 1 | 39651 | COMHEM-SWEDEN Com Hem Sweden
+2010-01-27 13:18:43 | 90.137.72.7 | 3196 | SE | 6 | 1257 | TELE2
+2010-01-27 13:21:44 | 84.217.35.39 | 1520 | SE | 12 | 2119 | TELENOR-NEXTEL Telenor Business Solutions AS
+2010-01-27 13:22:16 | 79.102.184.162 | 17852 | SE | 2 | 25169 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in S
+2010-01-27 23:35:26 | 189.176.246.187 | 1089 | NU | 3 | 8151 | Uninet S.A. de C.V.

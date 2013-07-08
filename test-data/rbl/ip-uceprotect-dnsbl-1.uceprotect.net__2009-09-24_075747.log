@@ -1,0 +1,100 @@
+###############################################################################
+#                                                                             #
+#         ©2001-2009 by Admins WebSecurity GbR - http://www.admins.ws         #
+#                       BLACKLIST FOR USE WITH RBLDNSD                        #
+#  Converted from UCEPROTECT® - Mailserver Software http://www.uceprotect.de  #
+#                                                                             #
+#  THIS IS A FREE SERVICE - IF YOU USE IT, YOU AGREE THAT ADMINS WEBSECURITY  #
+#     DOES NOT GIVE ANY WARRANTY TO YOU AND WILL NOT BE RESPONSIBLE FOR ANY   #
+#            DAMAGE OR PROFIT LOSS ! YOU ARE AT YOUR OWN RISK !               #
+#                                                                             #
+#    We suggest ISPs should read HELP FOR ISPs at http://www.uceprotect.net   #
+###############################################################################
+#                                                                             #
+#                    THIS IS UCEPROTECT-BLACKLIST LEVEL 1                     #
+#                        Blocking Class: Conservative                         #
+#      Listingpolicy is at http://www.uceprotect.net/en/index.php?m=3&s=3     #
+#         BE WARNED: USING LEVEL 1 MIGHT ALSO BLOCK A FEW LEGAL MAILS !       #
+#      WE DID OUR BEST TO PREVENT FALSE POSITIVES - BUT NOBODY IS PERFECT     #
+#    If you cannot risk loosing legal Mail you should not use any Blacklist.  #
+#                                                                             #
+###############################################################################
+#       This File was generated 24.09.2009 09:11 German time by Server 1      #
+#    Please read SPAM-FAQ at http://www.uceprotect.net for update examples    #
+#                            P L E A S E   N O T E  :                         # 
+# If many People know and use this Blacklist, it will become more effective ! #
+# You should therefore link to the projects website http://www.uceprotect.net #
+#                                                                             #
+#      IF YOU FIND THIS SERVICE USEFULL, PLEASE DONATE TO THE PROJECT !!!     #
+#                              Thank you very much.                           #
+#                                                                             #
+###############################################################################
+$SOA 3600 dnsbl-mirrors.uceprotect.net sonderlocke.fast9.uceprotect.net 2009092409 3600 3600 86400 3000
+:127.0.0.2: IP $ is UCEPROTECT-Level 1 listed. See http://www.uceprotect.net/rblcheck.php?ipr=$
+127.0.0.2  Test Record. UCEPROTECT.NET LEVEL 1 List is active.
+!127.0.0.1
+!10.0.0.0/8
+!172.16.0.0/12
+!192.168.0.0/24
+10.0.1.50
+10.10.0.95
+10.10.3.2
+10.32.0.118
+10.60.65.198
+100.21.229.119
+101.100.103.93
+101.100.116.2
+109.105.202.61
+109.112.0.125
+109.112.1.1
+109.112.1.107
+109.112.10.133
+109.112.10.196
+109.112.10.205
+109.112.11.103
+109.112.11.106
+109.112.11.155
+109.112.11.173
+109.112.11.241
+109.112.11.253
+109.112.12.0
+109.112.13.115
+109.112.13.196
+109.112.13.212
+109.112.13.236
+109.112.14.5
+109.112.14.57
+109.112.14.89
+109.112.15.180
+109.112.15.33
+109.112.16.137
+109.112.17.138
+109.112.17.200
+109.112.17.204
+109.112.17.97
+109.112.18.206
+109.112.18.243
+109.112.18.36
+109.112.19.181
+109.112.2.138
+109.112.2.218
+109.112.2.67
+109.112.2.99
+109.112.20.1
+109.112.20.154
+109.112.20.198
+109.112.20.36
+109.112.20.41
+109.112.20.95
+109.112.20.97
+109.112.21.1
+109.112.21.169
+109.112.21.250
+109.112.21.91
+109.112.22.160
+109.112.22.231
+109.112.22.75
+109.112.22.94
+109.112.23.23
+109.112.24.115
+109.112.24.70

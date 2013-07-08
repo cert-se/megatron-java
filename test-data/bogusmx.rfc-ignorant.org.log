@@ -1,0 +1,59 @@
+$TTL 3600
+        ;
+@  IN      SOA     ns0.rfc-ignorant.org. hostmaster.megacity.org. ( 2009032402
+30M     ; refresh
+15M     ; retry
+14D     ; expire
+60M     ; minimum
+        )
+
+                IN      NS              rbldnsd.a.rbl-auth.sr.sonic.net.
+                IN      NS              rbldnsd.b.rbl-auth.sr.sonic.net.
+                IN      NS              ns4.tamu.edu.
+                IN      NS              ns5.tamu.edu.
+                IN      NS              rbldns.cns.mcbone.net.
+
+*._smtp_client  IN      TXT     "spf=deny"
+
+
+
+-nscd.fresserve.co.uk              IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-100.com.cn                       IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-1kiss.com                        IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-24sexcams.com                    IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-360hometours.com                 IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-618x.com                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-9kiss.com                        IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-apr-creditcards.com              IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+0-cash.com                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+
+zzzzzz.org                         IN A   127.0.0.8
+                                   IN TXT "Domain has demonstrably bogus MX records"
+
+

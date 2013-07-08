@@ -1,0 +1,170 @@
+Bulk mode; whois.cymru.com [2009-03-10 09:59:21 +0000]
+158     | 194.237.142.20   | 194.237.142.0/24    | SE | ripencc  | 1996-05-08 | ERI-AS - Ericsson Network Systems, Inc.
+158     | 194.237.142.21   | 194.237.142.0/24    | SE | ripencc  | 1996-05-08 | ERI-AS - Ericsson Network Systems, Inc.
+702     | 62.247.6.10      | 62.247.0.0/16       | SE | ripencc  | 2001-09-13 | AS702 Verizon Business EMEA - Commercial IP service provider in Europe
+1257    | 192.36.80.8      | 192.36.80.0/24      | EU | ripencc  | 2000-03-22 | TELE2
+1257    | 193.13.73.77     | 193.12.0.0/14       | SE | ripencc  | 1994-04-20 | TELE2
+1257    | 193.15.240.59    | 193.12.0.0/14       | SE | ripencc  | 1996-01-02 | TELE2
+1257    | 193.15.240.60    | 193.12.0.0/14       | SE | ripencc  | 1996-01-02 | TELE2
+1257    | 90.139.99.230    | 90.128.0.0/12       | SE | ripencc  | 2006-10-17 | TELE2
+1299    | 91.149.34.32     | 91.149.32.0/20      | SE | ripencc  | 2006-11-14 | TELIANET TeliaNet Global Network
+1299    | 91.149.35.53     | 91.149.32.0/20      | SE | ripencc  | 2006-11-14 | TELIANET TeliaNet Global Network
+1299    | 92.241.206.100   | 92.241.192.0/20     | SE | ripencc  | 2007-12-18 | TELIANET TeliaNet Global Network
+1653    | 130.242.82.146   | 130.242.0.0/15      | EU | ripencc  | 2000-03-29 | SUNET SUNET Swedish University Network
+2119    | 213.113.42.12    | 213.112.0.0/14      | SE | ripencc  | 2000-12-15 | TELENOR-NEXTEL T.net
+2119    | 213.114.115.101  | 213.112.0.0/14      | SE | ripencc  | 2000-12-15 | TELENOR-NEXTEL T.net
+3301    | 90.239.96.223    | 90.224.0.0/12       | SE | ripencc  | 2006-05-30 | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 90.239.97.91     | 90.224.0.0/12       | SE | ripencc  | 2006-05-30 | TELIANET-SWEDEN TeliaNet Sweden
+5400    | 195.100.0.49     | 195.100.0.0/16      | SE | ripencc  | 1996-06-12 | BT BT European Backbone
+5400    | 195.100.0.60     | 195.100.0.0/16      | SE | ripencc  | 1996-06-12 | BT BT European Backbone
+6830    | 80.109.144.203   | 80.109.128.0/18     | AT | ripencc  | 2001-07-19 | UPC UPC Broadband
+6830    | 80.109.178.72    | 80.109.128.0/18     | AT | ripencc  | 2001-07-19 | UPC UPC Broadband
+8220    | 80.169.182.241   | 80.169.0.0/16       | GB | ripencc  | 2003-03-28 | COLT COLT Telecommunications
+8220    | 80.169.182.242   | 80.169.0.0/16       | GB | ripencc  | 2003-03-28 | COLT COLT Telecommunications
+8220    | 80.169.182.244   | 80.169.0.0/16       | GB | ripencc  | 2003-03-28 | COLT COLT Telecommunications
+8220    | 80.169.182.246   | 80.169.0.0/16       | GB | ripencc  | 2003-03-28 | COLT COLT Telecommunications
+8220    | 80.169.182.248   | 80.169.0.0/16       | GB | ripencc  | 2003-03-28 | COLT COLT Telecommunications
+8289    | 212.37.27.194    | 212.37.0.0/19       | SE | ripencc  | 1998-03-31 | DATAPHONE
+8289    | 213.80.57.34     | 213.80.0.0/18       | SE | ripencc  | 2000-06-16 | DATAPHONE
+8434    | 195.58.125.96    | 195.58.96.0/19      | SE | ripencc  | 1997-08-25 | TELENOR-SE Telenor Sweden
+8434    | 212.105.18.122   | 212.105.0.0/17      | SE | ripencc  | 1998-11-09 | TELENOR-SE Telenor Sweden
+8434    | 212.105.18.123   | 212.105.0.0/17      | SE | ripencc  | 1998-11-09 | TELENOR-SE Telenor Sweden
+8434    | 84.216.76.93     | 84.216.0.0/14       | SE | ripencc  | 2004-05-24 | TELENOR-SE Telenor Sweden
+8434    | 85.197.131.143   | 85.197.128.0/18     | SE | ripencc  | 2005-01-20 | TELENOR-SE Telenor Sweden
+8434    | 85.197.150.237   | 85.197.128.0/18     | SE | ripencc  | 2005-01-20 | TELENOR-SE Telenor Sweden
+8473    | 212.116.65.23    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 212.116.65.27    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 212.116.65.32    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 212.116.65.33    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 212.116.65.34    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 212.116.65.36    | 212.116.64.0/19     | SE | ripencc  | 1999-01-18 | BAHNHOF Bahnhof AB
+8473    | 85.24.234.92     | 85.24.128.0/17      | SE | ripencc  | 2005-02-24 | BAHNHOF Bahnhof AB
+12552   | 194.71.138.42    | 194.71.138.0/23     | SE | ripencc  | 1994-07-15 | IPO-EU IP-Only
+12552   | 194.71.138.48    | 194.71.138.0/23     | SE | ripencc  | 1994-07-15 | IPO-EU IP-Only
+12552   | 194.71.138.61    | 194.71.138.0/23     | SE | ripencc  | 1994-07-15 | IPO-EU IP-Only
+12552   | 194.71.139.60    | 194.71.138.0/23     | SE | ripencc  | 1994-07-15 | IPO-EU IP-Only
+12552   | 212.112.167.85   | 212.112.160.0/19    | SE | ripencc  | 1999-07-07 | IPO-EU IP-Only
+12552   | 87.96.228.244    | 87.96.128.0/17      | SE | ripencc  | 2005-08-01 | IPO-EU IP-Only
+12597   | 62.80.211.180    | 62.80.211.0/24      | SE | ripencc  | 2001-10-12 | GOTANET Gotanet-Leissner, Sweden
+12782   | 192.36.34.249    | 192.36.34.0/24      | EU | ripencc  | 2000-03-22 | Landstinget i Uppsala lan
+13189   | 212.112.63.122   | 212.112.32.0/19     | SE | ripencc  | 1999-05-31 | LIDERO Lidero Network AB
+13189   | 62.101.37.201    | 62.101.32.0/21      | SE | ripencc  | 2002-11-29 | LIDERO Lidero Network AB
+13189   | 62.101.43.199    | 62.101.40.0/22      | SE | ripencc  | 2002-11-29 | LIDERO Lidero Network AB
+13189   | 62.101.48.106    | 62.101.48.0/22      | SE | ripencc  | 2002-11-29 | LIDERO Lidero Network AB
+13189   | 62.101.48.109    | 62.101.48.0/22      | SE | ripencc  | 2002-11-29 | LIDERO Lidero Network AB
+13189   | 62.101.51.66     | 62.101.48.0/22      | SE | ripencc  | 2002-11-29 | LIDERO Lidero Network AB
+15782   | 217.72.48.85     | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 217.72.50.132    | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 217.72.53.159    | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 217.72.58.224    | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 217.72.58.232    | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 217.72.62.251    | 217.72.48.0/20      | SE | ripencc  | 2004-12-08 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 89.236.0.91      | 89.236.0.0/18       | SE | ripencc  | 2006-06-13 | PERSPEKTIV-AS Perspektiv Bredband AB
+15782   | 89.236.1.205     | 89.236.0.0/18       | SE | ripencc  | 2006-06-13 | PERSPEKTIV-AS Perspektiv Bredband AB
+16132   | 217.28.34.132    | 217.28.32.0/20      | SE | ripencc  | 2000-10-18 | NSAB-NET Nordic Satellite AB
+19399   | 192.44.242.18    | 192.44.242.0/24     | EU | ripencc  | 1989-01-11 | SLLNET Landstingskontoret
+19399   | 192.44.243.18    | 192.44.243.0/24     | EU | ripencc  | 1989-01-11 | SLLNET Landstingskontoret
+21052   | 83.209.45.12     | 83.209.0.0/16       | SE | ripencc  | 2004-03-02 | CENARA-AS Cenara AB
+21195   | 83.241.213.36    | 83.241.128.0/17     | SE | ripencc  | 2004-03-22 | DGCSYSTEMS DGC One AB Autonomous System
+21195   | 83.241.213.38    | 83.241.128.0/17     | SE | ripencc  | 2004-03-22 | DGCSYSTEMS DGC One AB Autonomous System
+21195   | 83.241.213.39    | 83.241.128.0/17     | SE | ripencc  | 2004-03-22 | DGCSYSTEMS DGC One AB Autonomous System
+21195   | 83.241.213.41    | 83.241.128.0/17     | SE | ripencc  | 2004-03-22 | DGCSYSTEMS DGC One AB Autonomous System
+21195   | 83.241.235.154   | 83.241.128.0/17     | SE | ripencc  | 2004-03-22 | DGCSYSTEMS DGC One AB Autonomous System
+21202   | 194.6.252.11     | 194.6.252.0/24      | SE | ripencc  | 2004-09-07 | DCSNET-AS DCS.net
+21202   | 217.76.94.15     | 217.76.80.0/20      | SE | ripencc  | 2003-08-19 | DCSNET-AS DCS.net
+21250   | 62.63.212.120    | 62.63.192.0/18      | SE | ripencc  | 2005-06-10 | TYFON Tyfon Svenska AB - Sweden
+21250   | 62.63.215.12     | 62.63.192.0/18      | SE | ripencc  | 2005-06-10 | TYFON Tyfon Svenska AB - Sweden
+21250   | 62.63.215.23     | 62.63.192.0/18      | SE | ripencc  | 2005-06-10 | TYFON Tyfon Svenska AB - Sweden
+21250   | 62.63.215.7      | 62.63.192.0/18      | SE | ripencc  | 2005-06-10 | TYFON Tyfon Svenska AB - Sweden
+21250   | 62.63.224.22     | 62.63.192.0/18      | SE | ripencc  | 2005-06-10 | TYFON Tyfon Svenska AB - Sweden
+21250   | 91.126.8.112     | 91.126.8.0/21       | SE | ripencc  | 2006-10-24 | TYFON Tyfon Svenska AB - Sweden
+24862   | 83.145.50.120    | 83.145.0.0/18       | SE | ripencc  | 2004-01-30 | CLSE-AS DATAPHONE SCANDINAVIA AB
+25169   | 79.102.100.82    | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.135.220   | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.142.157   | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.154.71    | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.155.239   | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.194.163   | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25169   | 79.102.89.71     | 79.102.0.0/16       | SE | ripencc  | 2007-11-13 | VODAFONE-SE-AS Vodafone Sverige, mobile company located in Sweden
+25176   | 81.8.140.42      | 81.8.128.0/17       | SE | ripencc  | 2001-12-21 | AC-NET ISP in the county of Vasterbotten, Sweden
+25217   | 217.68.36.10     | 217.68.32.0/20      | SE | ripencc  | 2000-11-13 | GIGANET-AS ISP Provider Giganet AB Multihomed network
+25217   | 217.68.36.11     | 217.68.32.0/20      | SE | ripencc  | 2000-11-13 | GIGANET-AS ISP Provider Giganet AB Multihomed network
+25387   | 62.88.128.21     | 62.88.128.0/17      | SE | ripencc  | 2000-12-18 | ASN-GOTEBORG City of Goteborg, sweden
+25417   | 87.249.172.160   | 87.249.160.0/19     | SE | ripencc  | 2005-08-31 | LJUSNET-AS se.ljusnet Autonomous System
+28847   | 62.108.199.108   | 62.108.192.0/19     | SE | ripencc  | 2000-06-29 | SE-TEKNIKPARK se.teknikpark Autonomous System
+28847   | 62.108.202.163   | 62.108.192.0/19     | SE | ripencc  | 2000-06-29 | SE-TEKNIKPARK se.teknikpark Autonomous System
+28847   | 62.108.204.115   | 62.108.192.0/19     | SE | ripencc  | 2000-06-29 | SE-TEKNIKPARK se.teknikpark Autonomous System
+28847   | 62.108.216.39    | 62.108.192.0/19     | SE | ripencc  | 2000-06-29 | SE-TEKNIKPARK se.teknikpark Autonomous System
+28854   | 88.206.204.54    | 88.206.200.0/21     | SE | ripencc  | 2005-12-14 | NAVABNET-SWEDEN CityNet Nassjo
+28908   | 88.83.57.119     | 88.83.32.0/19       | SE | ripencc  | 2005-12-28 | T3 ***************
+28954   | 80.86.65.66      | 80.86.64.0/20       | SE | ripencc  | 2001-08-17 | HUDIKSVALL-AS Hudiksvalls stadsnat is the municipality network internet provider
+28954   | 80.86.75.221     | 80.86.64.0/20       | SE | ripencc  | 2001-08-17 | HUDIKSVALL-AS Hudiksvalls stadsnat is the municipality network internet provider
+29217   | 85.119.130.132   | 85.119.128.0/21     | SE | ripencc  | 2005-06-13 | WM-DATA WM-data AB
+29460   | 217.76.52.168    | 217.76.48.0/20      | SE | ripencc  | 2003-09-29 | ADEPT-AS Adept AB, ISP operation
+29518   | 83.233.112.73    | 83.233.0.0/16       | SE | ripencc  | 2004-02-06 | SKYNET-AS Skycom Sweden
+29518   | 83.233.144.155   | 83.233.0.0/16       | SE | ripencc  | 2004-02-06 | SKYNET-AS Skycom Sweden
+29518   | 83.233.144.74    | 83.233.0.0/16       | SE | ripencc  | 2004-02-06 | SKYNET-AS Skycom Sweden
+29518   | 83.233.145.13    | 83.233.0.0/16       | SE | ripencc  | 2004-02-06 | SKYNET-AS Skycom Sweden
+29518   | 83.233.145.77    | 83.233.0.0/16       | SE | ripencc  | 2004-02-06 | SKYNET-AS Skycom Sweden
+29672   | 217.21.232.237   | 217.21.224.0/20     | SE | ripencc  | 2000-09-29 | STEK-AS S:t Erik Kommunikation AB
+30795   | 82.115.151.195   | 82.115.128.0/19     | SE | ripencc  | 2004-01-15 | INTRON-AS INTRON Networks
+31642   | 212.37.99.39     | 212.37.96.0/19      | SE | ripencc  | 1999-09-09 | STADSNAT Regional Internet Exchange (RIX)
+31642   | 212.37.99.44     | 212.37.96.0/19      | SE | ripencc  | 1999-09-09 | STADSNAT Regional Internet Exchange (RIX)
+33837   | 88.80.6.91       | 88.80.0.0/19        | SE | ripencc  | 2005-11-24 | PRQ-AS prq Inet
+33885   | 84.55.103.67     | 84.55.64.0/18       | SE | ripencc  | 2004-11-18 | OWNIT Ownit Broadband AB
+33885   | 84.55.103.85     | 84.55.64.0/18       | SE | ripencc  | 2004-11-18 | OWNIT Ownit Broadband AB
+33885   | 84.55.98.24      | 84.55.64.0/18       | SE | ripencc  | 2004-11-18 | OWNIT Ownit Broadband AB
+34133   | 85.89.65.12      | 85.89.64.0/19       | SE | ripencc  | 2004-11-02 | NETIT-AS NetIT Internet Solutions in Sweden AB
+34133   | 85.89.81.108     | 85.89.64.0/19       | SE | ripencc  | 2004-11-02 | NETIT-AS NetIT Internet Solutions in Sweden AB
+34244   | 85.30.144.147    | 85.30.128.0/18      | SE | ripencc  | 2005-05-30 | TELESERVICE Teleservice Bredband Skane AB
+34244   | 85.30.183.127    | 85.30.128.0/18      | SE | ripencc  | 2005-05-30 | TELESERVICE Teleservice Bredband Skane AB
+34576   | 194.103.188.58   | 194.103.188.0/22    | SE | ripencc  | 1994-10-19 | REGIONSKANE-SE REGION SKANE
+34576   | 194.103.189.24   | 194.103.188.0/22    | SE | ripencc  | 1994-10-19 | REGIONSKANE-SE REGION SKANE
+34576   | 194.103.189.35   | 194.103.188.0/22    | SE | ripencc  | 1994-10-19 | REGIONSKANE-SE REGION SKANE
+34576   | 194.103.189.42   | 194.103.188.0/22    | SE | ripencc  | 1994-10-19 | REGIONSKANE-SE REGION SKANE
+34610   | 77.110.15.53     | 77.110.0.0/18       | SE | ripencc  | 2007-01-29 | RIKSNET
+35100   | 91.90.31.10      | 91.90.24.0/21       | SE | ripencc  | 2006-10-06 | PATRIKWEB-CORE PatrikWeb Backbone Network Sweden
+35100   | 91.90.31.11      | 91.90.24.0/21       | SE | ripencc  | 2006-10-06 | PATRIKWEB-CORE PatrikWeb Backbone Network Sweden
+35100   | 91.90.31.16      | 91.90.24.0/21       | SE | ripencc  | 2006-10-06 | PATRIKWEB-CORE PatrikWeb Backbone Network Sweden
+35100   | 91.90.31.21      | 91.90.24.0/21       | SE | ripencc  | 2006-10-06 | PATRIKWEB-CORE PatrikWeb Backbone Network Sweden
+35706   | 77.105.218.234   | 77.105.208.0/20     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+35706   | 77.105.218.70    | 77.105.208.0/20     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+35706   | 77.105.226.50    | 77.105.224.0/19     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+35706   | 77.105.227.102   | 77.105.224.0/19     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+35706   | 77.105.228.113   | 77.105.224.0/19     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+35706   | 77.105.228.58    | 77.105.224.0/19     | SE | ripencc  | 2006-12-07 | NAO Net at Once
+39369   | 82.96.28.165     | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39369   | 82.96.28.166     | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39369   | 82.96.28.210     | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39369   | 82.96.28.249     | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39369   | 82.96.31.31      | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39369   | 82.96.31.7       | 82.96.28.0/22       | SE | ripencc  | 2003-11-10 | PORT80 Port80 AB, Sweden
+39651   | 213.89.128.136   | 213.89.0.0/16       | SE | ripencc  | 2000-12-27 | COMHEM-SWEDEN Com Hem Sweden
+39651   | 213.89.128.149   | 213.89.0.0/16       | SE | ripencc  | 2000-12-27 | COMHEM-SWEDEN Com Hem Sweden
+39651   | 213.89.128.228   | 213.89.0.0/16       | SE | ripencc  | 2000-12-27 | COMHEM-SWEDEN Com Hem Sweden
+39651   | 83.255.2.236     | 83.248.0.0/13       | SE | ripencc  | 2004-03-04 | COMHEM-SWEDEN Com Hem Sweden
+39651   | 83.255.33.234    | 83.248.0.0/13       | SE | ripencc  | 2004-03-04 | COMHEM-SWEDEN Com Hem Sweden
+41775   | 82.117.105.45    | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+41775   | 82.117.105.7     | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+41775   | 82.117.108.139   | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+41775   | 82.117.108.156   | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+41775   | 82.117.108.172   | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+41775   | 82.117.108.89    | 82.117.96.0/19      | SE | ripencc  | 2004-02-06 | BLIXTVIK-AS Blixtvik Internet och Telefoni AB
+42318   | 83.223.11.120    | 83.223.0.0/19       | SE | ripencc  | 2004-06-09 | FASTBIT-AS Fastbit AB
+42318   | 83.223.14.69     | 83.223.0.0/19       | SE | ripencc  | 2004-06-09 | FASTBIT-AS Fastbit AB
+42347   | 77.53.32.127     | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.44.229     | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.45.68      | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.46.106     | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.46.177     | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.46.198     | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+42347   | 77.53.46.57      | 77.53.0.0/16        | SE | ripencc  | 2007-01-24 | EPHONENET-AS Perfect Communication Sweden AB
+43012   | 77.91.220.5      | 77.91.216.0/21      | SE | ripencc  | 2007-05-23 | GASTABUD-SE Gastabudstaden AB
+44034   | 212.27.0.125     | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 212.27.0.127     | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 212.27.0.130     | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 212.27.0.134     | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 212.27.0.149     | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 212.27.0.15      | 212.27.0.0/19       | SE | ripencc  | 2008-06-02 | HI3G Hi3G Access AB
+44034   | 80.251.207.129   | 80.251.192.0/20     | SE | ripencc  | 2001-12-06 | HI3G Hi3G Access AB
+44581   | 85.8.1.173       | 85.8.0.0/18         | SE | ripencc  | 2005-02-07 | SE-ALLTELE-AS AllTele Allmanna Svenska Telefonaktiebolaget

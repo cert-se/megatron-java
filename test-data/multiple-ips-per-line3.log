@@ -1,0 +1,58 @@
+#
+# $Id: emerging-ciarmy.rules $
+# Emerging Threats Ciarmy rules.
+#
+# Rules to block CiArmy.com identified Top Attackers (www.ciarmy.com)
+#
+# More information available at www.emergingthreats.net
+#
+# Please submit any feedback or ideas to emerging@emergingthreats.net or the emerging-sigs mailing list
+#
+#*************************************************************
+#
+#  Copyright (c) 2003-2011, Emerging Threats
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the 
+#  following conditions are met:
+#  
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
+#    disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the 
+#    following disclaimer in the documentation and/or other materials provided with the distribution.
+#  * Neither the name of the nor the names of its contributors may be used to endorse or promote products derived 
+#    from this software without specific prior written permission.
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+#  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+#  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+#
+#
+# Version 37
+
+alert tcp [31.7.59.160,31.7.59.177,58.215.60.41,58.215.65.149,58.44.162.214,58.56.159.226,58.64.143.235,59.63.160.11,60.169.73.147,60.169.73.227] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403300; rev:37;)
+alert udp [31.7.59.160,31.7.59.177,58.215.60.41,58.215.65.149,58.44.162.214,58.56.159.226,58.64.143.235,59.63.160.11,60.169.73.147,60.169.73.227] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403301; rev:37;)
+alert tcp [60.169.73.43,60.172.22.77,60.173.9.10,60.174.109.155,60.190.216.33,61.147.103.98,61.147.110.57,61.147.67.253,61.160.195.25,61.160.201.26] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403302; rev:37;)
+alert udp [60.169.73.43,60.172.22.77,60.173.9.10,60.174.109.155,60.190.216.33,61.147.103.98,61.147.110.57,61.147.67.253,61.160.195.25,61.160.201.26] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403303; rev:37;)
+alert tcp [61.160.221.180,61.160.221.7,61.160.247.211,61.164.103.218,61.164.87.181,61.191.188.7,62.146.29.60,64.120.26.34,64.120.26.46,64.120.26.58] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403304; rev:37;)
+alert udp [61.160.221.180,61.160.221.7,61.160.247.211,61.164.103.218,61.164.87.181,61.191.188.7,62.146.29.60,64.120.26.34,64.120.26.46,64.120.26.58] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403305; rev:37;)
+alert tcp [64.27.2.116,67.55.110.36,69.73.188.251,70.37.65.32,74.55.67.74,77.222.131.112,82.195.239.194,91.217.153.208,91.217.153.216,94.76.225.83] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403306; rev:37;)
+alert udp [64.27.2.116,67.55.110.36,69.73.188.251,70.37.65.32,74.55.67.74,77.222.131.112,82.195.239.194,91.217.153.208,91.217.153.216,94.76.225.83] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403307; rev:37;)
+alert tcp [98.126.63.58,98.126.72.98,101.226.1.157,108.62.74.18,111.148.218.134,111.221.88.159,112.101.64.17,112.121.185.162,112.175.243.38,112.175.243.40] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403308; rev:37;)
+alert udp [98.126.63.58,98.126.72.98,101.226.1.157,108.62.74.18,111.148.218.134,111.221.88.159,112.101.64.17,112.121.185.162,112.175.243.38,112.175.243.40] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403309; rev:37;)
+alert tcp [112.3.61.3,112.91.177.38,116.40.117.245,117.21.225.97,117.56.104.98,118.123.178.32,118.126.3.62,119.145.148.56,119.37.192.66,119.57.72.18] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403310; rev:37;)
+alert udp [112.3.61.3,112.91.177.38,116.40.117.245,117.21.225.97,117.56.104.98,118.123.178.32,118.126.3.62,119.145.148.56,119.37.192.66,119.57.72.18] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403311; rev:37;)
+alert tcp [121.11.69.138,121.37.63.240,123.127.244.146,123.183.213.201,124.237.121.119,125.46.13.152,125.46.61.36,125.64.23.180,174.133.24.98,174.137.169.138] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403312; rev:37;)
+alert udp [121.11.69.138,121.37.63.240,123.127.244.146,123.183.213.201,124.237.121.119,125.46.13.152,125.46.61.36,125.64.23.180,174.133.24.98,174.137.169.138] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403313; rev:37;)
+alert tcp [174.137.169.140,180.186.74.13,183.166.53.35,183.63.35.21,184.105.176.207,184.105.177.21,184.107.235.66,184.22.25.231,193.28.228.6,202.102.52.9] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403314; rev:37;)
+alert udp [174.137.169.140,180.186.74.13,183.166.53.35,183.63.35.21,184.105.176.207,184.105.177.21,184.107.235.66,184.22.25.231,193.28.228.6,202.102.52.9] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403315; rev:37;)
+alert tcp [203.143.122.149,204.74.218.234,209.190.121.43,209.239.172.218,211.115.83.23,211.140.183.171,218.108.247.146,218.240.43.39,218.56.150.10,218.61.18.35] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403316; rev:37;)
+alert udp [203.143.122.149,204.74.218.234,209.190.121.43,209.239.172.218,211.115.83.23,211.140.183.171,218.108.247.146,218.240.43.39,218.56.150.10,218.61.18.35] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403317; rev:37;)
+alert tcp [220.226.188.41,221.10.245.121,221.6.70.122,222.137.252.29,222.186.23.22,222.186.24.133,222.186.24.72,222.214.216.39,222.217.221.12] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (TCP)"; flags:S; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403318; rev:37;)
+alert udp [220.226.188.41,221.10.245.121,221.6.70.122,222.137.252.29,222.186.23.22,222.186.24.133,222.186.24.72,222.214.216.39,222.217.221.12] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403319; rev:37;)
+
+alert udp [193.14.169.65,83.241.222.192] any -> $HOME_NET any (msg:"ET CIARMY Collective Intelligence Security Poor Reputation IP (UDP)"; reference:url,www.ciarmy.com/references/; reference:url,collectiveintelligencesecurity.com/cis/; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403319; rev:37;)

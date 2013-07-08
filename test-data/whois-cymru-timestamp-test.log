@@ -1,0 +1,12 @@
+Bulk mode; whois.cymru.com [2009-04-24 17:38:13 +0000]
+3301    | 193.180.228.186  | 193.180.228.0/24    | SE | ripencc  | 1993-09-01 | 2009-01-01 12:00:01 CET | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.157.68    | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:02 CEST | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.157.95    | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-01-01 12:00:03 GMT+01:00 | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:04 GMT+02:00 | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.180.228.186  | 193.180.228.0/24    | SE | ripencc  | 1993-09-01 | 2009-01-01 12:00:05 GMT | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.157.68    | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:06 BST | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:07 GMT-01:00 | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:08 GMT+01:30 | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:09 EST | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:10 PST | TELIANET-SWEDEN TeliaNet Sweden
+3301    | 193.44.6.50      | 193.44.0.0/15       | SE | ripencc  | 1993-09-01 | 2009-06-01 12:00:11 PDT | TELIANET-SWEDEN TeliaNet Sweden

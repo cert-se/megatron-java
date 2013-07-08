@@ -1,0 +1,30 @@
+#Software: Microsoft Internet Information Services 6.0
+#Version: 1.0
+#Date: 2009-06-08 00:00:00
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Cookie) cs(Referer) sc-status sc-substatus sc-win32-status cs-bytes time-taken 
+2009-06-08 00:00:00 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:04 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:10 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:15 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:19 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:25 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:29 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:35 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:39 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:44 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:50 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:55 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:00:59 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:04 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:09 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:15 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:20 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:25 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:30 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:34 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:39 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:44 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:50 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:01:55 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:02:00 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0
+2009-06-08 00:02:05 192.121.218.4 GET /cache_get.gif - 90 - 192.121.218.2 Mozilla/4.06+[en]+(WinNT;+I) - - 200 0 0 250 0

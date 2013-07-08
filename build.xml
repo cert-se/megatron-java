@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="megatron" default="dist" basedir=".">
+    <description>Build file for Megatron</description>
+
+    <loadproperties srcfile="build.properties" />
+    
+    <import file="build_common.xml" />
+
+    <property name="log4j" value="./lib/log4j.jar" />
+    <property name="geoip" value="./lib/geoip.jar" />
+    <property name="rome" value="./lib/rome.jar" />
+    <property name="jdom" value="./lib/jdom.jar" />
+    <property name="activation" value="./lib/activation.jar" />
+    <property name="mail" value="./lib/mail.jar" />
+    <property name="hibernate" value="./lib/hibernate3.jar" />	
+    <property name="antlr" value="./lib/antlr-2.7.6.jar" />
+    <property name="commons-collections" value="./lib/commons-collections-3.1.jar" />
+    <property name="dom4j" value="./lib/dom4j-1.6.1.jar" />
+    <property name="javassist" value="./lib/javassist-3.4.GA.jar" />
+    <property name="jta" value="./lib/jta-1.1.jar" />
+    <property name="slf4j" value="./lib/slf4j-api-1.5.6.jar" />
+    <property name="dnsjava" value="./lib/dnsjava.jar" />
+    <property name="joda-time" value="./lib/joda-time.jar" />
+    <property name="commons-net" value="./lib/commons-net.jar" />
+
+    <property name="build" location="build" />
+    <property name="build-dist" location="build/dist" />
+    <property name="build-classes" location="build/classes" />
+    <property name="src" location="src" />
+    <property name="version-file" location="${src}/se/sitic/megatron/util/Version.java" />
+    <property name="version-package" value="se.sitic.megatron.util" />
+    <property name="dist" location="dist" />
+    <property name="lib" location="lib" />
+
+    <path id="compile.classpath">
+    	<pathelement location="${hibernate}" />
+        <pathelement location="${log4j}" />
+        <pathelement location="${geoip}" />
+        <pathelement location="${rome}" />
+        <pathelement location="${jdom}" />
+        <pathelement location="${activation}" />
+        <pathelement location="${mail}" />
+        <pathelement location="${dnsjava}" />
+        <pathelement location="${joda-time}" />
+        <pathelement location="${commons-net}" />
+        <pathelement location="${classes}" />
+    </path>
+
+
+    <target name="init">
+        <tstamp>
+            <format property="FILE_TSTAMP" pattern="yyyy-MM-dd_HH.mm" />
+        </tstamp>
+
+        <!--creates the build directory-->
+        <mkdir dir="${build}" />
+        <mkdir dir="${build-dist}" />
+        <mkdir dir="${build-classes}" />
+        <mkdir dir="${dist}" />
+    </target>
+
+
+    <target name="build" depends="init" description="Compiles project.">
+        <sitic.javac />
+    </target>
+
+	
+    <target name="jar" depends="clean, create-version-class, build" description="Creates Megatron-jar.">
+        <mkdir dir="${build-dist}/lib" />
+        <jar jarfile="${build-dist}/lib/sitic-megatron.jar" basedir="${build-classes}" />
+    	<copy file="${build-dist}/lib/sitic-megatron.jar" todir="${dist}" preservelastmodified="true" />
+    </target>
+
+    
+    <target name="dist" depends="clean, create-version-class, build, zip-megatron, dist-pub" description="Creates all dist files.">
+        <mkdir dir="${build-dist}/lib" />
+        <jar jarfile="${build-dist}/lib/sitic-megatron.jar" basedir="${build-classes}" />
+        <copy todir="${build-dist}/lib" preservelastmodified="true">
+            <fileset dir="${lib}" excludes="ant.jar, junit.jar, **/src/*" />
+            <fileset file="${common}" />
+        </copy>
+
+        <mkdir dir="${build-dist}/conf" />
+        <copy todir="${build-dist}/conf" preservelastmodified="true">
+            <fileset dir="conf" excludes="dev" />
+        </copy>
+
+        <mkdir dir="${build-dist}/doc" />
+        <copy todir="${build-dist}/doc" preservelastmodified="true">
+            <fileset dir="doc" includes="release-notes.txt, readme-*.txt" />
+        </copy>
+        
+        <copy todir="${build-dist}" preservelastmodified="true">
+            <fileset dir="." includes="*.sh, *.bat" />
+<!--
+            <fileset dir="." file="LICENSE" />
+            <fileset dir="." file="NOTICE" />
+-->
+        </copy>
+
+        
+        <mkdir dir="${build-dist}/src" />
+        <copy todir="${build-dist}/src" preservelastmodified="true">
+            <fileset dir="src" />
+        </copy>
+
+        <mkdir dir="${build-dist}/src-test" />
+        <copy todir="${build-dist}/src-test" preservelastmodified="true">
+            <fileset dir="src-test" />
+        </copy>
+
+        <tar destfile="${dist}/megatron-java-${app.version}.tar.gz" compression="gzip">
+            <zipfileset dir="${build-dist}" prefix="megatron-java-${app.version}" />
+        </tar>
+
+        <mkdir dir="${build}/checksum" />
+        <checksum todir="${build}/checksum" algorithm="MD5" format="MD5SUM" fileext=".md5">
+            <fileset dir="${dist}" includes="*.gz, *.zip, *.jar" />
+        </checksum>
+        <checksum todir="${build}/checksum" algorithm="SHA" format="MD5SUM" fileext=".sha">
+            <fileset dir="${dist}" includes="*.gz, *.zip, *.jar" />
+        </checksum>
+
+        <concat destfile="${dist}/${ant.project.name}-${app.version}.md5" eol="unix">
+            <fileset dir="${build}/checksum" includes="*.md5" />
+        </concat>
+        <concat destfile="${dist}/${ant.project.name}-${app.version}.sha" eol="unix">
+            <fileset dir="${build}/checksum" includes="*.sha" />
+        </concat>
+    	
+    	<delete dir="${build}" includeEmptyDirs="true" />
+    </target>
+	
+	
+    <target name="dist-pub" depends="jar" description="Creates dist file for public release.">
+    	<mkdir dir="${build}/dist-pub/megatron-java" />
+    	<copy todir="${build}/dist-pub/megatron-java" preservelastmodified="true">
+    		<fileset dir="../megatron-java" includes="*.xml, *.properties, *.sh, *.bat, *.template, LICENSE, NOTICE, src/**, src-test/**, conf/geoip-db/GeoIP.dat, conf/geoip-db/readme.txt,
+    			conf/dev/**, conf/hibernate-mapping/**, conf/job-type/**, conf/template/**, dist/sitic-megatron.jar, doc/readme-*.txt, doc/release-notes.txt, launch/**, 
+            	lib/**, lib-src/**, sql/megatron-queries.sql, sql/megatron-schema.sql, test-data/**, .project, .classpath" />
+        </copy>
+    	<delete>
+            <fileset dir="${build}/dist-pub/megatron-java/conf/dev" includes="*_private.properties" />
+    	</delete>
+
+<!-- Perl project not included in the public release for the moment.
+    	<mkdir dir="${build}/dist-pub/megatron-perl" />
+        <copy todir="${build}/dist-pub/megatron-perl" preservelastmodified="true">
+             <fileset dir="../megatron-perl" includes="**" />
+         </copy>
+        <delete dir="${build}/dist-pub/megatron-perl/conf/prod" />
+        <delete dir="${build}/dist-pub/megatron-perl/deprecated" />
+        <delete dir="${build}/dist-pub/megatron-perl/.settings" />
+-->
+
+<!-- Python project not included in the public release for the moment.
+        <mkdir dir="${build}/dist-pub/megatron-python" />
+        <copy todir="${build}/dist-pub/megatron-python" preservelastmodified="true">
+             <fileset dir="../megatron-python" includes="**" />
+         </copy>
+        <delete>
+        	<fileset dir="${build}/dist-pub/megatron-python/conf/dev" includes="get_log_entry.ini, mega_downloader.*" />
+        </delete>
+        <delete dir="${build}/dist-pub/megatron-python/script-private" />
+    	<delete dir="${build}/dist-pub/megatron-python/conf/prod" />
+    	<delete dir="${build}/dist-pub/megatron-python/local-files" />
+    	<delete dir="${build}/dist-pub/megatron-python/input_files" />
+-->
+
+        <tar destfile="${dist}/megatron-pub-${app.version}.tar.gz" basedir="${build}/dist-pub" compression="gzip" />
+    </target>
+
+    
+    <target name="zip-megatron" depends="init" description="Creates a dist-zip that contains most Megatron files.">
+        <delete file="${dist}/megatron-${app.version}.tar.gz" quiet="true" />
+        <tar destfile="${dist}/megatron-${app.version}.tar.gz" basedir=".." compression="gzip"
+            excludes=".metadata/**, RemoteSystemsTempFiles/**, **/local-files/**, **/output/**, **/log/**, **/build/**, , **/dist/**, **/classes-eclipse/**, **/tmp/**, **/tmp-junit/**, **/slurp/**, **/geoip-db/GeoIPASNum.dat, **/geoip-db/GeoC*.dat, **/geoip-db/GeoLite*.dat, **/*_private.properties">
+        </tar>
+    </target>
+
+    
+    <target name="backup" depends="init" description="Creates a backup-zip that contains src and other files.">
+        <delete failonerror="false">
+            <fileset dir="${dist}" includes="megatron-backup_*" />
+        </delete>
+        <zip destfile="${dist}/megatron-backup_${FILE_TSTAMP}.zip" basedir=".." level="9"
+            excludes=".metadata/**, RemoteSystemsTempFiles/**, **/local-files/**, **/output/**, **/log/**, **/build/**, **/dist/**, **/classes-eclipse/**, **/tmp/**, **/tmp-junit/**, **/lib/**, **/lib-src/**, **/slurp/**, **/test-data-bronto/**, **/ip-tools/**, **/geoip-db/Geo*.dat">
+        </zip>
+    </target>
+
+    
+    <target name="clean" description="Deletes generated files.">
+        <!-- Delete created directory trees. -->
+        <delete dir="${build}" includeEmptyDirs="true" />
+        <delete failonerror="false">
+            <fileset dir="${dist}" includes="megatron-*" />
+        </delete>
+    </target>
+
+</project>

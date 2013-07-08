@@ -1,0 +1,46 @@
+Dear Responsible,  
+
+The Computer Security and Incident Response Team - Brazilian Federal Government CTIR Gov subordinate to the 
+Institutional Security Office / Presidency of the Republic. The CTIR Gov constituency consists of Departments
+and Organizations in the Brazilian Federal.
+ 
+We've received events of anti-virus systems from our constituency. After these events show below :  
+
+
+*** begin_log ***
+________________________________________________________________________________________________________________
+DATE - YYYY/MM/DD   TIME    IP ADDRESS  SMTP ID     INCIDENT    SUBJECT 
+----------------------------------------------------------------------------------------------------------------
+2010/01/30 14:03:38 GMT-02:00   81.235.2.13 63B2A32EA51 TROJ_DROPR.VEN  UPS Delivery Problem NR 90342.
+2010/01/30 14:19:01 GMT-02:00   81.235.2.13 996DC22F8B  TROJ_DROPR.VEN  UPS Delivery Problem NR 18752.
+2010/01/30 14:19:02 GMT-02:00   81.235.2.13 AEC0022F8E  TROJ_DROPR.VEN  UPS Delivery Problem NR 09812.
+2010/01/30 14:28:31 GMT-02:00   81.235.2.13 7D03322F26  TROJ_DROPR.VEN  UPS Delivery Problem NR 60653.
+________________________________________________________________________________________________________________
+***** End Log *****
+
+After analyse the logs above, we've detected that :
+ 
+1. Some machines, with the IP addresses above, sent messages containing malicious code.
+  
+2. The sources used to classify the information were the Trend Micro's, McAfee's, Clamav and Symantec Corporation's anti-virus service.  
+
+3. The records listed above are followed by "SMTP ID", which  will facilitate searches in logs from SMTP servers.
+  
+4. We kindly request you to verify these occurences since these machines could be compromised. 
+
+5. This message was sent to the network's registered technical/administrative contact, but if you are not right person to deal with the problem, we ask you to forward those who are able to do it.
+
+6. We don't have any other information about this(these) incident(s) which was introduced above. However, some further reference to this message should contain the SUBJECT sent.
+  
+7. For more details on why we are sending this message and who is CTIR Gov, please visit our site in the following address:   
+ 
+  http://www.ctir.gov.br  
+  
+Thanks for your attention.  
+  
+  
+Respectfully,  
+  
+___________________________________  
+CTIR Gov Team <ctir@ctir.gov.br>  
+www.ctir.gov.br  
