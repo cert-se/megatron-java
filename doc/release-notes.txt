@@ -5,6 +5,11 @@ v1.0.11 [to be released]
     - brobot
     - brobot2
     - ddos-amplification
+    - ip-flowing-fast
+    - ip-flowing-verbose
+
+* Improved: ip-flowing splitted in 3 configs (ip-flowing, ip-flowing-fast, 
+  ip-flowing-verbose). Easier to select output and lookups.
 
 * Improved: Remove diacritics (accents) from city name (filename for JSON-files
   in GeolocationJsonReportGenerator).
