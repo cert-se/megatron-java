@@ -24,27 +24,27 @@ For all features, see [readme-general.txt](https://github.com/cert-se/megatron-j
 ### Example of Usage
 Convert a file with IP addresses to a pipe-separated file with IP, AS, country code, and hostname:
 ```      
-$ ./megatron-dev.sh --job-type ip-flowing --export --no-db test-data/multiple-ips-per-line3.log
+$ megatron.sh --job-type ip-flowing --export --no-db test-data/multiple-ips-per-line3.log
 ```
 
 As above but output file is tab-separated and contains geolocation data:
 ```
-$ ./megatron-dev.sh --job-type ip-flowing-verbose --export --no-db test-data/multiple-ips-per-line3.log
+$ megatron.sh --job-type ip-flowing-verbose --export --no-db test-data/multiple-ips-per-line3.log
 ```
 
 Process file and save result in the database:
 ```
-$ ./megatron-dev.sh --job-type shadowserver-drone test-data/2009-06-08-drone-report-se.log
+$ megatron.sh --job-type shadowserver-drone test-data/2009-06-08-drone-report-se.log
 ```
 
 Preview of mail to be sent:
 ```
-$ ./megatron.sh --job shadowserver-drone_2013-06-22_160142 --id 4242 --mail-dry-run
+$ megatron.sh --job shadowserver-drone_2013-06-22_160142 --id 4242 --mail-dry-run
 ```
 
 Send emails for the job:
 ```
-$ ./megatron.sh --job shadowserver-drone_2009-06-22_160142 --id 4242 --mail
+$ megatron.sh --job shadowserver-drone_2009-06-22_160142 --id 4242 --mail
 ```
 
 Megatron is designed to automate day-to-day abuse handling. Running Megatron from the
