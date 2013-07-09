@@ -21,8 +21,7 @@ Major features:
 For all features, see [readme-general.txt](https://github.com/cert-se/megatron-java/blob/master/doc/readme-general.txt)
 
 
-Example of Usage
-----------------
+### Example of Usage
 Convert a file with IP addresses to a pipe-separated file with IP, AS, country code, and hostname:
 ```      
 $ ./megatron-dev.sh --job-type ip-flowing --export --no-db test-data/multiple-ips-per-line3.log
@@ -52,15 +51,13 @@ Megatron is designed to automate day-to-day abuse handling. Running Megatron fro
 command line is only necessary in special cases.  
 
 
-Installation
-------------
+### Installation
 Megatron is cross-platform as it is implemented in Java and Python. It has been tested on Windows 7 and Ubuntu 12.04. 
 Megatron requires a MySQL database. Do not worry, the installation is easy and described in detail in this document:
 [readme-install.txt](https://github.com/cert-se/megatron-java/blob/master/doc/readme-install.txt)
 
 
-Documentation
--------------
+### Documentation
 To get a grasp of Megatron, we recommend skimming the following:
 * Overview documentation: [readme-general.txt](https://github.com/cert-se/megatron-java/blob/master/doc/readme-general.txt)
 * Database schema: [megatron-schema.sql](https://github.com/cert-se/megatron-java/blob/master/sql/megatron-schema.sql)
@@ -71,14 +68,12 @@ and [conf/job-type/*](https://github.com/cert-se/megatron-java/tree/master/conf/
 TODO presentation slides and Wiki
 
 
-License
--------
+### License
 Megatron is distributed under the terms of the Apache Software Foundation license version 2.0, included in the 
 file LICENSE in the root of the project.
 
 
-Support and Warranty
---------------------
+### Support and Warranty
 CERT-SE does not offer any support, and Megatron is provided "as is" without warranty of any kind.
 
 However, we are a bunch of nerds at CERT-SE and we would love to hear from you to discuss technical stuff. 
