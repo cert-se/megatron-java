@@ -55,7 +55,7 @@ Quick Installation (Windows)
 ============================
 * Create the database (see above).
 
-* Ensure that Java is installed (Java 1.5 or later is required by Megatron): 
+* Ensure that Java is installed (Java 1.7 or later is required by Megatron): 
     > java -version
   
 * To install Java, download JDK from Suns website:
@@ -86,8 +86,8 @@ Quick Installation (Windows)
 * Log messages are written both to file and to stdout, for testing purposes. 
   Edit "conf/dev/log4j.properties" to turn off stdout logging.
   
-* Modify CERT-SE specific stuff in the configuration file, 
-  "megatron-globals.properties". Search for "sitic", "CERT-SE", and "SE".
+* Modify CERT-SE specific stuff in the configuration file, "megatron-globals.properties".
+  Search for "TODO Change on install", "CERT-SE", and "SE".
 
 * To be able to bind an input row to an organization, add organizations and 
   machine information (IP ranges, domain names, ASN, etc.) to the database.
@@ -98,7 +98,7 @@ Quick Installation (Unix)
 =========================
 * Create the database (see above).
 
-* Ensure that Java is installed (Java 1.5 or later is required by Megatron): 
+* Ensure that Java is installed (Java 1.7 or later is required by Megatron): 
     $ java -version
   
 * To install Java, execute the following in Ubuntu:
@@ -133,8 +133,8 @@ Quick Installation (Unix)
 * Log messages are written both to file and to stdout, for testing purposes. 
   Edit "conf/dev/log4j.properties" to turn off stdout logging.
   
-* Modify CERT-SE specific stuff in the configuration file, 
-  "megatron-globals.properties". Search for "sitic", "CERT-SE", and "SE".
+* Modify CERT-SE specific stuff in the configuration file, "megatron-globals.properties". 
+  Search for "TODO Change on install", "CERT-SE", and "SE".
 
 * To be able to bind an input row to an organization, add organizations and 
   machine information (IP ranges, domain names, ASN, etc.) to the database.
@@ -170,6 +170,15 @@ Deployment (Unix)
 * Create a user, e.g. u_megatron, that owns all the Megatron files and executes
   "megatron.sh".
 
+* Modify CERT-SE specific stuff in the following configuration files:
+    - megatron-globals.properties 
+      Search for "TODO Change on install", "CERT-SE", and "SE".
+    - job-type/*.properties
+      Search for "SE" (filter.countryCodeFilter.includeCountryCodes) and 
+      "CERT-SE" (mail.subjectTemplate).
+    - template/mail/*
+      All mail templates are CERT-SE specific.  
+
 * We recommend having crontabbed download scripts that will download input 
   files to the slurp directory and then call Megatron with the --slurp switch.
 
@@ -178,21 +187,13 @@ Installation IDE (Eclipse)
 ==========================
 * Create the database (see above).
 
-* Create a new Java project in Eclipse called megatron-java in the workspace 
-  megatron. Utility scripts may be implemented in for example Python, and
-  then the Python project megatron-python can be added to the workspace. 
-
-* Unpack the distribution (megatron-pub-X.X.X.tar.gz) into the created 
-  project. It should look something like this:
-    - <workspace dir>/megatron/megatron-java/src
-    - <workspace dir>/megatron/megatron-java/src-test
-    - <workspace dir>/megatron/megatron-java/conf
-    - ...
-    - <workspace dir>/megatron/megatron-java/build_common.xml
-    - <workspace dir>/megatron/megatron-java/build.properties
-    - ...
-
-* Refresh project.
+* Create project from GitHub: megatron-java
+    - File - Import - Projects from GIT
+    - Location of GIT repository: URI
+    - URL: https://github.com/cert-se/megatron-java.git
+    - Select "master"
+    - Select "Import as General Project"
+  A Java-project should now have been created as specified in ".project".  
 
 * Ensure that the following project properties are assigned:
     - Add src and src-test as source folders (Java Build Path - Source Tab).
@@ -200,8 +201,8 @@ Installation IDE (Eclipse)
       (Java Build Path - Source Tab).
     - Add all .jar-files in lib to project (Java Build Path - Libraries Tab).
     - Add JUnit 4 (Java Build Path - Libraries Tab - Add Library... - JUnit).
-    - Set "Compiler compliance level" to 5.0: (Java Compiler). Both JDK 1.5, 
-      1.6, and 1.7 have been tested.
+    - Set "Compiler compliance level" to 1.7: (Java Compiler). Both JDK 1.5
+      and 1.6 is no longer supported.
 
 * Download additional MaxMind databases (GeoIP.dat is included) to 
   "conf/geoip-db" and unzip them:
@@ -218,8 +219,8 @@ Installation IDE (Eclipse)
   This will import testdata which are specified in "conf/dev/systemdata.txt".
   The launch file "launch/megatron-import-contacts.launch" may be used.
 
-* Modify CERT-SE specific stuff in the configuration file 
-  "conf/dev/megatron-globals.properties". Search for "sitic", "CERT-SE", and "SE".
+* Modify CERT-SE specific stuff in the configuration file, "megatron-globals.properties". 
+  Search for "TODO Change on install", "CERT-SE", and "SE".
 
 * Now it's time to run something more interesting. Use the following switches 
   to run a small Shadowserver-file:
