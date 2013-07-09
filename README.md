@@ -1,5 +1,4 @@
-Megatron - A System for Abuse Handling and Incident Handling
-------------------------------------------------------------
+### Megatron - A System for Abuse Handling and Incident Handling
 Megatron is a tool implemented by CERT-SE which collects and analyses log files with bad 
 machines, e.g. from Shadowserver. Apart from abuse mail handling, Megatron can be used to 
 collect statistics, convert log files, and do log file analysis during incident handling.
@@ -14,8 +13,8 @@ Major features:
 * Database: input records are stored in a relational database (MySQL is default), making data mining possible.
 * Filtering: a wide variety of filters can be used to filter input records.
 * Data decoration: data may be added to the record before it is saved to the database. Types of lookups: 
-  IP --> ASN, IP --> country code, IP --> hostname, hostname --> IP, URL --> hostname, hostname --> 
-  country code, and IP --> geolocation.
+  IP to ASN, IP to country code, IP to hostname, hostname to IP, URL to hostname, hostname to 
+  country code, and IP to geolocation.
 * Performance: large data volumes can be handled. All lookups except DNS queries are local, for instance 
   ASN lookups uses database queries by importing a BGP routing table to the database.
 
