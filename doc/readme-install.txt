@@ -21,14 +21,18 @@ directories:
 
 Database
 ========
-Megatron requires a database to execute. Only MySQL 5.1 have been tested, but 
-any JDBC compliant database should work. 
+Megatron requires a database to execute. MariaDB 5.5, MySQL 5.1 and 5.6 have 
+been tested, but any JDBC compliant database should work.
+
+Installation of MariaDB:
+  - Windows: https://downloads.mariadb.org/
+  - Ubuntu and Debian: https://kb.askmonty.org/en/installing-mariadb-deb-files/
 
 Installation of MySQL:
   - Windows: http://dev.mysql.com/downloads/
   - Ubuntu: sudo apt-get install mysql-server 
 
-The following steps will create a Megatron database:
+The following steps will create a Megatron database (works in both MariaDB and MySQL):
   - mysql -u root -p
   - create database megatron;
   - use megatron;
@@ -60,6 +64,8 @@ Quick Installation (Windows)
   
 * To install Java, download JDK from Suns website:
   http://java.sun.com/javase/downloads/
+
+* Download tarball: https://github.com/cert-se/megatron-java#download
 
 * Unpack the distribution (megatron-pub-X.X.X.tar.gz) into the installation 
   directory, e.g. "C:\Users\foo-user\megatron". If "C:\Program Files" in Vista
@@ -106,6 +112,8 @@ Quick Installation (Unix)
   
   Binaries for other Unices may be downloaded from Sun's web site:    
     http://java.sun.com/javase/downloads/
+
+* Download tarball: https://github.com/cert-se/megatron-java#download
 
 * Unpack the distribution (megatron-pub-X.X.X.tar.gz) into the installation  
   directory, e.g. "~/megatron".
