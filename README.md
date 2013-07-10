@@ -1,4 +1,4 @@
-### Megatron - A System for Abuse Handling and Incident Handling
+### Megatron - A System for Abuse- and Incident Handling
 Megatron is a tool implemented by CERT-SE which collects and analyses log files with bad 
 machines, e.g. from Shadowserver. Apart from abuse mail handling, Megatron can be used to 
 collect statistics, convert log files, and do log file analysis during incident handling.
