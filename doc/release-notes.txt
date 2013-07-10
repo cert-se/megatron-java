@@ -17,6 +17,8 @@ v1.0.11 [to be released]
 * Improved: Support for Java 1.5 and 1.6 dropped (have reached end-of-life).
   Source and target is now 1.7.  
 
+* Improved: Tested with MariaDB. Worked without any problem.
+
 * Bug: Using UTF-8 in megatron.sh (e.g. generated filenames will be in UTF-8). 
 
 * Moved repository to GitHub:
