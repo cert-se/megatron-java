@@ -51,6 +51,15 @@ Megatron is designed to automate day-to-day abuse handling. Running Megatron fro
 command line is only necessary in special cases.  
 
 
+### Download
+
+Binaries, config files, and source code are included in this tarball:
+* [megatron-pub-1.0.10.tar.gz](https://www.cert.se/megatron/megatron-pub-1.0.10.tar.gz)
+  MD5: 2ee0e4a433eb21c64cdabc0a66eadffd
+  SHA1: ab4c38019f56d84a43e3eb675ede0fba3c2bd05c
+* [Release Notes](https://github.com/cert-se/megatron-java/blob/master/doc/release-notes.txt)
+
+
 ### Installation
 Megatron is cross-platform as it is implemented in Java and Python. It has been tested on Windows 7 and Ubuntu 12.04. 
 Megatron requires a MySQL database. Do not worry, the installation is easy and described in detail in this document:
@@ -63,9 +72,9 @@ To get a grasp of Megatron, we recommend skimming the following:
 * Database schema: [megatron-schema.sql](https://github.com/cert-se/megatron-java/blob/master/sql/megatron-schema.sql)
 * Configuration files: [conf/dev/megatron-globals.properties](https://github.com/cert-se/megatron-java/blob/master/conf/dev/megatron-globals.properties) 
 and [conf/job-type/*](https://github.com/cert-se/megatron-java/tree/master/conf/job-type)
-* The source code.
+* The source code
 
-TODO presentation slides and Wiki
+Other resources are [this presentation](https://www.cert.se/megatron/megatron-telia2011.pdf) and the [projects Wiki](https://github.com/cert-se/megatron-java/wiki).
 
 
 ### License
