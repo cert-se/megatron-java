@@ -55,10 +55,8 @@ command line is only necessary in special cases.
 
 Binaries, config files, and source code are included in this tarball:
 * [megatron-pub-1.0.10.tar.gz](https://www.cert.se/megatron/megatron-pub-1.0.10.tar.gz)
-<pre>
-MD5: 2ee0e4a433eb21c64cdabc0a66eadffd
-SHA1: ab4c38019f56d84a43e3eb675ede0fba3c2bd05c
-</pre>  
+<pre>MD5: 2ee0e4a433eb21c64cdabc0a66eadffd
+SHA1: ab4c38019f56d84a43e3eb675ede0fba3c2bd05c</pre>
 * [Release Notes](https://github.com/cert-se/megatron-java/blob/master/doc/release-notes.txt)
 
 
