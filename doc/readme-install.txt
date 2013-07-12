@@ -200,7 +200,8 @@ Installation IDE (Eclipse)
     - Location of GIT repository: URI
     - URL: https://github.com/cert-se/megatron-java.git
     - Select "master"
-    - Select "Import as General Project"
+    - Select "Import existing projects" (because a ".project"-file is included 
+      in the GIT repository)
   A Java-project should now have been created as specified in ".project".  
 
 * Ensure that the following project properties are assigned:
