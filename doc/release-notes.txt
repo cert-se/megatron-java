@@ -14,6 +14,9 @@ v1.0.11 [to be released]
 * Improved: Remove diacritics (accents) from city name (filename for JSON-files
   in GeolocationJsonReportGenerator).
 
+* Improved: Removed references to "sitic_footer.txt" in all job types. Added
+  "general_footer.txt" in "megatron_globals.properties" instead.  
+
 * Improved: Support for Java 1.5 and 1.6 dropped (have reached end-of-life).
   Source and target is now 1.7.  
 

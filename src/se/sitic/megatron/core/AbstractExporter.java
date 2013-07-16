@@ -11,6 +11,7 @@ import se.sitic.megatron.util.Constants;
 import se.sitic.megatron.util.DateUtil;
 import se.sitic.megatron.util.FileUtil;
 import se.sitic.megatron.util.SqlUtil;
+import se.sitic.megatron.util.StringUtil;
 
 
 /**
@@ -42,7 +43,7 @@ public abstract class AbstractExporter {
 
     protected String readTemplate(String filePropertyKey, String languageCode, boolean isMandatory) throws MegatronException {
         String filename = props.getString(filePropertyKey, null);
-        if (filename == null) {
+        if (StringUtil.isNullOrEmpty(filename)) {
             if (isMandatory) {
                 throw new MegatronException("Mandatory property for template file is missing.");
             } 
