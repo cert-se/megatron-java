@@ -8,6 +8,10 @@ v1.0.11 [to be released]
     - ip-flowing-fast
     - ip-flowing-verbose
 
+* New: Filter log entries by occurrence (OccurrenceFilter), e.g. "include first
+  20 matches of the same IP address" or "include log entries with more than 10 
+  occurrences of the same URL".
+
 * Improved: ip-flowing splitted in 3 configs (ip-flowing, ip-flowing-fast, 
   ip-flowing-verbose). Easier to select output and lookups.
 
@@ -27,7 +31,13 @@ v1.0.11 [to be released]
 * Moved repository to GitHub:
   - Modified Ant-script (build.xml)
   - All files have now Unix line endings (except files in doc/ and sql/) 
-  - Documentation improved  
+  - Documentation improved
+  
+* Config changes:
+    - New: filter.occurrenceFilter.attributeNames
+    - New: filter.occurrenceFilter.excludeIntervals
+    - New: filter.occurrenceFilter.includeIntervals
+    - New: filter.occurrenceFilter.fileSorted
 
 
 v1.0.10

@@ -135,6 +135,10 @@ public class AppProperties {
     public static final String FILTER_ATTRIBUTE_NAME_KEY = "filter.attributeFilter.attributeName";
     public static final String FILTER_ATTRIBUTE_EXCLUDE_REG_EXP_KEY = "filter.attributeFilter.excludeRegExp";
     public static final String FILTER_ATTRIBUTE_INCLUDE_REG_EXP_KEY = "filter.attributeFilter.includeRegExp";
+    public static final String FILTER_OCCURRENCE_ATTRIBUTE_NAMES_KEY = "filter.occurrenceFilter.attributeNames"; 
+    public static final String FILTER_OCCURRENCE_EXCLUDE_INTERVALS_KEY = "filter.occurrenceFilter.excludeIntervals";
+    public static final String FILTER_OCCURRENCE_INCLUDE_INTERVALS_KEY = "filter.occurrenceFilter.includeIntervals";
+    public static final String FILTER_OCCURRENCE_FILE_SORTED_KEY = "filter.occurrenceFilter.fileSorted";
     public static final String FILTER_MATCH_IP_ADDRESS_KEY = "filter.organizationFilter.matchIpAddress";
     public static final String FILTER_MATCH_HOSTNAME_KEY = "filter.organizationFilter.matchHostname";
     public static final String FILTER_MATCH_ASN_KEY = "filter.organizationFilter.matchAsn";
@@ -692,6 +696,7 @@ public class AppProperties {
         }
         File file = new File(dirStr);
         File[] files = file.listFiles(new FileFilter() {
+            @Override
             public boolean accept(File pathname) {
                 return pathname.getName().endsWith(".properties");
             }
