@@ -25,6 +25,31 @@ public class IntervalList {
     }
 
     
+    /**
+     * Creates an IntervalList-object from specified comma separated list of intervals.
+     * 
+     * @return created IntervalList-object, or null if intervalStrings is empty. 
+     * @throws MegatronException if intervalStrings is invalid.
+     */
+    public static IntervalList createIntervalList(String[] intervalStrings) throws MegatronException {
+        if ((intervalStrings == null) || (intervalStrings.length == 0)) {
+            return null;
+        }
+        
+        IntervalList result = new IntervalList();
+        for (int i = 0; i < intervalStrings.length; i++) {
+            try {
+                result.add(new Interval(intervalStrings[i]));
+            } catch (MegatronException e) {
+                String msg = "Cannot create interval from string: " + intervalStrings[i]; 
+                throw new MegatronException(msg, e);
+            }
+        }
+    
+        return result;
+    }
+
+    
     public void add(Interval interval) {
         intervals.add(interval);
         sorted = false;
@@ -107,6 +132,14 @@ public class IntervalList {
     public int findNoOfIntervals(long val) {
         List<Interval> intervals = findIntervalsInternal(val, false);
         return (intervals != null) ? intervals.size() : 0;
+    }
+    
+    
+    /**
+     * Returns number of intervals.
+     */
+    public int size() {
+        return intervals.size();
     }
     
     

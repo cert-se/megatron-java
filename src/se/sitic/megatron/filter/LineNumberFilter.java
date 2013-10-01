@@ -3,7 +3,6 @@ package se.sitic.megatron.filter;
 import org.apache.log4j.Logger;
 
 import se.sitic.megatron.core.AppProperties;
-import se.sitic.megatron.core.Interval;
 import se.sitic.megatron.core.IntervalList;
 import se.sitic.megatron.core.JobContext;
 import se.sitic.megatron.core.MegatronException;
@@ -27,15 +26,18 @@ public class LineNumberFilter implements ILineFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         this.jobContext = jobContext;
         TypedProperties props = jobContext.getProps();
         
-        excludeIntervals = createIntervalList(props.getStringListFromCommaSeparatedValue(AppProperties.FILTER_LINE_NUMBER_EXCLUDE_INTERVALS_KEY, null, true));
+        String[] intervals = props.getStringListFromCommaSeparatedValue(AppProperties.FILTER_LINE_NUMBER_EXCLUDE_INTERVALS_KEY, null, true);
+        excludeIntervals = IntervalList.createIntervalList(intervals);
         if (excludeIntervals != null) {
             log.info("Using exclude line number filter: " + excludeIntervals.toString());
         }
-        includeIntervals = createIntervalList(props.getStringListFromCommaSeparatedValue(AppProperties.FILTER_LINE_NUMBER_INCLUDE_INTERVALS_KEY, null, true));
+        intervals = props.getStringListFromCommaSeparatedValue(AppProperties.FILTER_LINE_NUMBER_INCLUDE_INTERVALS_KEY, null, true);
+        includeIntervals = IntervalList.createIntervalList(intervals);
         if (includeIntervals != null) {
             log.info("Using include line number filter: " + includeIntervals.toString());
         }
@@ -52,6 +54,7 @@ public class LineNumberFilter implements ILineFilter {
     }
 
     
+    @Override
     public boolean accept(String line) throws MegatronException {
         boolean result = true;
         
@@ -72,27 +75,9 @@ public class LineNumberFilter implements ILineFilter {
     }
     
     
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered lines (LineNumberFilter): " + noOfFilteredLines);
-    }
-
-
-    private IntervalList createIntervalList(String[] intervalStrings) throws MegatronException {
-        if ((intervalStrings == null) || (intervalStrings.length == 0)) {
-            return null;
-        }
-        
-        IntervalList result = new IntervalList();
-        for (int i = 0; i < intervalStrings.length; i++) {
-            try {
-                result.add(new Interval(intervalStrings[i]));
-            } catch (MegatronException e) {
-                String msg = "Cannot create interval from string: " + intervalStrings[i]; 
-                throw new MegatronException(msg, e);
-            }
-        }
-    
-        return result;
     }
 
 }
