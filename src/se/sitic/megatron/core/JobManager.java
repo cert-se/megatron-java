@@ -603,7 +603,8 @@ public class JobManager {
         }
 
         // -- write finished message to RSS
-        if (!props.isNoDb()) {
+        boolean isJobRssEnabled = props.getBoolean(AppProperties.RSS_JOB_ENABLED_KEY, true);
+        if (isJobRssEnabled && !props.isNoDb()) {
             template = "Lines: @noOfLines@<br>@linesAfterProcessorStr@Saved Entries: @noOfSavedEntries@<br>High Priority Entries: @noOfHighPriorityEntries@<br>" +
                 "Exported Entries: @noOfExportedEntries@<br>Filtered Lines: @noOfFilteredLines@<br>Parse errors: @noOfParseException@<br>" +
                 "Filename: @jobFilename@<br>Duration: @duration@";
@@ -613,6 +614,8 @@ public class JobManager {
             String description = createFinishedMessage(template, linesAfterProcessorTemplate);
             JobRssFile rssFile = new JobRssFile(props);
             rssFile.addItem(title, description);
+        } else if (!isJobRssEnabled && !props.isNoDb()) {
+            log.info("Writing to job RSS feed disabled due to property: " + AppProperties.RSS_JOB_ENABLED_KEY);
         }
     }
 

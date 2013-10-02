@@ -203,6 +203,7 @@ public class AppProperties {
     public static final String RSS_FACTORY_CLASS_NAME_KEY = "rss.factoryClassName";
     public static final String RSS_FORMAT_KEY = "rss.format";
     // Job RSS
+    public static final String RSS_JOB_ENABLED_KEY = "rss.job.enabled";
     public static final String RSS_JOB_FILE_KEY = "rss.job.file";
     public static final String RSS_JOB_CONTENT_TITLE_KEY = "rss.job.content.title";
     public static final String RSS_JOB_CONTENT_LINK_KEY = "rss.job.content.link";

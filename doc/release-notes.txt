@@ -12,6 +12,8 @@ v1.0.11 [to be released]
   20 matches of the same IP address" or "include log entries with more than 10 
   occurrences of the same URL".
 
+* New: Added property (rss.job.enabled) to turn on/off writing to job RSS file.
+
 * Improved: ip-flowing splitted in 3 configs (ip-flowing, ip-flowing-fast, 
   ip-flowing-verbose). Easier to select output and lookups.
 
@@ -36,6 +38,7 @@ v1.0.11 [to be released]
   - Documentation improved
   
 * Config changes:
+    - New: rss.job.enabled
     - New: filter.occurrenceFilter.attributeNames
     - New: filter.occurrenceFilter.excludeIntervals
     - New: filter.occurrenceFilter.includeIntervals
