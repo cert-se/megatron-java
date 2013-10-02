@@ -78,13 +78,25 @@ Other resources are [this presentation](https://www.cert.se/megatron/megatron-te
 
 
 ### License
-Megatron is distributed under the terms of the Apache Software Foundation license version 2.0, included in the 
+Megatron is distributed under the terms of the Apache Software Foundation license version 2.0, which is included in the 
 file LICENSE in the root of the project.
 
 
 ### Support and Warranty
 CERT-SE does not offer any support, and Megatron is provided "as is" without warranty of any kind.
 
-However, we are a bunch of nerds at CERT-SE and we would love to hear from you to discuss technical stuff. 
-Send questions, criticism, flatter, feature requests, etc. to <cert@cert.se>. Our PGP keys can be found on 
-CERT-SE's [contact page](https://www.cert.se/om-cert-se).
+However, we are a bunch of nerds at CERT-SE and we would love to hear from you and discuss technical stuff. 
+Send feedback to <cert@cert.se>. Our PGP keys can be found on CERT-SE's [contact page](https://www.cert.se/om-cert-se).
+
+
+### Mailing List
+[Megatron Hacking](https://groups.google.com/group/megatron-hacking) is the mailing list for Megatron. Join by sending an empty email to:
+
+  <megatron-hacking+subscribe@googlegroups.com>
+  
+Or you can go to the following URL:
+
+  <https://groups.google.com/group/megatron-hacking/subscribe>
+
+The mailing list is for discussions about Megatron (installation problems, bug fixes, feature 
+requests, etc.). Keep in mind that the list is public.
