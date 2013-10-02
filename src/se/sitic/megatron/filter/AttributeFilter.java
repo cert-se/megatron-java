@@ -35,6 +35,7 @@ public class AttributeFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         props = jobContext.getProps();
 
@@ -75,6 +76,7 @@ public class AttributeFilter implements ILogEntryFilter {
     }
     
     
+    @Override
     public boolean accept(LogEntry logEntry) throws MegatronException {
         boolean result = false;
 
@@ -112,6 +114,7 @@ public class AttributeFilter implements ILogEntryFilter {
     }
     
     
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered log entries (AttributeFilter): " + noOfFilteredEntries);
     }

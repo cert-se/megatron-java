@@ -66,6 +66,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public List<IRssItem> getItems() {
         List<IRssItem> result = new ArrayList<IRssItem>(syndFeed.getEntries().size());
 
@@ -78,6 +79,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public void setItems(List<IRssItem> items) {
         if (items == null) {
             syndFeed.setEntries(null);
@@ -94,6 +96,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public boolean removeItem(IRssItem item) {
         if (item == null) {
             return false;
@@ -106,26 +109,31 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public String getTitle() {
         return syndFeed.getTitle();
     }
 
 
+    @Override
     public void setTitle(String title) {
         syndFeed.setTitle(title);
     }
 
 
+    @Override
     public String getDescription() {
         return syndFeed.getDescription();
     }
 
 
+    @Override
     public void setDescription(String description) {
         syndFeed.setDescription(description);
     }
 
 
+    @Override
     public List<String> getLinks() {
         // Rome does not support multiple links.
         // SyndFeed.setLinks sets the *entry* links.
@@ -139,6 +147,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public void setLinks(List<String> links) {
         // Rome does not support multiple links.
         // SyndFeed.setLinks sets the *entry* links.
@@ -154,6 +163,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public List<String> getCategories() {
         List<String> result = new ArrayList<String>();
         List<?> categories = syndFeed.getCategories();
@@ -167,6 +177,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public void setCategories(List<String> categories) {
         if (categories == null) {
             syndFeed.setCategories(null);
@@ -184,16 +195,19 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public List<String> getSupportedRssFormats() {
         return SUPPORTED_FORMATS;
     }
 
 
+    @Override
     public String getRssFormat() {
         return syndFeed.getFeedType();
     }
 
 
+    @Override
     public void setRssFormat(String rssFormat) {
         if ((rssFormat == null) || !SUPPORTED_FORMATS.contains(rssFormat)) {
             String msg = "RSS format not supported: '" + rssFormat + "'. Using default format.";
@@ -209,16 +223,19 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public Date getPublicationDate() {
         return syndFeed.getPublishedDate();
     }
 
 
+    @Override
     public void setPublicationDate(Date date) {
         syndFeed.setPublishedDate(date);
     }
 
 
+    @Override
     public List<String> getAuthors() {
         List<String> result = new ArrayList<String>();
 
@@ -246,6 +263,7 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public void setAuthors(List<String> authors) {
         if ((authors == null) || (authors.size() == 0)) {
             syndFeed.setAuthor(null);
@@ -268,11 +286,13 @@ public class RomeRssChannel implements IRssChannel {
     }
 
 
+    @Override
     public String getCopyright() {
         return syndFeed.getCopyright();
     }
 
 
+    @Override
     public void setCopyright(String copyright) {
         syndFeed.setCopyright(copyright);
     }

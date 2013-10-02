@@ -32,6 +32,7 @@ public class RegExpParser implements IParser {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws InvalidExpressionException {
         this.jobContext = jobContext;
         this.props = jobContext.getProps();
@@ -49,6 +50,7 @@ public class RegExpParser implements IParser {
     }
 
     
+    @Override
     public LogEntry parse(String logLine) throws ParseException {
         LogEntry result = null;
 
@@ -98,6 +100,7 @@ public class RegExpParser implements IParser {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         // empty
     }

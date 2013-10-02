@@ -39,7 +39,8 @@ public class ASNumber extends BaseASNumber {
 		this.setNumber(asn);
 	}
 	
-	public int compareTo(Object obj) {
+	@Override
+    public int compareTo(Object obj) {
 		
 		int result = 0;
 		if (this.getNumber() == ((ASNumber)obj).getNumber()) {		

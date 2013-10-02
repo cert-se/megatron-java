@@ -28,11 +28,13 @@ public class HostnameDecorator implements IDecorator {
     private long totalDuration2;    
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         // empty
     }
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         List<Long> ipAddresses = AppUtil.getIpAddressesToDecorate(logEntry);
         Iterator<Long> iterator = (ipAddresses != null) ? ipAddresses.iterator() : null;
@@ -64,6 +66,7 @@ public class HostnameDecorator implements IDecorator {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         long noOfTotalLookups = noOfLookups + noOfLookups2;
         log.info("No. of lookups (ip --> hostname): " + noOfTotalLookups + " (" + noOfLookups + "+" + noOfLookups2 + ")."); 

@@ -35,6 +35,7 @@ public class RomeRssParser implements IRssParser {
     }
 
 
+    @Override
     public IRssChannel parseRss(InputStream in, String encoding) throws RssParseException, IOException {
         try {
             Reader reader = null;

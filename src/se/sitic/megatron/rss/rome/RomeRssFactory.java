@@ -24,21 +24,25 @@ public class RomeRssFactory implements IRssFactory {
     }
 
 
+    @Override
     public IRssParser createRssParser() {
         return new RomeRssParser(props);
     }
 
 
+    @Override
     public IRssChannel createRssChannel() {
         return new RomeRssChannel(props);
     }
 
 
+    @Override
     public IRssItem createRssItem(IRssChannel parentChannel) {
         return new RomeRssItem(props, (RomeRssChannel)parentChannel);
     }
 
 
+    @Override
     public IRssWriter createRssWriter() {
         return new RomeRssWriter(props);
     }

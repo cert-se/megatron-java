@@ -37,6 +37,7 @@ public class CountryCodeFilter implements ILogEntryFilter {
     private long noOfDecoratedEntries;
     
 
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         this.jobContext = jobContext;
         TypedProperties props = jobContext.getProps();
@@ -81,6 +82,7 @@ public class CountryCodeFilter implements ILogEntryFilter {
     }
 
 
+    @Override
     public boolean accept(LogEntry logEntry) throws MegatronException {
         boolean result = false;
         
@@ -145,6 +147,7 @@ public class CountryCodeFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         if (countryCodeDecorator != null) {
             countryCodeDecorator.close();

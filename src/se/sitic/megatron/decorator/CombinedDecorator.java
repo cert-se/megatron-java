@@ -30,6 +30,7 @@ public class CombinedDecorator implements IDecorator {
     private List<IDecorator> decorators;
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         decorators = new ArrayList<IDecorator>();
 
@@ -60,6 +61,7 @@ public class CombinedDecorator implements IDecorator {
     }
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         for (Iterator<IDecorator> iterator = decorators.iterator(); iterator.hasNext(); ) {
             iterator.next().execute(logEntry);
@@ -67,6 +69,7 @@ public class CombinedDecorator implements IDecorator {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         for (Iterator<IDecorator> iterator = decorators.iterator(); iterator.hasNext(); ) {
             IDecorator decorator = iterator.next();

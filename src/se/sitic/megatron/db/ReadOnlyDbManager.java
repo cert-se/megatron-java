@@ -21,42 +21,48 @@ public class ReadOnlyDbManager extends  DbManager {
 	}
 
 	
-	public void addLogEntry(LogEntry logEntry) 
+	@Override
+    public void addLogEntry(LogEntry logEntry) 
 	throws DbException {				
 		
 
 	}
 
 	
-	public void updateLogEntry(LogEntry logEntry) 
+	@Override
+    public void updateLogEntry(LogEntry logEntry) 
 	throws DbException {				
 		
 
 	}
 	
 	
-	public void addOrganization(Organization org) 
+	@Override
+    public void addOrganization(Organization org) 
 	throws DbException {
 
 		
 	}
 
 	
-	public void updateOrganization(Organization org, String modifiedBy) 
+	@Override
+    public void updateOrganization(Organization org, String modifiedBy) 
 	throws DbException {
 
 		
 	}
 
 
-	public void addMailJob(MailJob mailJob) 
+	@Override
+    public void addMailJob(MailJob mailJob) 
 	throws DbException {
 		
 
 	}
 	
 
-	@Deprecated
+	@Override
+    @Deprecated
 	public void updateMailJob(MailJob mailJob) 
 	throws DbException {
 		
@@ -64,34 +70,39 @@ public class ReadOnlyDbManager extends  DbManager {
 	}
 
 
-	public void finishMailJob(MailJob mailJob, String errorMsg) 
+	@Override
+    public void finishMailJob(MailJob mailJob, String errorMsg) 
 	throws DbException {
 		
 
 	}
 
 	
-	public long deleteMailJob(MailJob mailJob) 
+	@Override
+    public long deleteMailJob(MailJob mailJob) 
 	throws DbException {
         return 0;
 	
 	}		
 	
 
-	public void addLogJob(Job job) 
+	@Override
+    public void addLogJob(Job job) 
 	throws DbException {	
 	    
 	}
 
 	
-	public void finishLogJob(Job job, String errorMsg) 
+	@Override
+    public void finishLogJob(Job job, String errorMsg) 
 	throws DbException {
 		
 
 	}
 
 	
-	public long deleteLogJob(Job job) 
+	@Override
+    public long deleteLogJob(Job job) 
 	throws DbException {
 		return 0;
 	

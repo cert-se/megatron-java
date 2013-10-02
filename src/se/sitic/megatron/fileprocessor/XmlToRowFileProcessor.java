@@ -59,6 +59,7 @@ public class XmlToRowFileProcessor implements IFileProcessor {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         
@@ -100,6 +101,7 @@ public class XmlToRowFileProcessor implements IFileProcessor {
     } 
     
 
+    @Override
     public File execute(File inputFile) throws MegatronException {
         File result = createTemporaryFile(TMP_PREFIX);
 
@@ -141,6 +143,7 @@ public class XmlToRowFileProcessor implements IFileProcessor {
     }
 
     
+    @Override
     public void close(boolean jobSuccessful) throws MegatronException {
         // empty
     }

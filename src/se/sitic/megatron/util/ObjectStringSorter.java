@@ -83,6 +83,7 @@ public abstract class ObjectStringSorter implements Comparator<Object> {
      * Compares string representation for specified objects, which may be null.
      * Implements Comparator.compare(Object, Object).
      */
+    @Override
     public int compare(Object obj1, Object obj2) {
         String str1 = getObjectString(obj1);
         String str2 = getObjectString(obj2);

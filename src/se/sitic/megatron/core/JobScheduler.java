@@ -55,7 +55,6 @@ public class JobScheduler {
     /**
      * Slurps files in the slurp directory; calls processFile for each file.  
      */
-    @SuppressWarnings("null")
     public int processSlurpDirectory() throws MegatronException {
         int noOfFiles = 0;
         int noOfOkFiles = 0;
@@ -84,6 +83,7 @@ public class JobScheduler {
         }
         List<File> files = new ArrayList<File>(Arrays.asList(fileArray));
         Collections.sort(files, new Comparator<File>() {
+                @Override
                 public int compare(File o1, File o2) {
                     // oldest file first
                     return (o1.lastModified() < o2.lastModified()) ? -1 : (o1.lastModified() == o2.lastModified() ? 0 : 1);

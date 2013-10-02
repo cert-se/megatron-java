@@ -24,6 +24,7 @@ public class CountryCodeFromHostnameDecorator implements IDecorator {
     private long noOfAssigments2;
     
 
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
 
@@ -37,6 +38,7 @@ public class CountryCodeFromHostnameDecorator implements IDecorator {
     }
 
     
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         if ((logEntry.getCountryCode() == null) && (logEntry.getHostname() != null)) {
             String countryCode = extractCountryCodeTld(logEntry.getHostname());
@@ -62,6 +64,7 @@ public class CountryCodeFromHostnameDecorator implements IDecorator {
     }
     
     
+    @Override
     public void close() {
         long noOfTotalAssigments = noOfAssigments + noOfAssigments2;
         log.info("No. of assignments (hostname --> country code): " + noOfTotalAssigments + " (" + noOfAssigments + "+" + noOfAssigments2 + ")."); 

@@ -71,11 +71,13 @@ public class StatisticsXmlReportGenerator implements IReportGenerator {
     }
 
     
+    @Override
     public void init() {
         this.props = AppProperties.getInstance().getGlobalProperties();
     }
     
 
+    @Override
     public void createFiles() throws MegatronException {
         log.info("Creating XML files with overview statistics.");
         DbManager dbManager = null;

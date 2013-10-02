@@ -29,6 +29,7 @@ public class RegExpLineFilter implements ILineFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         // UNUSED: this.jobContext = jobContext;
     
@@ -65,6 +66,7 @@ public class RegExpLineFilter implements ILineFilter {
     }
 
 
+    @Override
     public boolean accept(String line) throws MegatronException {
         boolean result = true;
 
@@ -87,6 +89,7 @@ public class RegExpLineFilter implements ILineFilter {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered lines (RegExpLineFilter): " + noOfFilteredLines);
     }

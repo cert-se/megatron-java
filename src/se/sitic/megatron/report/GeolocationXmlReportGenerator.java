@@ -73,11 +73,13 @@ public class GeolocationXmlReportGenerator implements IReportGenerator {
     }
     
 
+    @Override
     public void init() throws MegatronException {
         this.props = AppProperties.getInstance().createTypedPropertiesForCli("report-geolocation");
     }
     
     
+    @Override
     public void createFiles() throws MegatronException {
         DbManager dbManager = null;
         try {
@@ -292,6 +294,7 @@ public class GeolocationXmlReportGenerator implements IReportGenerator {
         }
         List<LogEntry> result = new ArrayList<LogEntry>(orgMap.values());
         Collections.sort(result, new Comparator<LogEntry>() {
+                @Override
                 public int compare(LogEntry o1, LogEntry o2) {
                     int badHosts1 = Integer.parseInt(o1.getAdditionalItems().get(TOTAL_NO_OF_BAD_HOSTS_KEY));
                     int badHosts2 = Integer.parseInt(o2.getAdditionalItems().get(TOTAL_NO_OF_BAD_HOSTS_KEY));
@@ -340,6 +343,7 @@ public class GeolocationXmlReportGenerator implements IReportGenerator {
         }
         List<LogEntry> result = new ArrayList<LogEntry>(cityMap.values());
         Collections.sort(result, new Comparator<LogEntry>() {
+                @Override
                 public int compare(LogEntry o1, LogEntry o2) {
                     int badHosts1 = Integer.parseInt(o1.getAdditionalItems().get(TOTAL_NO_OF_BAD_HOSTS_KEY));
                     int badHosts2 = Integer.parseInt(o2.getAdditionalItems().get(TOTAL_NO_OF_BAD_HOSTS_KEY));

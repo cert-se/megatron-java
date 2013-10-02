@@ -119,6 +119,7 @@ public class MailExporter extends AbstractExporter {
             Long ip = mailJob.isUsePrimaryOrg() ? logEntry.getIpAddress() : logEntry.getIpAddress2(); 
             boolean exists = (ip != null) && dbManager.existsMailForIp(ip.longValue(), organization, periodInSecs, mailJob.isUsePrimaryOrg());
             if (exists) {
+                @SuppressWarnings("null")
                 String msg = "Ignoring log entry#" + logEntry.getId() + ", because IP is quarantined. An email have already been sent for this IP: " + 
                     IpAddressUtil.convertIpAddress(ip, false);
                 log.info(msg);

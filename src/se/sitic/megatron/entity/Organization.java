@@ -47,7 +47,8 @@ public class Organization extends BaseOrganization {
 
 	
 	// Changed to trim each email address in list
-	public void setEmailAddresses (java.lang.String emailAddresses) {
+	@Override
+    public void setEmailAddresses (java.lang.String emailAddresses) {
 	    	    	    
 	    if (emailAddresses != null) {
 	        String[] mails = emailAddresses.split(",");
@@ -64,21 +65,24 @@ public class Organization extends BaseOrganization {
     }
 	
 	// Overloaded method from the base class that adds organization id to the IP-range.
-	public void addToIpRanges (se.sitic.megatron.entity.IpRange ipRange) {
+	@Override
+    public void addToIpRanges (se.sitic.megatron.entity.IpRange ipRange) {
 		if (null == getIpRanges()) setIpRanges(new java.util.TreeSet<se.sitic.megatron.entity.IpRange>());
 				
 		ipRange.setOrganizationId(this.getId());		
 		super.addToIpRanges(ipRange);		
 	}
 	// Overloaded method from the base class that adds organization id to the DomainName.
-	public void addToDomainNames (se.sitic.megatron.entity.DomainName domainName) {
+	@Override
+    public void addToDomainNames (se.sitic.megatron.entity.DomainName domainName) {
 		if (null == getDomainNames()) setDomainNames(new java.util.TreeSet<se.sitic.megatron.entity.DomainName>());
 		
 		domainName.setOrganizationId(this.getId());
 		super.addToDomainNames(domainName);		
 	}
 	// Overloaded method from the base class that adds organization id to the ASNumber.
-	public void addToASNumbers (se.sitic.megatron.entity.ASNumber asNumber) {
+	@Override
+    public void addToASNumbers (se.sitic.megatron.entity.ASNumber asNumber) {
 		if (null == getASNumbers()) setASNumbers(new java.util.TreeSet<se.sitic.megatron.entity.ASNumber>());
 
 		asNumber.setOrganizationId(this.getId());

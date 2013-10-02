@@ -55,6 +55,7 @@ public class Interval implements Comparable<Interval> {
 
     
     // implements Comparable
+    @Override
     public int compareTo(Interval interval2) {
         long start2 = interval2.getStart();
         long end2 = interval2.getEnd();

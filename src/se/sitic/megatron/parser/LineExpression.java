@@ -174,6 +174,7 @@ public class LineExpression {
     
     private void sortByLength(List<String> strings) {
         Collections.sort(strings, new Comparator<String>() {
+                @Override
                 public int compare(String o1, String o2) {
                     // reverse sort order
                     return (o1.length() > o2.length()) ? -1 : (o1.length() == o2.length() ? 0 : 1);
@@ -185,6 +186,7 @@ public class LineExpression {
     private void sortVariablesByOccurance(final List<String> variables) {
         // checks for longer variables with same prefix, e.g. $ipAddress2 may come before $ipAddress
         Collections.sort(variables, new Comparator<String>() {
+                @Override
                 public int compare(String var1, String var2) {
                     int index1 = indexOf(getLineRegExp(), var1, 0);
                     int index2 = indexOf(getLineRegExp(), var2, 0);

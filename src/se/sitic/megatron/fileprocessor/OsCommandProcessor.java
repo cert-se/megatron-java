@@ -36,6 +36,7 @@ public class OsCommandProcessor implements IFileProcessor {
     }
     
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         
@@ -57,6 +58,7 @@ public class OsCommandProcessor implements IFileProcessor {
     }
 
     
+    @Override
     public File execute(File inputFile) throws MegatronException {
         if (osCommand == null) {
             String msg = "Mandatory property not defined: " + AppProperties.FILE_PROCESSOR_OS_COMMAND_KEY;
@@ -104,6 +106,7 @@ public class OsCommandProcessor implements IFileProcessor {
     }
 
 
+    @Override
     public void close(boolean jobSuccessful) throws MegatronException {
         // empty
     }

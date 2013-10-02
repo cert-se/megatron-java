@@ -32,6 +32,7 @@ public class RomeRssWriter implements IRssWriter {
     }
 
 
+    @Override
     public void writeRss(Writer out, IRssChannel rssChannel) throws RssException, IOException {
         SyndFeed syndFeed = ((RomeRssChannel)rssChannel).getSyndFeed();
         SyndFeedOutput syndFeedOutput = new SyndFeedOutput();

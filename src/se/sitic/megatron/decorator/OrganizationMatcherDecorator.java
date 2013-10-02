@@ -68,12 +68,14 @@ public class OrganizationMatcherDecorator implements IDecorator {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         this.jobContext = jobContext;
         init();
     }
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         int orgId = 0;
         boolean highPriorityEntryFound = false;
@@ -112,6 +114,7 @@ public class OrganizationMatcherDecorator implements IDecorator {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         long noOfTotalOrganizationsFound = noOfOrganizationsFound + noOfOrganizationsFound2;
         log.info("No. of organizations found: " + noOfTotalOrganizationsFound + " (" + noOfOrganizationsFound + "+" + noOfOrganizationsFound2 + ")."); 

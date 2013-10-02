@@ -37,6 +37,7 @@ public class LineMerger implements ILineProcessor {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         
@@ -66,6 +67,7 @@ public class LineMerger implements ILineProcessor {
     }
 
 
+    @Override
     public List<String> execute(String line) throws MegatronException {
         List<String> result = null;
         
@@ -112,6 +114,7 @@ public class LineMerger implements ILineProcessor {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         log.debug("No. of mergers: " + noOfMergers);
     }

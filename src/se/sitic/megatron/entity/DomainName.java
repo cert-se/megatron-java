@@ -40,14 +40,16 @@ public class DomainName extends BaseDomainName {
 		this.setName(name);
 	}
 	
-	public int compareTo(Object obj) {
+	@Override
+    public int compareTo(Object obj) {
 		
 		return this.getName().compareToIgnoreCase(((DomainName)obj).getName());
 		
 	}
 	
 	// Added to trim the domain name
-	public void setName (java.lang.String name) {
+	@Override
+    public void setName (java.lang.String name) {
         super.setName(name.trim());
     }
 	

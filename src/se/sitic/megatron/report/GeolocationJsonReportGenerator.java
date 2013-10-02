@@ -103,11 +103,13 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
     }
     
 
+    @Override
     public void init() throws MegatronException {
         this.props = AppProperties.getInstance().createTypedPropertiesForCli("report-geolocation");
     }
     
     
+    @Override
     public void createFiles() throws MegatronException {
         DbManager dbManager = null;
         try {
@@ -468,6 +470,7 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
         List<LogEntry> result = new ArrayList<LogEntry>(orgMap.values());
         Collections.sort(result, new Comparator<LogEntry>() {
+                @Override
                 public int compare(LogEntry o1, LogEntry o2) {
                     int badHosts1 = Integer.parseInt(o1.getAdditionalItems().get(UNIQUE_NO_OF_BAD_HOSTS_KEY));
                     int badHosts2 = Integer.parseInt(o2.getAdditionalItems().get(UNIQUE_NO_OF_BAD_HOSTS_KEY));
@@ -516,6 +519,7 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
         List<LogEntry> result = new ArrayList<LogEntry>(cityMap.values());
         Collections.sort(result, new Comparator<LogEntry>() {
+                @Override
                 public int compare(LogEntry o1, LogEntry o2) {
                     int badHosts1 = Integer.parseInt(o1.getAdditionalItems().get(UNIQUE_NO_OF_BAD_HOSTS_KEY));
                     int badHosts2 = Integer.parseInt(o2.getAdditionalItems().get(UNIQUE_NO_OF_BAD_HOSTS_KEY));
@@ -765,11 +769,13 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
 
         
+        @Override
         public void init(JobContext jobContext) throws MegatronException {
             // empty
         }
 
         
+        @Override
         @SuppressWarnings("synthetic-access")
         public void execute(LogEntry logEntry) throws MegatronException {
             Map<String, String> additionalItems = logEntry.getAdditionalItems();
@@ -780,6 +786,7 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
 
 
+        @Override
         public void close() throws MegatronException {
             // empty
         }
@@ -798,11 +805,13 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
 
         
+        @Override
         public void init(JobContext jobContext) throws MegatronException {
             // empty
         }
 
         
+        @Override
         public void execute(LogEntry logEntry) throws MegatronException {
             Map<String, String> additionalItems = logEntry.getAdditionalItems();
             if ((additionalItems != null) && (logEntry.getIpAddress() != null)) {
@@ -812,6 +821,7 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
         }
 
 
+        @Override
         public void close() throws MegatronException {
             // empty
         }

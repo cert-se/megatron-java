@@ -27,6 +27,7 @@ public class UrlToHostnameDecorator implements IDecorator {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         usePrimaryOrg = props.getBoolean(AppProperties.DECORATOR_URL_TO_HOSTNAME_USE_PRIMARY_ORG_KEY, true);
@@ -35,6 +36,7 @@ public class UrlToHostnameDecorator implements IDecorator {
     }    
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         if ((usePrimaryOrg && (logEntry.getHostname() != null)) || (!usePrimaryOrg && (logEntry.getHostname2() != null))) {
             if (!warningLogged) {
@@ -55,6 +57,7 @@ public class UrlToHostnameDecorator implements IDecorator {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         log.info("No. of assigned hostnames: " + noOfAssignedHostnames); 
     }

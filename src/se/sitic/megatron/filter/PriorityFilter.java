@@ -31,6 +31,7 @@ public class PriorityFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps(); 
         String[] intervalStringList = null;
@@ -59,6 +60,7 @@ public class PriorityFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public boolean accept(LogEntry logEntry) throws MegatronException {
         // default is not to accept; only include intervals is used 
         boolean result = false;
@@ -78,6 +80,7 @@ public class PriorityFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered log entries (PriorityFilter): " + noOfFilteredEntries);
         if ((noOfEntriesWithPrio == 0) && (noOfFilteredEntries > 0)) {

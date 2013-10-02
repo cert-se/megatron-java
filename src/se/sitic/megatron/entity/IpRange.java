@@ -37,7 +37,8 @@ public class IpRange extends BaseIpRange {
 
 /*[CONSTRUCTOR MARKER END]*/	
 	
-	public int compareTo(Object obj) {
+	@Override
+    public int compareTo(Object obj) {
 
 		int result = 0;
 		if (this.getStartAddress() == ((IpRange)obj).getStartAddress()) {		

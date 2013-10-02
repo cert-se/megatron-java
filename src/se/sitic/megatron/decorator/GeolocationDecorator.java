@@ -36,6 +36,7 @@ public class GeolocationDecorator implements IDecorator {
     private long noOfLookups2;
     
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         geoIpCityManager = GeoIpCityManager.getInstance(props);
@@ -54,6 +55,7 @@ public class GeolocationDecorator implements IDecorator {
     }
 
     
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         // Note: We must ensure that all specified fields are added to additional items,
         // even if lookup returns null. Otherwise the export might fail.
@@ -91,6 +93,7 @@ public class GeolocationDecorator implements IDecorator {
     }
     
     
+    @Override
     public void close() throws MegatronException {
         long noOfTotalLookups = noOfLookups + noOfLookups2;
         log.info("No. of lookups (ip --> geolocation): " + noOfTotalLookups + " (" + noOfLookups + "+" + noOfLookups2 + ")."); 

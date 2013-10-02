@@ -40,12 +40,14 @@ public class AsnDecorator implements IDecorator {
     private long noOfLookups2;
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
         dbManager = new AsnLookupDbManager(props);
     }    
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         List<Long> ipAddresses = AppUtil.getIpAddressesToDecorate(logEntry);
         Iterator<Long> iterator = (ipAddresses != null) ? ipAddresses.iterator() : null;
@@ -67,6 +69,7 @@ public class AsnDecorator implements IDecorator {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         long noOfTotalLookups = noOfLookups + noOfLookups2;
         log.info("No. of lookups by AsnDecorator (ip --> asn): " + noOfTotalLookups + " (" + noOfLookups + "+" + noOfLookups2 + ")."); 

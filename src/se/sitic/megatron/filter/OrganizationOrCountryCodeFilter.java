@@ -24,6 +24,7 @@ public class OrganizationOrCountryCodeFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         organizationFilter = new OrganizationFilter();
         organizationFilter.init(jobContext);
@@ -32,6 +33,7 @@ public class OrganizationOrCountryCodeFilter implements ILogEntryFilter {
     }
 
 
+    @Override
     public boolean accept(LogEntry logEntry) throws MegatronException {
         boolean result = organizationFilter.accept(logEntry) || countryCodeFilter.accept(logEntry);
         if (!result) {
@@ -42,6 +44,7 @@ public class OrganizationOrCountryCodeFilter implements ILogEntryFilter {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered log entries (OrganizationOrCountryCodeFilter): " + noOfFilteredEntries);
         if (organizationFilter != null) {

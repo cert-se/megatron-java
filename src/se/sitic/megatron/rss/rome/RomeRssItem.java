@@ -62,21 +62,25 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public IRssChannel getParentChannel() {
         return this.parentChannel;
     }
 
 
+    @Override
     public String getTitle() {
         return syndEntry.getTitle();
     }
 
 
+    @Override
     public void setTitle(String title) {
         syndEntry.setTitle(title);
     }
 
 
+    @Override
     public String getDescription() {
         String result = null;
         SyndContent syndContent = syndEntry.getDescription();
@@ -88,6 +92,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public void setDescription(String description) {
         SyndContent syndContent = syndEntry.getDescription();
 
@@ -101,6 +106,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public List<String> getLinks() {
         List<String> result = new ArrayList<String>();
 
@@ -119,6 +125,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public void setLinks(List<String> links) {
         // Rome does not seem to support multiple links, despite
         // setLinks(List) exists. Does not work for rss_1.0 at least.
@@ -134,6 +141,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public List<String> getCategories() {
         List<String> result = new ArrayList<String>();
         List<?> categories = syndEntry.getCategories();
@@ -151,6 +159,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public void setCategories(List<String> categories) {
         if (categories == null) {
             syndEntry.setCategories(null);
@@ -168,26 +177,31 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public Date getPublicationDate() {
         return syndEntry.getPublishedDate();
     }
 
 
+    @Override
     public void setPublicationDate(Date date) {
         syndEntry.setPublishedDate(date);
     }
 
 
+    @Override
     public Date getUpdatedDate() {
         return syndEntry.getUpdatedDate();
     }
 
 
+    @Override
     public void setUpdatedDate(Date date) {
         syndEntry.setUpdatedDate(date);
     }
 
 
+    @Override
     public List<String> getAuthors() {
         List<String> result = new ArrayList<String>();
 
@@ -215,6 +229,7 @@ public class RomeRssItem implements IRssItem {
     }
 
 
+    @Override
     public void setAuthors(List<String> authors) {
         if ((authors == null) || (authors.size() == 0)) {
             syndEntry.setAuthor(null);

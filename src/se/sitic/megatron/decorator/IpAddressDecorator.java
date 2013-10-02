@@ -23,11 +23,13 @@ public class IpAddressDecorator implements IDecorator {
     private long totalDuration2;    
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         // empty
     }
 
 
+    @Override
     public void execute(LogEntry logEntry) throws MegatronException {
         if ((logEntry.getIpAddress() == null) && (logEntry.getHostname() != null)) {
             long t1 = System.currentTimeMillis();
@@ -57,6 +59,7 @@ public class IpAddressDecorator implements IDecorator {
     }
 
 
+    @Override
     public void close() throws MegatronException {
         long noOfTotalLookups = noOfLookups + noOfLookups2;
         log.info("No. of lookups (hostname --> ip): " + noOfTotalLookups + " (" + noOfLookups + "+" + noOfLookups2 + ").");

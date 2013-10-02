@@ -25,6 +25,7 @@ public class OrganizationFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void init(JobContext jobContext) throws MegatronException {
         TypedProperties props = jobContext.getProps();
 
@@ -45,6 +46,7 @@ public class OrganizationFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public boolean accept(LogEntry logEntry) throws MegatronException {
         boolean result = false;
         
@@ -63,6 +65,7 @@ public class OrganizationFilter implements ILogEntryFilter {
     }
 
     
+    @Override
     public void close() throws MegatronException {
         log.info("No. of filtered log entries (OrganizationFilter): " + noOfFilteredEntries);
     }

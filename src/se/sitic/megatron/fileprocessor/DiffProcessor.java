@@ -171,6 +171,7 @@ public class DiffProcessor extends OsCommandProcessor {
         // -- sort backup files (reverse order)
         final String backupShortPrefix = new File(filePrefix + BACKUP_EXT).getName();
         File[] fileArray = workDir.listFiles(new FileFilter() {
+                @Override
                 public boolean accept(File pathname) {
                     return pathname.getName().startsWith(backupShortPrefix) && pathname.isFile();
                 }
