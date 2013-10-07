@@ -260,7 +260,10 @@ public class MailExporter extends AbstractExporter {
         }
         if (template == null) {
             templateName = AppProperties.MAIL_SUBJECT_TEMPLATE_KEY;
-            template = props.getString(templateName, "S\u00e4kerhetsmeddelande fr\u00e5n SITIC [RTIR ID #$rtirId]");
+            template = props.getString(templateName, null);
+            if (template == null) {
+                throw new MegatronException("Mandatory property not defined: " + AppProperties.MAIL_SUBJECT_TEMPLATE_KEY);
+            }
         }
         String subject = AppUtil.replaceVariables(template, attributeMap, false, templateName);
 
