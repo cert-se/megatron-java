@@ -243,3 +243,12 @@ CREATE TABLE asn_lookup (
     INDEX (start_address),
     INDEX (end_address)
 ) ENGINE = MYISAM;
+
+
+# Additional indices that will increase performance.
+# SQL queries for quarantine will be must faster.   
+
+CREATE INDEX mj_started ON mail_job (started);
+CREATE INDEX mj_finished ON mail_job (finished);
+CREATE INDEX mjlem_job_id ON mail_job_log_entry_mapping (mail_job_id);
+CREATE INDEX mjlem_log_id ON mail_job_log_entry_mapping (log_entry_id);

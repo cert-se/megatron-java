@@ -21,6 +21,9 @@ v1.0.11 [to be released]
 * Improved: ip-flowing splitted in 3 configs (ip-flowing, ip-flowing-fast, 
   ip-flowing-verbose). Easier to select output and lookups.
 
+* Improved: Added additional indices to megatron-schema.sql that will increase
+  performance for quarantine SQL queries. 
+
 * Improved: Remove diacritics (accents) from city name (filename for JSON-files
   in GeolocationJsonReportGenerator).
 
