@@ -22,6 +22,7 @@ public abstract class AbstractExporter {
 
     protected JobContext jobContext;
     protected TypedProperties props;
+    protected AttributeValueRewriter rewriter;
 
     
     public AbstractExporter(JobContext jobContext) {
@@ -34,6 +35,12 @@ public abstract class AbstractExporter {
 
     
     protected abstract String getTimestampFormat();
+
+    
+    protected void init() throws MegatronException {
+        String[] rewriterArray = props.getStringList(AppProperties.EXPORT_REWRITERS_KEY, null);
+        rewriter = AttributeValueRewriter.createAttributeValueRewriter(rewriterArray);
+    }
 
     
     protected String readTemplate(String filePropertyKey, boolean isMandatory) throws MegatronException {

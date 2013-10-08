@@ -794,6 +794,7 @@ public class GeolocationJsonReportGenerator implements IReportGenerator {
     }
 
     
+    // TODO This class can be replaced by using "export.rewriters" (did not exist when this class was implemented). 
     /**
      * Adds "ipAddressMasked" to additional items. 
      */

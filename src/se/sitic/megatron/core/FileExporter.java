@@ -46,7 +46,7 @@ public class FileExporter extends AbstractExporter {
     private BufferedWriter out;
     
     
-    public FileExporter(JobContext jobContext) {
+    public FileExporter(JobContext jobContext) throws MegatronException {
         super(jobContext);
         init();
     }
@@ -90,7 +90,7 @@ public class FileExporter extends AbstractExporter {
     
     public void writeLogEntry(LogEntry logEntry) throws MegatronException {
         String template = readTemplate(AppProperties.EXPORT_ROW_FILE_KEY, true);
-        LogEntryMapper mapper = new LogEntryMapper(props, logEntry);
+        LogEntryMapper mapper = new LogEntryMapper(props, rewriter, logEntry);
         String templateName = props.getString(AppProperties.EXPORT_ROW_FILE_KEY, null);
         template = mapper.replaceVariables(template, xmlFormat, templateName);
         if ((separator != null) && (noOfLogEntriesWritten > 0)) {
@@ -147,8 +147,11 @@ public class FileExporter extends AbstractExporter {
         return props.getString(AppProperties.EXPORT_TIMESTAMP_FORMAT_KEY, "yyyy-MM-dd HH:mm:ss z");
     }
 
-    
-    private void init() {
+
+    @Override    
+    protected void init() throws MegatronException {
+        super.init();
+
         String dirName = props.getString(AppProperties.OUTPUT_DIR_KEY, "tmp/export");
         String rowFilename = props.getString(AppProperties.EXPORT_ROW_FILE_KEY, ".txt");
         String ext = rowFilename.endsWith(".xml") ? ".xml" : ".txt";

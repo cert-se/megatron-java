@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import se.sitic.megatron.core.AppProperties;
+import se.sitic.megatron.core.AttributeValueRewriter;
 import se.sitic.megatron.core.ConversionException;
 import se.sitic.megatron.core.JobContext;
 import se.sitic.megatron.core.MegatronException;
@@ -18,6 +19,8 @@ import se.sitic.megatron.util.StringUtil;
  * Parses a log entry line using regular expression defined in "parser.lineRegExp".
  */
 public class RegExpParser implements IParser {
+    // private static final Logger log = Logger.getLogger(RegExpParser.class);
+    
     private TypedProperties props;
     private JobContext jobContext;
 
@@ -25,15 +28,16 @@ public class RegExpParser implements IParser {
     private Matcher matcher;
     private boolean trimValue;
     private String removeEnclosingCharsFromValue;
-    
-    
+    private AttributeValueRewriter rewriter;
+
+
     public RegExpParser() {
         // empty
     }
 
     
     @Override
-    public void init(JobContext jobContext) throws InvalidExpressionException {
+    public void init(JobContext jobContext) throws InvalidExpressionException, MegatronException {
         this.jobContext = jobContext;
         this.props = jobContext.getProps();
         
@@ -47,6 +51,8 @@ public class RegExpParser implements IParser {
         matcher = expression.createRegExp();
         trimValue = props.getBoolean(AppProperties.PARSER_TRIM_VALUE_KEY, false);
         removeEnclosingCharsFromValue = props.getString(AppProperties.PARSER_REMOVE_ENCLOSING_CHARS_FROM_VALUE_KEY, null);
+        String[] rewriterArray = props.getStringList(AppProperties.PARSER_REWRITERS_KEY, null);
+        rewriter = AttributeValueRewriter.createAttributeValueRewriter(rewriterArray);
     }
 
     
@@ -82,6 +88,10 @@ public class RegExpParser implements IParser {
                     // empty value is stored for free text (otherwise list order cannot be preserved) 
                     parsedLogEntry.put(variables.get(i).substring(1), value);
                 }
+            }
+            
+            if (rewriter != null) {
+                rewriter.rewrite(parsedLogEntry);
             }
         } else {
             String msg = "Cannot parse line at " + jobContext.getLineNo() + "; line is unmatched. Line: '" + logLine + "'.";

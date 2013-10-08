@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import se.sitic.megatron.core.AppProperties;
+import se.sitic.megatron.core.AttributeValueRewriter;
 import se.sitic.megatron.core.ConversionException;
 import se.sitic.megatron.core.TypedProperties;
 import se.sitic.megatron.entity.LogEntry;
@@ -71,6 +72,7 @@ public class LogEntryMapper {
     public static final String FREE_TEXT_PREFIX = "freeText";
 
     private TypedProperties props;
+    private AttributeValueRewriter rewriter;
     private Map<String, String> attrMap;
     private String timestampFormat;
 
@@ -81,9 +83,15 @@ public class LogEntryMapper {
     }
 
     
-    public LogEntryMapper(TypedProperties props, LogEntry logEntry) {
+    public LogEntryMapper(TypedProperties props, AttributeValueRewriter rewriter, LogEntry logEntry) {
         this.props = props;
+        this.rewriter = rewriter;
         this.attrMap = createAttributeMap(logEntry);
+    }
+
+    
+    public LogEntryMapper(TypedProperties props, LogEntry logEntry) {
+        this(props, null, logEntry);
     }
     
     
@@ -267,11 +275,15 @@ public class LogEntryMapper {
 
     
     /**
-     * Expands variables in specified template.
+     * Expands variables in specified template. Rewrites, if any rewriters
+     * are defined, attribute values before expansion. 
      * 
      * @throws ConversionException if not all variables have been expanded.
      */
     public String replaceVariables(String template, boolean isXml, String templateName) throws ConversionException {
+        if (rewriter != null) {
+            rewriter.rewrite(attrMap);
+        }
         return AppUtil.replaceVariables(template, attrMap, isXml, templateName);
     }
 

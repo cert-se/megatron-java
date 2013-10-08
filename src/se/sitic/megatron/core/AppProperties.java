@@ -82,6 +82,7 @@ public class AppProperties {
     public static final String EXPORT_FOOTER_FILE_KEY = "export.footerFile";
     public static final String EXPORT_CHAR_SET_KEY = "export.charSet";
     public static final String EXPORT_TIMESTAMP_FORMAT_KEY = "export.timestampFormat";
+    public static final String EXPORT_REWRITERS_KEY = "export.rewriters";
 
     // Mail
     public static final String MAIL_SMTP_HOST_KEY = "mail.smtpHost";
@@ -196,6 +197,7 @@ public class AppProperties {
     public static final String PARSER_FREE_TEXT_KEY = "parser.item.freeText";
     public static final String PARSER_TRIM_VALUE_KEY = "parser.trimValue";
     public static final String PARSER_REMOVE_ENCLOSING_CHARS_FROM_VALUE_KEY = "parser.removeEnclosingCharsFromValue";
+    public static final String PARSER_REWRITERS_KEY = "parser.rewriters";
     public static final String PARSER_REMOVE_TRAILING_SPACES_KEY = "parser.removeTrailingSpaces";
     public static final String PARSER_EXPAND_IP_RANGE_WITH_ZERO_OCTETS_KEY = "parser.expandIpRangeWithZeroOctets";
     

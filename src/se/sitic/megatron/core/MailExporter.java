@@ -66,7 +66,7 @@ public class MailExporter extends AbstractExporter {
     /**
      * Constructor.
      */
-    public MailExporter(MailJobContext mailJobContext) {
+    public MailExporter(MailJobContext mailJobContext) throws MegatronException {
         super(mailJobContext);
         this.mailJobContext = mailJobContext;
         this.props = mailJobContext.getProps();
@@ -236,7 +236,10 @@ public class MailExporter extends AbstractExporter {
     }
 
     
-    private void init() {
+    @Override
+    protected void init() throws MegatronException {
+        super.init();
+        
         this.dbManager = mailJobContext.getDbManager();
         this.mailSender = new MailSender();
     }
@@ -285,7 +288,7 @@ public class MailExporter extends AbstractExporter {
         template = readTemplate(AppProperties.MAIL_ROW_FILE_KEY, langCode, true);
         for (Iterator<LogEntry> iterator = logEntries.iterator(); iterator.hasNext(); ) {
             LogEntry logEntry = iterator.next();
-            LogEntryMapper mapper = new LogEntryMapper(props, logEntry);
+            LogEntryMapper mapper = new LogEntryMapper(props, rewriter, logEntry);
             body.append(mapper.replaceVariables(template, false, templateName));
         }
         // footer

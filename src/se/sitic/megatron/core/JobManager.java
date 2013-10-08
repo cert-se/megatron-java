@@ -283,7 +283,7 @@ public class JobManager {
             parser = (IParser)clazz.newInstance();
             parser.init(jobContext);
         } catch (Exception e) {
-            // ClassNotFoundException, InstantiationException, IllegalAccessException
+            // ClassNotFoundException, InstantiationException, IllegalAccessException, MegatronException
             String msg = "Cannot instantiate parser class: " + className;
             throw new MegatronException(msg, e);
         }
