@@ -45,7 +45,7 @@ public class AttributeValueRewriter {
             }
             Rewriter rewriter = new Rewriter(fromToArray[0], fromToArray[1]);
             rewriterMap.put(attributeName, rewriter);
-            log.info("Adding rewriter for " + attributeName + ":'" + fromToArray[0] + "' --> '" + fromToArray[0] + "'");
+            log.info("Adding rewriter for " + attributeName + ":'" + fromToArray[0] + "' --> '" + fromToArray[1] + "'");
         }
     }
 
