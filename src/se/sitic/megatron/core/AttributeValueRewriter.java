@@ -76,6 +76,9 @@ public class AttributeValueRewriter {
             Rewriter rewriter = rewriterMap.get(attributeName);
             if (rewriter != null) {
                 String attributeValue = attributeMap.get(attributeName);
+                if (attributeValue == null) {
+                    continue;
+                }
                 String newValue = rewriter.rewrite(attributeValue);
                 if (!newValue.equals(attributeValue)) {
                     ++result;
