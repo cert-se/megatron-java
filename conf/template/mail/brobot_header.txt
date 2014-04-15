@@ -1,6 +1,5 @@
-CERT-SE har fått information om att en webbserver i ert nät har
-utnyttjats för att utföra tillgänglighetsattacker (DDoS-attacker) mot
-organisationer i USA.
+CERT-SE har fått information om att en eller flera webbservrar i ert nät 
+kan utnyttjats för att utföra tillgänglighetsattacker (DDoS-attacker).
 
 En angripare har lyckats ta sig in i webbservern och där planterat ett
 antal elakartade skript. Baserad på den information som finns
