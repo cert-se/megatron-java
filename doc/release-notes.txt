@@ -7,6 +7,16 @@ v1.0.11 [to be released]
     - ddos-amplification
     - ip-flowing-fast
     - ip-flowing-verbose
+    - shadowserver-openresolver
+    - shadowserver-qotd
+    - shadowserver-chargen
+    - shadowserver-sinkhole-http-drone
+    - shadowserver-netbios
+    - shadowserver-snmp
+    - shadowserver-microsoft-sinkhole
+
+* Improved: The following job types (configurations) are improved:
+    - shadowserver-sinkhole-http-drone
 
 * New: Filter log entries by occurrence (OccurrenceFilter), e.g. "include first
   20 matches of the same IP address" or "include log entries with more than 10 

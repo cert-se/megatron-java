@@ -1,0 +1,9 @@
+CERT-SE har tagit del av information som tyder på att en eller flera datorer i ert
+nätverk ingår i ett botnät.
+
+CERT-SE har fått informationen från Shadowserver. För mer information: 
+https://www.shadowserver.org/
+
+Loggraden innehåller följande fält:
+"timestamp","ip","asn","geo","url","type","http_agent","tor","src_port","p0f_genre","p0f_detail","hostname","dst_port","http_host","http_referer","http_referer_asn","http_referer_geo","http_referer_ip","dst_ip","dst_asn","dst_geo"
+

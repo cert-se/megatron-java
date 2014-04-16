@@ -1,0 +1,17 @@
+CERT-SE har tagit del av information som visar att en eller flera maskiner i 
+ert nätverk tycks vara öppna SNMP-servrar. 
+
+En öppen SNMP-server är ett säkerhetsproblem av följande anledningar:
+
+* Läcker information om systemet vilket en angripare kan utnyttja.
+
+* Kan utnyttjas för att förstärka en tillgänglighetsattack (DDoS). 
+
+Mer information:
+
+  - https://snmpscan.shadowserver.org/ 
+  - https://www.us-cert.gov/ncas/alerts/TA14-017A
+
+CERT-SE har fått informationen från Shadowserver. För mer information:
+https://www.shadowserver.org/wiki/pmwiki.php/Services/Open-SNMP
+

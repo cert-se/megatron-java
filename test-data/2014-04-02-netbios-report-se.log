@@ -1,0 +1,13 @@
+"timestamp","ip","protocol","port","hostname","tag","mac_address","asn","geo","region","city","workgroup","machine_name","username"
+"2014-04-02 00:13:29","80.85.127.36","udp",137,,"netbios","00-0C-29-31-A1-E8",1257,"SE","VASTRA GOTALAND","NOSSEBRO","WORKGROUP","ELVIRAWEB",
+"2014-04-02 00:13:34","85.24.219.62","udp",137,,"netbios","00-00-00-00-00-00",8473,"SE","STOCKHOLMS LAN","STOCKHOLM","WORKGROUP","DS212J","DS212J"
+"2014-04-02 00:13:34","37.199.74.227","udp",137,"m37-199-74-227.cust.tele2.se","netbios","00-A0-C6-00-00-00",1257,"SE","STOCKHOLMS LAN","KISTA",,,
+"2014-04-02 00:13:34","130.239.72.59","udp",137,"sivlc.fysbot.umu.se","netbios","00-00-00-00-00-00",2833,"SE","VASTERBOTTENS LAN","UMEA",,"SIVLC",
+"2014-04-02 00:13:34","109.225.118.246","udp",137,"h109-225-118-246.dynamic.se.alltele.net","netbios","74-D0-2B-9C-B1-4D",44581,"SE","OSTERGOTLANDS LAN","LINKOPING","WORKGROUP","JKP2",
+"2014-04-02 00:13:35","194.47.25.105","udp",137,,"netbios","84-2B-2B-43-E2-B7",1653,"SE","SKANE LAN","KRISTIANSTAD","HKR","AGRESSOSQL",
+"2014-04-02 00:13:36","89.221.247.10","udp",137,,"netbios","00-16-3E-DB-04-A9",3301,"SE","SKANE LAN","HELSINGBORG","WORKGROUP","U8621285-01",
+"2014-04-02 00:13:36","46.246.123.2","udp",137,,"netbios",,42708,"SE","STOCKHOLMS LAN","STOCKHOLM",,,
+"2014-04-02 00:13:38","217.72.57.65","udp",922,,"netbios","00-00-00-00-00-00",15782,"SE","STOCKHOLMS LAN","STOCKHOLM","WORKGROUP","OSTRANDSTC",
+
+"2014-04-13 00:42:10","88.131.192.250","udp",137,"tla-ups1.stg.se.ip.tdc.net","netbios",00,3292,"SE","STOCKHOLMS LAN","SOLLENTUNA",,,
+"2014-04-13 01:03:53","62.20.1.4","udp",137,,"netbios",00,3301,"SE","SKANE LAN","MALMOE",,,

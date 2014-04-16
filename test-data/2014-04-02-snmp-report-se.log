@@ -1,0 +1,12 @@
+"timestamp","ip","protocol","port","hostname","sysdesc","sysname","asn","geo","region","city","version"
+"2014-04-02 04:13:59","84.243.52.117","udp",161,"tmnet.se","Cisco Internetwork Operating System Software IOS (tm) C3550 Software (C3550-I9Q3L2-M) Version 12.1(20)EA1a RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems Inc.Compiled Mon 19-Apr-04 21:42 by yenanh",,31677,"SE","STOCKHOLMS LAN","STOCKHOLM",2
+"2014-04-02 04:14:00","62.101.35.236","udp",161,"lid-sheab.lidero.net","ExtremeXOS version 12.0.3.16 v1203b16 by release-manager on Tue Apr 8 01:08:39 PDT 2008","router1",13189,"SE","UPPSALA LAN","ENKOPING",2
+"2014-04-02 04:14:01","193.12.37.34","udp",161,"s193-12-37-34.cust.tele2.se","NDS CORE SNMP Agent","NDS_ Ltd..",1257,"SE","STOCKHOLMS LAN","KISTA",2
+"2014-04-02 04:14:01","213.67.82.8","udp",161,,"DSL-320B","tc",3301,"SE","STOCKHOLMS LAN","STOCKHOLM",2
+"2014-04-02 04:14:02","213.64.16.172","udp",161,,"DSL-320B","tc",3301,"SE","STOCKHOLMS LAN","STOCKHOLM",2
+"2014-04-02 04:14:03","82.115.151.18","udp",161,,,,30795,"SE","GOTLANDS LAN","VISBY",2
+
+"2014-04-13 04:19:34","217.142.154.62","udp",161,,"3Com Switch 4210 9-Port Software Version 3.10 Release 2212",4210,16253,"SE","UPPSALA LAN","UPPSALA",2
+"2014-04-13 04:33:12","62.63.240.170","udp",161,"s240h170o3tcn2.dyn.tyfon.se","Apple AirPort - Apple Inc. 2006-2012.  All rights Reserved.",55123,21250,"SE","STOCKHOLMS LAN","SOEDERTAELJE",2
+"2014-04-13 04:58:30","212.105.84.79","udp",161,"212-105-84-79.ki.telenor.se","Videoconferencing Device",1,2119,"SE","STOCKHOLMS LAN","STOCKHOLM",2
+"2014-04-13 05:27:15","217.142.128.83","udp",161,,"3Com Switch 4210 9-Port Software Version 3.10 Release 2212",4210,16253,"SE","UPPSALA LAN","UPPSALA",2

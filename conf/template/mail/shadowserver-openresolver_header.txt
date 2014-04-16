@@ -1,0 +1,14 @@
+CERT-SE har tagit del av information som visar att en eller flera DNS-servrar i ert nätverk tycks 
+vara öppna rekursiva namnservrar, vilka kan användas för att förstärka tillgänglighetsattacker. 
+ISP:ar och webbhotell erbjuder rekursiva namnservrar till sina kunder men för övriga organisationer 
+har dessa få legitima användningsområden och bör undvikas. 
+
+För information om hur öppna rekursiva namnservrar kan användas i DDoS-attacker[1] samt för att 
+verifiera om en namnserver är öppen och rekursiv[2], se länkarna nedan:
+
+[1] https://www.iis.se/domaner/teknik/rekursiva-resolvrar
+[2] http://dns.measurement-factory.com/surveys/openresolvers.html
+
+CERT-SE har fått informationen från Shadowserver. För mer information: 
+https://www.shadowserver.org/wiki/pmwiki.php/Services/DNS-open-resolvers
+
