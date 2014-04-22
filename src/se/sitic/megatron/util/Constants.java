@@ -33,4 +33,6 @@ public abstract class Constants {
     // Additional format strings for parser.timestampFormat.
     public static final String TIME_STAMP_FORMAT_EPOCH_IN_SEC = "epochInSec";
     public static final String TIME_STAMP_FORMAT_EPOCH_IN_MS = "epochInMs";
+    public static final String TIME_STAMP_FORMAT_WINDOWS_EPOCH = "windowsEpoch";
+    
 }

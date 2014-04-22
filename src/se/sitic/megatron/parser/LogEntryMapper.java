@@ -104,7 +104,8 @@ public class LogEntryMapper {
             field = LOG_TIMESTAMP;
             if (!isNullOrEmpty(attrMap.get(field))) {
                 String format = props.getString(AppProperties.PARSER_TIME_STAMP_FORMAT_KEY, "yyyy-MM-dd HH:mm:ss z");
-                if (format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_EPOCH_IN_SEC) || format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_EPOCH_IN_MS)) {
+                if (format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_EPOCH_IN_SEC) || format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_EPOCH_IN_MS) || 
+                        format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_WINDOWS_EPOCH)) {
                     long epoch = 0L;
                     try {
                         epoch = Long.parseLong(attrMap.get(field));
@@ -114,6 +115,10 @@ public class LogEntryMapper {
                     }
                     if (format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_EPOCH_IN_MS)) {
                         epoch = SqlUtil.convertTimestampToSec(epoch);
+                    } else if (format.equalsIgnoreCase(Constants.TIME_STAMP_FORMAT_WINDOWS_EPOCH)) {
+                        // convert to Unix epoch in seconds
+                        long epochDiff = 11644473600L;
+                        epoch = (epoch / 10000000L) - epochDiff;
                     }
                     // sanity check
                     if (epoch < 946684800L) {

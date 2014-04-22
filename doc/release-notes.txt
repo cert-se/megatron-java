@@ -28,6 +28,9 @@ v1.0.11 [to be released]
 
 * New: Added property (rss.job.enabled) to turn on/off writing to job RSS file.
 
+* New: Support for Windows epoch ("Windows NT time format").  
+  Set "parser.timestampFormat" to "windowsEpoch".  
+
 * Improved: ip-flowing splitted in 3 configs (ip-flowing, ip-flowing-fast, 
   ip-flowing-verbose). Easier to select output and lookups.
 
