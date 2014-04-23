@@ -3,6 +3,7 @@ package se.sitic.megatron.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -23,7 +24,9 @@ public abstract class AbstractExporter {
     protected JobContext jobContext;
     protected TypedProperties props;
     protected AttributeValueRewriter rewriter;
-
+    
+    private Map<File, String> templateFileCache;
+    
     
     public AbstractExporter(JobContext jobContext) {
         this.jobContext = jobContext;
@@ -40,6 +43,7 @@ public abstract class AbstractExporter {
     protected void init() throws MegatronException {
         String[] rewriterArray = props.getStringList(AppProperties.EXPORT_REWRITERS_KEY, null);
         rewriter = AttributeValueRewriter.createAttributeValueRewriter(rewriterArray);
+        templateFileCache = new HashMap<File, String>();
     }
 
     
@@ -69,7 +73,12 @@ public abstract class AbstractExporter {
             templateFile = new File(getTemplateDir(), filename);
         }
         try {
-            return FileUtil.readFile(templateFile, Constants.UTF8);
+            String result = templateFileCache.get(templateFile);
+            if (result == null) {
+                result = FileUtil.readFile(templateFile, Constants.UTF8);
+                templateFileCache.put(templateFile, result);
+            }
+            return result;
         } catch (IOException e) {
             String msg = "Cannot read template file: " + templateFile.getAbsolutePath();
             throw new MegatronException(msg, e);
