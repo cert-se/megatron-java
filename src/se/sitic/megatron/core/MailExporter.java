@@ -112,21 +112,27 @@ public class MailExporter extends AbstractExporter {
         }
         
         // -- remove quarantined log entries
-        List<LogEntry> logEntriesToSend = new ArrayList<LogEntry>();
+        List<LogEntry> logEntriesToSend = null;
         int periodInSecs = props.getInt(AppProperties.MAIL_IP_QUARANTINE_PERIOD_KEY, 7*24*60*60);
-        for (Iterator<LogEntry> iterator = logEntries.iterator(); iterator.hasNext(); ) {
-            LogEntry logEntry = iterator.next();
-            Long ip = mailJob.isUsePrimaryOrg() ? logEntry.getIpAddress() : logEntry.getIpAddress2(); 
-            boolean exists = (ip != null) && dbManager.existsMailForIp(ip.longValue(), organization, periodInSecs, mailJob.isUsePrimaryOrg());
-            if (exists) {
-                @SuppressWarnings("null")
-                String msg = "Ignoring log entry#" + logEntry.getId() + ", because IP is quarantined. An email have already been sent for this IP: " + 
-                    IpAddressUtil.convertIpAddress(ip, false);
-                log.info(msg);
-                mailJobContext.writeToConsole(msg);
-                mailJobContext.incNoOfQuarantineLogEntries(1);
-            } else {
-                logEntriesToSend.add(logEntry);
+        if (periodInSecs == 0) {
+            // 0 to turn off quarantine
+            logEntriesToSend = logEntries;
+        } else {
+            logEntriesToSend = new ArrayList<LogEntry>();
+            for (Iterator<LogEntry> iterator = logEntries.iterator(); iterator.hasNext(); ) {
+                LogEntry logEntry = iterator.next();
+                Long ip = mailJob.isUsePrimaryOrg() ? logEntry.getIpAddress() : logEntry.getIpAddress2(); 
+                boolean exists = (ip != null) && dbManager.existsMailForIp(ip.longValue(), organization, periodInSecs, mailJob.isUsePrimaryOrg());
+                if (exists) {
+                    @SuppressWarnings("null")
+                    String msg = "Ignoring log entry#" + logEntry.getId() + ", because IP is quarantined. An email have already been sent for this IP: " + 
+                        IpAddressUtil.convertIpAddress(ip, false);
+                    log.info(msg);
+                    mailJobContext.writeToConsole(msg);
+                    mailJobContext.incNoOfQuarantineLogEntries(1);
+                } else {
+                    logEntriesToSend.add(logEntry);
+                }
             }
         }
         

@@ -39,6 +39,10 @@ v1.0.11 [to be released]
 * Improved: Added additional indices to megatron-schema.sql that will increase
   performance for quarantine SQL queries. 
 
+* Improved: If quarantine is turned off (mail.ipQuarantinePeriod=0) no SQL
+  queries for quarantine checking are executed. Configuration for each job in 
+  --job-list is loaded.  
+
 * Improved: Remove diacritics (accents) from city name (filename for JSON-files
   in GeolocationJsonReportGenerator).
 

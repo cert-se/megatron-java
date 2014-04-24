@@ -36,6 +36,7 @@ public class JobListWriter {
     private boolean toStdout;
     private int prio;
     private StringBuilder content;
+    private Map<String, TypedProperties> jobPropsCache;
     
     
     public JobListWriter(TypedProperties globalProps, boolean toStdout) {
@@ -106,11 +107,31 @@ public class JobListWriter {
             highPriorityEntriesStr = highPriorityEntriesStr + "+";
         }
         
+        // props for job
+        String jobType = job.getJobType().getName();
+        if (Constants.DEFAULT_JOB_TYPE.equals(jobType)) {
+            // use job type in job name if job type not specified in db  
+            String[] headTail = StringUtil.splitHeadTail(job.getName(), "_", false);
+            jobType = headTail[0];
+        }
+        TypedProperties jobProps = jobPropsCache.get(jobType);
+        if (jobProps == null) {
+            log.debug("Loading properties for job-type: " + jobType);
+            try {
+                jobProps = AppProperties.getInstance().createTypedPropertiesForCli(jobType);
+                jobPropsCache.put(jobType, jobProps);
+            } catch (MegatronException e) {
+                log.warn("Cannot load properties for job-type: " + jobType, e);
+                jobProps = props;
+            }
+        }
+        int quarantinePeriodInSecs = jobProps.getInt(AppProperties.MAIL_IP_QUARANTINE_PERIOD_KEY, 7*24*60*60);
+        
         // mailSent
         String mailSent = null;
         if (dbManager.searchMailJobs(job).size() > 0) {
             mailSent = "Yes";
-        } else if (isAllQuarantined(dbManager, logEntries)) {
+        } else if (isAllQuarantined(dbManager, logEntries, quarantinePeriodInSecs)) {
             mailSent = "All Quarantined";
         } else {
             mailSent = "No";
@@ -128,18 +149,21 @@ public class JobListWriter {
     }
 
 
-    private boolean isAllQuarantined(DbManager dbManager, List<LogEntry> logEntries) throws MegatronException {
+    private boolean isAllQuarantined(DbManager dbManager, List<LogEntry> logEntries, int quarantinePeriodInSecs) throws MegatronException {
+        if (quarantinePeriodInSecs == 0) {
+            log.debug("Skip quarantine checking due to property: " + AppProperties.MAIL_IP_QUARANTINE_PERIOD_KEY);
+            return false;
+        }
         log.debug("Checking if all log entries are quarantined.");
 
         boolean result = true;
-        int periodInSecs = props.getInt(AppProperties.MAIL_IP_QUARANTINE_PERIOD_KEY, 7*24*60*60);
         Set<Long> existsMailForIpCache = new HashSet<Long>();
         for (Iterator<LogEntry> iterator = logEntries.iterator(); result && iterator.hasNext(); ) {
             LogEntry logEntry = iterator.next();
             if (!props.isUseOrg2()) {
                 Organization org1 = logEntry.getOrganization();
                 if ((org1 != null) && (org1.getPriority().getPrio() >= prio) && (logEntry.getIpAddress() != null) && !existsMailForIpCache.contains(logEntry.getIpAddress())) {
-                    result = dbManager.existsMailForIp(logEntry.getIpAddress(), org1, periodInSecs, true);
+                    result = dbManager.existsMailForIp(logEntry.getIpAddress(), org1, quarantinePeriodInSecs, true);
                     if (result) {
                         existsMailForIpCache.add(logEntry.getIpAddress());
                     }
@@ -147,7 +171,7 @@ public class JobListWriter {
             } else {
                 Organization org2 = logEntry.getOrganization2();
                 if ((org2 != null) && (org2.getPriority().getPrio() >= prio) && (logEntry.getIpAddress2() != null) && !existsMailForIpCache.contains(logEntry.getIpAddress2())) {
-                    result = dbManager.existsMailForIp(logEntry.getIpAddress2(), org2, periodInSecs, false);
+                    result = dbManager.existsMailForIp(logEntry.getIpAddress2(), org2, quarantinePeriodInSecs, false);
                     if (result) {
                         existsMailForIpCache.add(logEntry.getIpAddress2());
                     }
@@ -176,6 +200,7 @@ public class JobListWriter {
         } catch (NumberFormatException e) {
             throw new MegatronException("Invalid prio value: " + prioStr);
         }
+        jobPropsCache = new HashMap<String, TypedProperties>();
     }
 
     
