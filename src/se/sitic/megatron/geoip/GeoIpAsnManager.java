@@ -48,10 +48,15 @@ public class GeoIpAsnManager {
     public As getAs(long ipAddress) {
         As result = null;
         
-        String asStr = geoIpLookup.getOrg(ipAddress);
-        if (!StringUtil.isNullOrEmpty(asStr)) {
-            log.debug("AS for ip-address " + ipAddress + ": " + asStr);
-            result = parseAs(asStr);
+        try {
+            String asStr = geoIpLookup.getOrg(ipAddress);
+            if (!StringUtil.isNullOrEmpty(asStr)) {
+                log.debug("AS for ip-address " + ipAddress + ": " + asStr);
+                result = parseAs(asStr);
+            }
+        } catch (RuntimeException e) {
+            // in some rare cases com.maxmind.geoip.LookupService.getOrg throws ArrayIndexOutOfBoundsException
+            log.error("Cannot lookup AS from ip-adress: " + ipAddress, e);
         }
         
         return result;
