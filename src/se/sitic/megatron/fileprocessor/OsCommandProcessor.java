@@ -32,7 +32,7 @@ public class OsCommandProcessor implements IFileProcessor {
 
     
     public OsCommandProcessor() {
-        // emptry
+        // empty
     }
     
     
