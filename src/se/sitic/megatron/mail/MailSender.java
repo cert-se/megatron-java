@@ -77,7 +77,7 @@ public class MailSender {
             throw new MailException("SMTP host not specified.");
         }
 
-        String from = (fromAddress != null) ? fromAddress : props.getString(AppProperties.MAIL_FROM_ADDRESS_KEY, "sitic@sitic.se");
+        String from = (fromAddress != null) ? fromAddress : props.getString(AppProperties.MAIL_FROM_ADDRESS_KEY, "megatron@example.org");
         String to = (toAddresses != null) ? toAddresses : props.getString(AppProperties.MAIL_TO_ADDRESSES_KEY, null);
         String bcc = (bccAddresses != null) ? bccAddresses : props.getString(AppProperties.MAIL_BCC_ADDRESSES_KEY, null);
         String replyTo = (replyToAddresses != null) ? replyToAddresses : props.getString(AppProperties.MAIL_REPLY_TO_ADDRESSES_KEY, null);
