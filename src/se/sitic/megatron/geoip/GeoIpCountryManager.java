@@ -59,10 +59,15 @@ public class GeoIpCountryManager {
         StringBuilder result = new StringBuilder(64);
         
         Country country = null;
-        if (geoIpCityManager != null) {
-            country = geoIpCityManager.getCountry(ipAddress);
-        } else {
-            country = geoIpLookup.getCountry(ipAddress); 
+        try {
+            if (geoIpCityManager != null) {
+                country = geoIpCityManager.getCountry(ipAddress);
+            } else {
+                country = geoIpLookup.getCountry(ipAddress); 
+            }
+        } catch (RuntimeException e) {
+            // in some rare cases com.maxmind.geoip.LookupService.getCountry throws ArrayIndexOutOfBoundsException
+            log.error("Cannot lookup country code from ip-adress: " + ipAddress, e);
         }
 
         if (country != null) {

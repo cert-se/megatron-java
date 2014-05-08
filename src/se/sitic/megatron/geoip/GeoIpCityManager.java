@@ -49,7 +49,12 @@ public class GeoIpCityManager {
     public Geolocation getGeolocation(long ipAddress) {
         Geolocation result = null;
         
-        Location location = geoIpLookup.getLocation(ipAddress);
+        Location location = null;
+        try {
+            location = geoIpLookup.getLocation(ipAddress);
+        } catch (RuntimeException e) {
+            log.error("Cannot lookup geolocation from ip-adress: " + ipAddress, e);
+        }
         if (location != null) {
             if (log.isDebugEnabled()) {
                 log.debug("Geolocation for ip-address " + ipAddress + ": " + location.latitude + "/" + location.longitude + " (" + location.countryCode + ")");
@@ -66,7 +71,12 @@ public class GeoIpCityManager {
         // return geoIpLookup.getCountry(ipAddress);
 
         Country result = null;
-        Location location = geoIpLookup.getLocation(ipAddress);
+        Location location = null;
+        try {
+            location = geoIpLookup.getLocation(ipAddress);
+        } catch (RuntimeException e) {
+            log.error("Cannot lookup country code from ip-adress: " + ipAddress, e);
+        }
         if ((location != null) && (location.countryCode != null) && !location.countryCode.equals("--")) {
             result = new Country(location.countryCode, location.countryName);
         }        
