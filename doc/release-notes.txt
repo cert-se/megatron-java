@@ -60,6 +60,8 @@ v1.0.11 [to be released]
 
 * Improved: Tested with MariaDB. Worked without any problem.
 
+* Improved: Failed DNS lookups are now logged with debug-level.
+
 * Bug: RuntimeException is thrown from GeoIP API (IP to ASN lookup).
 
 * Bug: Using UTF-8 in megatron.sh (e.g. generated filenames will be in UTF-8). 

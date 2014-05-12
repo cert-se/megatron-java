@@ -323,7 +323,7 @@ public abstract class IpAddressUtil {
             hostAddress = inetAddress.getHostAddress();
         } catch (UnknownHostException e) {
             String msg = "DNS lookup failed for hostname: " + hostname;
-            log.warn(msg, e);
+            log.debug(msg, e);
         }
         
         try {
@@ -394,11 +394,7 @@ public abstract class IpAddressUtil {
                     ipAddressStr = Long.toString(ipAddress);
                 }
                 String msg = "Reverse DNS lookup failed for IP-address: " + ipAddressStr;
-                log.info(msg, e);
-            } else {
-                // Do not include stacktrace; log will be too verbose.
-                String msg = "Reverse DNS lookup failed for IP-address: " + ipAddress;
-                log.info(msg);
+                log.debug(msg, e);
             }
         }
         
