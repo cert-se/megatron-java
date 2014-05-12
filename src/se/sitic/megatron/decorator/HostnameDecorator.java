@@ -2,12 +2,14 @@ package se.sitic.megatron.decorator;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import se.sitic.megatron.core.JobContext;
 import se.sitic.megatron.core.MegatronException;
 import se.sitic.megatron.entity.LogEntry;
+import se.sitic.megatron.fileprocessor.MultithreadedDnsProcessor;
 import se.sitic.megatron.util.AppUtil;
 import se.sitic.megatron.util.DateUtil;
 import se.sitic.megatron.util.IpAddressUtil;
@@ -20,6 +22,7 @@ import se.sitic.megatron.util.StringUtil;
 public class HostnameDecorator implements IDecorator {
     private static final Logger log = Logger.getLogger(HostnameDecorator.class);    
 
+    private Map<Long, String> reverseDnsMap;
     private long noOfLookups;
     private long noOfLookups2;
     private long noOfFailedLookups;
@@ -28,9 +31,10 @@ public class HostnameDecorator implements IDecorator {
     private long totalDuration2;    
 
     
+    @SuppressWarnings("unchecked")
     @Override
     public void init(JobContext jobContext) throws MegatronException {
-        // empty
+        reverseDnsMap = (Map<Long, String>)jobContext.getAdditionalData(MultithreadedDnsProcessor.REVERSE_DNS_MAP_KEY);
     }
 
 
@@ -40,7 +44,7 @@ public class HostnameDecorator implements IDecorator {
         Iterator<Long> iterator = (ipAddresses != null) ? ipAddresses.iterator() : null;
         while ((logEntry.getHostname() == null) && (iterator != null) && iterator.hasNext()) {
             long t1 = System.currentTimeMillis();
-            String hostname = IpAddressUtil.reverseDnsLookup(iterator.next());
+            String hostname = reverseDnsLookup(iterator.next());
             long t2 = System.currentTimeMillis();
             totalDuration += t2-t1;
             if (!StringUtil.isNullOrEmpty(hostname)) {
@@ -53,7 +57,7 @@ public class HostnameDecorator implements IDecorator {
         
         if ((logEntry.getHostname2() == null) && (logEntry.getIpAddress2() != null)) {
             long t1 = System.currentTimeMillis();
-            String hostname = IpAddressUtil.reverseDnsLookup(logEntry.getIpAddress2());
+            String hostname = reverseDnsLookup(logEntry.getIpAddress2());
             long t2 = System.currentTimeMillis();
             totalDuration2 += t2-t1;
             if (!StringUtil.isNullOrEmpty(hostname)) {
@@ -77,6 +81,14 @@ public class HostnameDecorator implements IDecorator {
         String durationStr = DateUtil.formatDuration(totalDuration);
         String durationStr2 = DateUtil.formatDuration(totalDuration2);
         log.info("Time for lookups (ip --> hostname): " + totalDurationStr + " (" + durationStr + "+" + durationStr2 + ").");
+    }
+    
+    
+    private String reverseDnsLookup(long ipAddress) {
+        if (reverseDnsMap != null) {
+            return reverseDnsMap.get(ipAddress);
+        }
+        return IpAddressUtil.reverseDnsLookup(ipAddress);
     }
 
 }

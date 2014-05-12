@@ -265,7 +265,7 @@ public abstract class IpAddressUtil {
         
         String hostName = null;
         if (includeHostName) {
-            hostName = reverseDnsLookupInternal(ipAddress);
+            hostName = reverseDnsLookupInternal(ipAddress, true);
         }
         
         StringBuilder result = new StringBuilder(256); 
@@ -344,19 +344,30 @@ public abstract class IpAddressUtil {
      * if lookup fails. 
      */
     public static String reverseDnsLookup(long ipAddress) {
-        return reverseDnsLookupInternal(ipAddress);
+        return reverseDnsLookupInternal(ipAddress, true);
     }
 
     
-    private static String reverseDnsLookupInternal(long ipAddress) {
+    /**
+     * As reverseDnsLookup(long), but without cache.
+     */
+    public static String reverseDnsLookupWithoutCache(long ipAddress) {
+        return reverseDnsLookupInternal(ipAddress, false);
+    }
+
+    
+    private static String reverseDnsLookupInternal(long ipAddress, boolean useCache) {
         String result = null;
         
         // -- Cache lookup
-        Long cacheKey = new Long(ipAddress);
-        result = hostNameCache.get(cacheKey);
-        if (result != null) {
-            // log.debug("Cache hit: " + ipAddress + ":" + result);
-            return result;
+        Long cacheKey = null;
+        if (useCache) {
+            cacheKey = new Long(ipAddress);
+            result = hostNameCache.get(cacheKey);
+            if (result != null) {
+                // log.debug("Cache hit: " + ipAddress + ":" + result);
+                return result;
+            }
         }
         
         // -- Reverse DNS lookup 
@@ -392,17 +403,19 @@ public abstract class IpAddressUtil {
         }
         
         // -- Add to cache (even empty entries)
-        if (log.isDebugEnabled()) {
-            String ipAddressStr = null;
-            try {
-                ipAddressStr = convertIpAddressToString(ipAddress);
-            } catch (UnknownHostException e2) {
-                ipAddressStr = Long.toString(ipAddress);
+        if (useCache) {
+            if (log.isDebugEnabled()) {
+                String ipAddressStr = null;
+                try {
+                    ipAddressStr = convertIpAddressToString(ipAddress);
+                } catch (UnknownHostException e2) {
+                    ipAddressStr = Long.toString(ipAddress);
+                }
+                log.debug("Adds hostname to cache: " + ipAddress + " [" + ipAddressStr + "]:" + result);
             }
-            log.debug("Adds hostname to cache: " + ipAddress + " [" + ipAddressStr + "]:" + result);
+            hostNameCache.put(cacheKey, result);
         }
-        hostNameCache.put(cacheKey, result);
-
+        
         return result;
     }
 

@@ -1,10 +1,13 @@
 package se.sitic.megatron.decorator;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import se.sitic.megatron.core.JobContext;
 import se.sitic.megatron.core.MegatronException;
 import se.sitic.megatron.entity.LogEntry;
+import se.sitic.megatron.fileprocessor.MultithreadedDnsProcessor;
 import se.sitic.megatron.util.DateUtil;
 import se.sitic.megatron.util.IpAddressUtil;
 
@@ -15,6 +18,7 @@ import se.sitic.megatron.util.IpAddressUtil;
 public class IpAddressDecorator implements IDecorator {
     private static final Logger log = Logger.getLogger(IpAddressDecorator.class);    
 
+    private Map<String, Long> dnsMap;
     private long noOfLookups;
     private long noOfLookups2;
     private long noOfFailedLookups;
@@ -23,9 +27,10 @@ public class IpAddressDecorator implements IDecorator {
     private long totalDuration2;    
 
     
+    @SuppressWarnings("unchecked")
     @Override
     public void init(JobContext jobContext) throws MegatronException {
-        // empty
+        dnsMap = (Map<String, Long>)jobContext.getAdditionalData(MultithreadedDnsProcessor.DNS_MAP_KEY);
     }
 
 
@@ -33,7 +38,7 @@ public class IpAddressDecorator implements IDecorator {
     public void execute(LogEntry logEntry) throws MegatronException {
         if ((logEntry.getIpAddress() == null) && (logEntry.getHostname() != null)) {
             long t1 = System.currentTimeMillis();
-            long ipAddress = IpAddressUtil.dnsLookup(logEntry.getHostname());
+            long ipAddress = dnsLookup(logEntry.getHostname());
             long t2 = System.currentTimeMillis();
             totalDuration += t2-t1;
             if (ipAddress != 0L) {
@@ -46,7 +51,7 @@ public class IpAddressDecorator implements IDecorator {
         
         if ((logEntry.getIpAddress2() == null) && (logEntry.getHostname2() != null)) {
             long t1 = System.currentTimeMillis();
-            long ipAddress = IpAddressUtil.dnsLookup(logEntry.getHostname2());
+            long ipAddress = dnsLookup(logEntry.getHostname2());
             long t2 = System.currentTimeMillis();
             totalDuration2 += t2-t1;
             if (ipAddress != 0L) {
@@ -70,6 +75,15 @@ public class IpAddressDecorator implements IDecorator {
         String durationStr = DateUtil.formatDuration(totalDuration);
         String durationStr2 = DateUtil.formatDuration(totalDuration2);
         log.info("Time for lookups (hostname --> ip): " + totalDurationStr + " (" + durationStr + "+" + durationStr2 + ").");
+    }
+    
+    
+    private long dnsLookup(String hostname) {
+        if (dnsMap != null) {
+            Long result = dnsMap.get(hostname);
+            return (result != null) ? result.longValue() : 0L;
+        }
+        return IpAddressUtil.dnsLookup(hostname);
     }
 
 }

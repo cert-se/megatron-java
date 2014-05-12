@@ -18,6 +18,10 @@ v1.0.11 [to be released]
 * Improved: The following job types (configurations) are improved:
     - shadowserver-sinkhole-http-drone
 
+* New: MultithreadedDnsProcessor makes DNS lookups and reverse lookups in 
+  several threads to increase performance. See the following configurations:
+  ip-flowing and ip-flowing-verbose. 
+
 * New: Filter log entries by occurrence (OccurrenceFilter), e.g. "include first
   20 matches of the same IP address" or "include log entries with more than 10 
   occurrences of the same URL".
@@ -73,6 +77,10 @@ v1.0.11 [to be released]
     - New: filter.occurrenceFilter.excludeIntervals
     - New: filter.occurrenceFilter.includeIntervals
     - New: filter.occurrenceFilter.fileSorted
+    - New: fileProcessor.multithreadedDnsProcessor.noOfThreads
+    - New: fileProcessor.multithreadedDnsProcessor.reverseDnsLookup
+    - New: fileProcessor.multithreadedDnsProcessor.regExpIp
+    - New: fileProcessor.multithreadedDnsProcessor.regExpHostname
 
 
 v1.0.10

@@ -132,6 +132,9 @@ public class JobManager {
             
             // -- process line by line
             BufferedReader in = null;
+            // init attributes for printProgress 
+            lastProgressPrintTime = System.currentTimeMillis(); 
+            lastProgressPrintLineNo = 0L;
             try {
                 String charSet = props.getString(AppProperties.INPUT_CHAR_SET_KEY, Constants.UTF8);
                 in = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
@@ -328,10 +331,6 @@ public class JobManager {
             fileExporter = new FileExporter(jobContext);
             fileExporter.writeHeader(job);
         }
-        
-        // init attributes for printProgress 
-        lastProgressPrintTime = System.currentTimeMillis(); 
-        lastProgressPrintLineNo = 0L;
     }
     
     

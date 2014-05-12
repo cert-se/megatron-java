@@ -1,5 +1,8 @@
 package se.sitic.megatron.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import se.sitic.megatron.db.DbManager;
 import se.sitic.megatron.entity.Job;
 
@@ -40,11 +43,11 @@ public class JobContext {
 
     /** No. of exported log entries. */
     private long noOfExportedEntries = 0L;
-    
-    
-    // TODO add map for additional data, e.g. Map<String, Object> data
 
+    /** Name-value table to store untyped data that needs to be shared e.g. between two decorators. */
+    private Map<String, Object> additionalData;
 
+    
     /**
      * Constructor.
      */
@@ -174,5 +177,22 @@ public class JobContext {
     public void setNoOfLines(long noOfLines) {
         this.noOfLines = noOfLines;
     }
+    
+    
+    public Object getAdditionalData(String key) {
+        if (additionalData == null) {
+            return null;
+        }
+        return additionalData.get(key);
+    }
+    
+    
+    public void addAdditionalData(String key, Object value) {
+        if (additionalData == null) {
+            additionalData = new HashMap<String, Object>();
+        }
+        additionalData.put(key, value);
+    }
+
 
 }

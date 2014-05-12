@@ -157,6 +157,10 @@ public class AppProperties {
     public static final String FILE_PROCESSOR_XML_TO_ROW_OUTPUT_SEPARATOR_KEY = "fileProcessor.xmlToRowFileProcessor.outputSeparator";
     // Deprecated: fileProcessor.xmlToRowFileProcessor.deleteOutputFile (use fileProcessor.deleteTmpFiles instead)
     public static final String FILE_PROCESSOR_XML_TO_ROW_DELETE_OUTPUT_FILE_KEY = "fileProcessor.xmlToRowFileProcessor.deleteOutputFile";
+    public static final String FILE_PROCESSOR_DNS_NO_OF_THREADS_KEY = "fileProcessor.multithreadedDnsProcessor.noOfThreads";
+    public static final String FILE_PROCESSOR_DNS_REVERSE_DNS_LOOKUP_KEY = "fileProcessor.multithreadedDnsProcessor.reverseDnsLookup";
+    public static final String FILE_PROCESSOR_DNS_REG_EXP_IP_KEY = "fileProcessor.multithreadedDnsProcessor.regExpIp";
+    public static final String FILE_PROCESSOR_DNS_REG_EXP_HOSTNAME_KEY = "fileProcessor.multithreadedDnsProcessor.regExpHostname";
     
     // Line Processor
     public static final String LINE_PROCESSOR_CLASS_NAME_KEY = "lineProcessor.className";
