@@ -1,0 +1,1 @@
+$logTimestamp	$ipAddress	$hostname	$port	$asn	$countryCode	$ipAddress2	$hostname2	$port2	$asn2	$countryCode2	$url	$additionalItemList	$created	$jobTypeName

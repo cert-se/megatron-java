@@ -15,6 +15,9 @@ public abstract class Constants {
     /** ISO-8859 character-set in Java core API. */
     public static final String ISO8859 = "ISO-8859-1";
 
+    /** MIME-type for plain text. */
+    public static final String MIME_TEXT_PLAIN = "text/plain";
+    
     /** Comments in config files starts with this string. */
     public static final String CONFIG_COMMENT_PREFIX = "#";
 

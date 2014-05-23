@@ -18,6 +18,13 @@ v1.0.11 [to be released]
 * Improved: The following job types (configurations) are improved:
     - shadowserver-sinkhole-http-drone
 
+* New: Organization report is target for organizations with a huge volume of 
+  abuse cases, e.g. ISPs and web hotels. Instead of getting one email per data 
+  source, they will receive one report every 24 hours that is machine parsable.
+
+* New: Log entries in mail body are now also included as an attachment in a 
+  standardized format that is machine parsable.
+
 * New: MultithreadedDnsProcessor makes DNS lookups and reverse lookups in 
   several threads to increase performance. See the following configurations:
   ip-flowing and ip-flowing-verbose. 
@@ -70,6 +77,11 @@ v1.0.11 [to be released]
   - Modified Ant-script (build.xml)
   - All files have now Unix line endings (except files in doc/ and sql/) 
   - Documentation improved
+
+* CLI changes:
+  - Deprecated: --create-xml (use --create-reports instead)
+  - New: --create-reports
+  - New: --create-report
   
 * Config changes:
     - New: rss.job.enabled
@@ -83,6 +95,14 @@ v1.0.11 [to be released]
     - New: fileProcessor.multithreadedDnsProcessor.reverseDnsLookup
     - New: fileProcessor.multithreadedDnsProcessor.regExpIp
     - New: fileProcessor.multithreadedDnsProcessor.regExpHostname
+    - New: mail.attachmentHeaderFile
+    - New: mail.attachmentRowFile
+    - New: mail.attachmentFooterFile
+    - New: mail.attachmentName    
+    - New: export.jobTypeNameMapper
+    - New: report.organization.noOfHours
+    - New: report.organization.jobTypes
+    - New: report.organization.recipients
 
 
 v1.0.10

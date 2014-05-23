@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -1088,14 +1087,8 @@ public class DbManager {
                 jobTypeKillList = new ArrayList<String>();
                 jobTypeKillList.add("");
             }
-            StringBuffer inList = new StringBuffer(128);
-            for (Iterator<String> iterator = jobTypeKillList.iterator(); iterator.hasNext(); ) {
-                if (inList.length() > 0) {
-                    inList.append(", ");
-                }
-                inList.append("'").append(iterator.next()).append("'");
-            }
-            queryStr = StringUtil.replace(queryStr, "@inList@", inList.toString());
+            String inList = StringUtil.toSingleQuotedString(jobTypeKillList);
+            queryStr = StringUtil.replace(queryStr, "@inList@", inList);
             
             // -- execute query
             log.debug("Executing query: " + queryStr);
@@ -1175,7 +1168,51 @@ public class DbManager {
         
         return result;
     }
-    	  
+    
+
+    /**
+     * Fetches log entries for specified organization for use in OrganizationReportGenerator.
+     * 
+     * @param jobTypes list of job types (db-field "job_type.name") for log entries to be included in the result.
+     */
+    @SuppressWarnings("deprecation")
+    public List<LogEntry> fetchLogEntriesForOrganizationReport(int orgId, Date startDate, Date endDate, List<String> jobTypes) throws DbException {
+        List<LogEntry> entries = new ArrayList<LogEntry>(2048);
+        PreparedStatement ps = null;
+        if ((jobTypes == null) || jobTypes.isEmpty()) {
+            return entries;
+        }
+        
+        try {
+            String inList = StringUtil.toSingleQuotedString(jobTypes);
+            String sql = 
+                 "SELECT le.id from log_entry le, job j, job_type jt " +
+                 "WHERE j.finished >= ? AND j.finished <= ? AND j.job_type_id = jt.id AND jt.name in (" + inList + ") AND le.job_id = j.id AND le.org_id = ?;";
+
+            log.debug("Executing query: " + sql);
+            ps = session.connection().prepareStatement(sql);            
+            ps.setLong(1, SqlUtil.convertTimestamp(startDate));
+            ps.setLong(2, SqlUtil.convertTimestamp(endDate));
+            ps.setInt(3, orgId);
+            boolean successful = ps.execute();
+            
+            if (successful) {
+                ResultSet resultSet = ps.getResultSet(); 
+                while (resultSet.next()) {
+                    long entryID = resultSet.getLong(1);
+                    LogEntry entry = (LogEntry)this.loadLongObject(LogEntry.class, entryID);
+                    entries.add(entry);
+                }
+            }
+        } catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in fetchLogEntriesForOrganizationReport", e);
+        } finally {
+            try { if (ps != null) ps.close(); } catch (SQLException ignored) { }
+        }
+        
+        return entries;
+    }
+
     
 	public long getNumberOfSuccessfulLogJobs(Date startDate, Date endDate) 
 	throws DbException {

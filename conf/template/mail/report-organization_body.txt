@@ -1,0 +1,39 @@
+CERT-SE has received information about infected or abused machines in your 
+network. Information about attached report:
+
+- Time period: $timePeriod (UTC)
+- No. of rows: $noOfLogEntries
+
+
+Fields in the attached report (tab separated):
+
+- timestamp:    Time in log file from source (UTC)
+- ip:           Source IP ("bad" machine in your network)
+- hostname:     Source hostname (reverse DNS of the IP)
+- port:         Source port
+- asn:          Source ASN
+- cc:           Source country-code
+- ip2:          Destination IP, e.g. C&C server
+- hostname2:    Destination hostname
+- port2:        Destination port
+- asn2:         Destination ASN
+- cc2:          Destination country-code 
+- url:          URL, e.g. to C&C server 
+- comment:      Additional information, e.g. infection
+- created:      Time processed by CERT-SE (UTC)
+- report:       Name of report (see below)
+
+Note: All fields except timestamp, created, and report may be empty.
+
+
+Values in the report-field:
+
+- shadowserver-drone2
+  <https://www.shadowserver.org/wiki/pmwiki.php/Services/Botnet-Drone-Hadoop>
+
+- shadowserver-sinkhole-http-drone
+  <https://www.shadowserver.org/wiki/pmwiki.php/Services/Sinkhole-HTTP-Drone>
+
+TODO Change on install: Add description for all job-types that are
+specified in "report.organization.jobTypes".
+

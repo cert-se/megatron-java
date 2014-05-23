@@ -362,6 +362,23 @@ public abstract class StringUtil {
      * comma separated.
      */
     public static String toQuotedString(List<?> list) {
+        return toQuotedString(list, "\"");
+    }
+
+    
+    /**
+     * As toQuotedString, but use a single quote instead of a double quote.
+     */
+    public static String toSingleQuotedString(List<?> list) {
+        return toQuotedString(list, "\'");
+    }
+
+    
+    /**
+     * Returns specified list as a string where every element is quoted with
+     * specified character and comma separated.
+     */
+    private static String toQuotedString(List<?> list, String quoteChar) {
         if ((list == null) || (list.size() == 0)) {
             return "";
         }
@@ -373,7 +390,7 @@ public abstract class StringUtil {
             if (result.length() > 0) {
                 result.append(",");
             }
-            result.append("\"").append(str).append("\"");
+            result.append(quoteChar).append(str).append(quoteChar);
         }
 
         return result.toString();

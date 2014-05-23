@@ -51,6 +51,8 @@ public class TypedProperties {
     public static final String CLI_ADDRESSES_FILE_KEY = "cli.addressFileKey";
     public static final String CLI_CREATE_STATS_RSS_KEY = "cli.createStatsRss";
     public static final String CLI_CREATE_FLASH_XML_KEY = "cli.createFlashXml";
+    public static final String CLI_CREATE_REPORTS_KEY = "cli.createReports";
+    public static final String CLI_CREATE_REPORT_KEY = "cli.createReport";    
     public static final String CLI_UI_ORGANIZATIONS = "cli.uiOrganizations"; 
     public static final String CLI_MAIL_DRY_RUN_KEY = "cli.mailDryRun";
     public static final String CLI_MAIL_DRY_RUN2_KEY = "cli.mailDryRun2";
@@ -525,9 +527,27 @@ public class TypedProperties {
     
     /**
      * Returns CLI switch: --create-xml
+     * <p>
+     * --create-xml is deprecated. Use --create-reports instead.
      */
     public boolean isCreateFlashXml() {
         return getBoolean(CLI_CREATE_FLASH_XML_KEY, false);
+    }
+
+    
+    /**
+     * Returns CLI switch: --create-reports
+     */
+    public boolean isCreateReports() {
+        return getBoolean(CLI_CREATE_REPORTS_KEY, false);
+    }
+
+    
+    /**
+     * Returns CLI switch: --create-report
+     */
+    public String getCreateReport() {
+        return getString(CLI_CREATE_REPORT_KEY, null);
     }
 
     

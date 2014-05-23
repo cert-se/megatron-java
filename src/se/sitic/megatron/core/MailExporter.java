@@ -1,5 +1,6 @@
 package se.sitic.megatron.core;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +12,9 @@ import org.apache.log4j.Logger;
 import se.sitic.megatron.db.DbManager;
 import se.sitic.megatron.entity.LogEntry;
 import se.sitic.megatron.entity.MailJob;
+import se.sitic.megatron.entity.NameValuePair;
 import se.sitic.megatron.entity.Organization;
+import se.sitic.megatron.mail.MailAttachment;
 import se.sitic.megatron.mail.MailSender;
 import se.sitic.megatron.parser.LogEntryMapper;
 import se.sitic.megatron.util.AppUtil;
@@ -25,7 +28,8 @@ import se.sitic.megatron.util.StringUtil;
  * Sends mail from log entries in the database. 
  */
 public class MailExporter extends AbstractExporter {
-    private static final Logger log = Logger.getLogger(MailExporter.class);
+    // protected due to acess from innner class 
+    protected static final Logger log = Logger.getLogger(MailExporter.class);
     
     private static final String JOB_INFO_HEADER = "---- Job Info ----" + Constants.LINE_BREAK;
     private static final String MESSAGE_HEADER = "---- Sample Message ----" + Constants.LINE_BREAK;
@@ -54,7 +58,8 @@ public class MailExporter extends AbstractExporter {
     private static final String RTIR_ID = "rtirId";  
     private static final String ORGANIZATION_NAME = "organizationName";
     private static final String EMAIL_ADDRESSES = "emailAddresses";
-
+    private static final String JOB_TYPE_NAME = "jobTypeName";
+    
     private MailJobContext mailJobContext;
     private MailJob mailJob;
     private DbManager dbManager;
@@ -75,6 +80,18 @@ public class MailExporter extends AbstractExporter {
     }
 
     
+    /**
+     * Add, or replace, a global attribute that can be used as a variable 
+     * in a template. 
+     */
+    public void addAdditionalGlobalAttribute(String key, String value) {
+        if (globalAttributeMap == null) {
+            globalAttributeMap = new HashMap<String, String>();
+        }
+        globalAttributeMap.put(key, value);
+    }
+
+
     /**
      * Sends one mail with specified log entries. Note: All log entries must 
      * belong to the same organization.
@@ -160,12 +177,15 @@ public class MailExporter extends AbstractExporter {
             mailJobContext.incNoOfMailsTobeSent(1);
         } else {
             addToSummary(organization, messageData);
-            log.info("Sending abuse mail:" + organization.getEmailAddresses());
+            log.info("Sending abuse mail: " + organization.getEmailAddresses());
             mailSender.clear();
             mailSender.setToAddresses(organization.getEmailAddresses());
             mailSender.setBccAddresses(props.getString(AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null));
             mailSender.setSubject(messageData.getSubject());
             mailSender.setBody(messageData.getBody());
+            if (messageData.getAttachment() != null) {
+                mailSender.addAttachment(messageData.getAttachment());
+            }
             mailSender.send(props);
             mailJobContext.incNoOfSentMails(1);
             mailJobContext.incNoOfSentLogEntries(logEntriesToSend.size());
@@ -212,7 +232,7 @@ public class MailExporter extends AbstractExporter {
                 String msg = "Sending mail job summary email skipped; no to-addresses defined in config.";
                 log.info(msg);
             } else {
-                log.info("Sending summary mail:" + toAddresses);
+                log.info("Sending summary mail: " + toAddresses);
                 String subject = props.getString(AppProperties.MAIL_JOB_SUMMARY_SUBJECT_TEMPLATE_KEY, SUMMARY_SUBJECT_TEMPLATE);
                 subject = AppUtil.replaceVariables(subject, globalAttributeMap, false, AppProperties.MAIL_JOB_SUMMARY_SUBJECT_TEMPLATE_KEY);
                 mailSender.clear();
@@ -276,8 +296,9 @@ public class MailExporter extends AbstractExporter {
         }
         String subject = AppUtil.replaceVariables(template, attributeMap, false, templateName);
 
-        // -- body
-        StringBuilder body = new StringBuilder(512);
+        // -- body and attachment
+        StringBuilder body = new StringBuilder(2*1024);
+        StringBuilder attachment = new StringBuilder(2*1024);
         // header
         templateName = props.getString(AppProperties.MAIL_HEADER_FILE_KEY, null);
         template = readTemplate(AppProperties.MAIL_HEADER_FILE_KEY, langCode, false);
@@ -291,11 +312,35 @@ public class MailExporter extends AbstractExporter {
             String msg = "Mail templates are not specified or debug templates are used. Probably, no templates exists for this job type.";
             throw new MegatronException(msg);
         }
-        template = readTemplate(AppProperties.MAIL_ROW_FILE_KEY, langCode, true);
-        for (Iterator<LogEntry> iterator = logEntries.iterator(); iterator.hasNext(); ) {
-            LogEntry logEntry = iterator.next();
-            LogEntryMapper mapper = new LogEntryMapper(props, rewriter, logEntry);
-            body.append(mapper.replaceVariables(template, false, templateName));
+        template = readTemplate(AppProperties.MAIL_ROW_FILE_KEY, langCode, false);
+        String attachmentTemplateName = props.getString(AppProperties.MAIL_ATTACHMENT_ROW_FILE_KEY, null);
+        String attachmentTemplate = readTemplate(AppProperties.MAIL_ATTACHMENT_ROW_FILE_KEY, langCode, false);
+        if ((template != null) || (attachmentTemplate != null)) {
+            for (Iterator<LogEntry> iterator = logEntries.iterator(); iterator.hasNext(); ) {
+                LogEntry logEntry = iterator.next();
+                LogEntryMapper mapper = new LogEntryMapper(props, rewriter, logEntry);
+                if (template != null) {
+                    String template2 = replaceJobTypeVariables(template, logEntry);
+                    body.append(mapper.replaceVariables(template2, false, templateName));
+                }
+                if (attachmentTemplate != null) {
+                    String template2 = replaceJobTypeVariables(attachmentTemplate, logEntry);
+                    attachment.append(mapper.replaceVariables(template2, false, attachmentTemplateName));
+                }
+            }
+        }
+        // attachment header and footer
+        if (attachment.length() > 0) {
+            templateName = props.getString(AppProperties.MAIL_ATTACHMENT_HEADER_FILE_KEY, null);
+            template = readTemplate(AppProperties.MAIL_ATTACHMENT_HEADER_FILE_KEY, langCode, false);
+            if (template != null) {
+                attachment.insert(0, AppUtil.replaceVariables(template, attributeMap, false, templateName));
+            }
+            templateName = props.getString(AppProperties.MAIL_ATTACHMENT_FOOTER_FILE_KEY, null);
+            template = readTemplate(AppProperties.MAIL_ATTACHMENT_FOOTER_FILE_KEY, langCode, false);
+            if (template != null) {
+                attachment.append(AppUtil.replaceVariables(template, attributeMap, false, templateName));
+            }
         }
         // footer
         templateName = props.getString(AppProperties.MAIL_FOOTER_FILE_KEY, null);
@@ -304,7 +349,7 @@ public class MailExporter extends AbstractExporter {
             body.append(AppUtil.replaceVariables(template, attributeMap, false, templateName));
         }
 
-        return new MessageData(subject, body.toString());
+        return new MessageData(subject, body.toString(), attachment.toString());
     }
 
     
@@ -355,17 +400,55 @@ public class MailExporter extends AbstractExporter {
     }
 
     
+    private String replaceJobTypeVariables(String template, LogEntry logEntry) {
+        String result = template;
+        String jobTypeNameVar = LogEntryMapper.VARIABLE_PREFIX + JOB_TYPE_NAME; 
+        if (template.indexOf(jobTypeNameVar) != -1) {
+            // -- fetch jobType.name
+            String replaceWith = null;
+            try {
+                replaceWith = logEntry.getJob().getJobType().getName();
+            } catch (RuntimeException e) {
+                replaceWith = "[Undefined]";
+                log.error("Cannot get job_type.name for log_entry.", e);
+            }
+            // -- replace if value is in mapping list
+            List<NameValuePair> mappingList = props.getNameValuePairList(AppProperties.EXPORT_JOB_TYPE_NAME_MAPPER_KEY, null);
+            if ((mappingList != null) && (mappingList.size() > 0)) {
+                for (Iterator<NameValuePair> iterator = mappingList.iterator(); iterator.hasNext(); ) {
+                    NameValuePair nameValuePair = iterator.next();
+                    if (nameValuePair.getName().equals(replaceWith)) {
+                        replaceWith = nameValuePair.getValue();
+                    }
+                }
+            }
+            result = StringUtil.replace(template, jobTypeNameVar, replaceWith);
+        }
+        return result;
+    }
+
+
     /**
-     * Entiry class for the content in an email.
+     * Entity class for the content in an email.
      */
     private class MessageData {
         private String subject;
         private String body;
-
+        private MailAttachment attachment;
         
-        public MessageData(String subject, String body) {
+        public MessageData(String subject, String body, String attachment) {
             this.subject = subject;
             this.body = body;
+            
+            if (!StringUtil.isNullOrEmpty(attachment)) {
+                String charSet = props.getString(AppProperties.EXPORT_CHAR_SET_KEY, Constants.UTF8);
+                String attachmentName = props.getString(AppProperties.MAIL_ATTACHMENT_NAME_KEY, "abuse-report.csv");
+                try {
+                    this.attachment = new MailAttachment(attachment.getBytes(charSet), Constants.MIME_TEXT_PLAIN, attachmentName);
+                } catch (UnsupportedEncodingException e) {
+                    log.error("Cannot create attachment due to invalid character set: " + charSet, e);
+                }
+            }
         }
 
         
@@ -376,6 +459,11 @@ public class MailExporter extends AbstractExporter {
 
         public String getBody() {
             return body;
+        }
+        
+        
+        public MailAttachment getAttachment() {
+            return attachment;
         }
     }
 

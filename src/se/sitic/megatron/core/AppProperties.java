@@ -20,6 +20,7 @@ import java.util.regex.PatternSyntaxException;
 import org.apache.log4j.Logger;
 
 import se.sitic.megatron.entity.NameValuePair;
+import se.sitic.megatron.report.IReportGenerator;
 import se.sitic.megatron.util.Constants;
 import se.sitic.megatron.util.FileUtil;
 import se.sitic.megatron.util.StringUtil;
@@ -83,6 +84,7 @@ public class AppProperties {
     public static final String EXPORT_CHAR_SET_KEY = "export.charSet";
     public static final String EXPORT_TIMESTAMP_FORMAT_KEY = "export.timestampFormat";
     public static final String EXPORT_REWRITERS_KEY = "export.rewriters";
+    public static final String EXPORT_JOB_TYPE_NAME_MAPPER_KEY = "export.jobTypeNameMapper";    
 
     // Mail
     public static final String MAIL_SMTP_HOST_KEY = "mail.smtpHost";
@@ -104,6 +106,10 @@ public class AppProperties {
     public static final String MAIL_HEADER_FILE_KEY = "mail.headerFile";
     public static final String MAIL_ROW_FILE_KEY = "mail.rowFile";
     public static final String MAIL_FOOTER_FILE_KEY = "mail.footerFile";
+    public static final String MAIL_ATTACHMENT_HEADER_FILE_KEY = "mail.attachmentHeaderFile";
+    public static final String MAIL_ATTACHMENT_ROW_FILE_KEY = "mail.attachmentRowFile";
+    public static final String MAIL_ATTACHMENT_FOOTER_FILE_KEY = "mail.attachmentFooterFile";    
+    public static final String MAIL_ATTACHMENT_NAME_KEY = "mail.attachmentName";
     public static final String MAIL_TIMESTAMP_FORMAT_KEY = "mail.timestampFormat";
     public static final String MAIL_RAISE_ERROR_FOR_DEBUG_TEMPLATE_KEY = "mail.raiseErrorForDebugTemplate";
     
@@ -244,6 +250,10 @@ public class AppProperties {
     public static final String REPORT_GEOLOCATION_JOB_TYPE_KILL_LIST_KEY = "report.geolocation.jobTypeKillList";
     public static final String REPORT_GEOLOCATION_ORGANIZATION_TYPE_KILL_LIST_KEY = "report.geolocation.organizationTypeKillList";
     public static final String REPORT_GEOLOCATION_ORGANIZATION_TYPE_NAME_MAPPER_KEY = "report.geolocation.organizationTypeNameMapper";
+    public static final String REPORT_ORGANIZATION_NO_OF_HOURS_KEY = "report.organization.noOfHours";
+    public static final String REPORT_ORGANIZATION_JOB_TYPES_KEY = "report.organization.jobTypes";
+    public static final String REPORT_ORGANIZATION_RECIPIENTS_KEY = "report.organization.recipients";
+    
     
     // Import
     public static final String CONTACTS_IMPORT_FILE_KEY = "import.dataFile";
@@ -523,6 +533,7 @@ public class AppProperties {
     /**
      * Parsers specified command line arguments and adds them to properties map.
      */
+    @SuppressWarnings("unused")
     private void parseCommandLine(String[] args) throws MegatronException, CommandLineParseException {
         if (args == null) {
             return;
@@ -671,7 +682,25 @@ public class AppProperties {
                 } else if (arg.equals("--create-rss")) {
                     globalProps.put(TypedProperties.CLI_CREATE_STATS_RSS_KEY, TRUE);
                 } else if (arg.equals("--create-xml")) {
+                    // --create-xml is deprecated. Use --create-reports instead. 
                     globalProps.put(TypedProperties.CLI_CREATE_FLASH_XML_KEY, TRUE);
+                } else if (arg.equals("--create-reports")) {
+                    globalProps.put(TypedProperties.CLI_CREATE_REPORTS_KEY, TRUE);
+                } else if (arg.equals("--create-report")) {
+                    ++i;
+                    if (i == args.length) {
+                        throw new CommandLineParseException("Missing argument to " + arg);
+                    }
+                    String className = args[i];
+                    try {
+                        Class<?> reportGeneratorClass = Class.forName(className);
+                        IReportGenerator reportGenerator = (IReportGenerator)reportGeneratorClass.newInstance();
+                    } catch (Exception e) {
+                        // ClassNotFoundException, InstantiationException, IllegalAccessException
+                        String msg = "Argument for --create-report must be a Java-class that implements IReportGenerator: " + className;
+                        throw new MegatronException(msg, e);
+                    }
+                    globalProps.put(TypedProperties.CLI_CREATE_REPORT_KEY, className);
                 } else if (arg.equals("--ui-org")) {
                     globalProps.put(TypedProperties.CLI_UI_ORGANIZATIONS, TRUE);                    
                 } else if (arg.equals("--mail-dry-run") || arg.equals("-1")) {

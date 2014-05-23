@@ -78,7 +78,8 @@ public class Megatron {
         "  --add-addresses      Add email addresses listed in specified file." + Constants.LINE_BREAK +
         "  --delete-addresses   Delete email addresses listed in specified file." + Constants.LINE_BREAK +
         "  --create-rss         Create RSS with Megatron statistics."+ Constants.LINE_BREAK +
-        "  --create-xml         Create XML report files for graphs."+ Constants.LINE_BREAK +
+        "  --create-reports     Create report files (json, xml, html, etc.)."+ Constants.LINE_BREAK +
+        "  --create-report      Run a specific report."+ Constants.LINE_BREAK +
         "  --ui-org             Administration of organizations (command line interface)." + Constants.LINE_BREAK +
         "" + Constants.LINE_BREAK +
         "Examples:" + Constants.LINE_BREAK +
@@ -102,6 +103,8 @@ public class Megatron {
         "    megatron.sh --add-addresses new-addresses.txt" + Constants.LINE_BREAK +
         "  Start admin-UI for organizations, IP-blocks, ASNs, and domain names." + Constants.LINE_BREAK +
         "    megatron.sh --ui-org" + Constants.LINE_BREAK +
+        "  Run the organization report (emails an abuse-report to selected organizations)." + Constants.LINE_BREAK +
+        "    megatron.sh --create-report se.sitic.megatron.report.OrganizationReportGenerator" + Constants.LINE_BREAK +
         "  Process files in the slurp directory and exports them to a different format:" + Constants.LINE_BREAK +
         "    megatron.sh --slurp --no-db --export" + Constants.LINE_BREAK +
         "  Process files in the slurp directory and save result in the database:" + Constants.LINE_BREAK +
@@ -304,8 +307,14 @@ public class Megatron {
         } else if (globalProps.isCreateStatsRss()) {
             StatsRssGenerator generator = new StatsRssGenerator(globalProps);
             generator.createFile();
-        } else if (globalProps.isCreateFlashXml()) {
-            String classNames[] = globalProps.getStringList(AppProperties.REPORT_CLASS_NAMES_KEY, new String[0]);
+        } else if (globalProps.isCreateFlashXml() || globalProps.isCreateReports() || (globalProps.getCreateReport() != null)) {
+            String classNames[] = null;
+            if (globalProps.getCreateReport() != null) {
+                classNames = new String[1];
+                classNames[0] = globalProps.getCreateReport();
+            } else {
+                classNames = globalProps.getStringList(AppProperties.REPORT_CLASS_NAMES_KEY, new String[0]);
+            }
             List<IReportGenerator> reportGenerators = createReportGenerators(classNames);
             if (reportGenerators.isEmpty()) {
                 throw new MegatronException("No report generators specified. See '" + AppProperties.REPORT_CLASS_NAMES_KEY + "'." );
