@@ -17,6 +17,7 @@ v1.0.11 [to be released]
 
 * Improved: The following job types (configurations) are improved:
     - shadowserver-sinkhole-http-drone
+    - ip-flowing
 
 * New: Organization report is target for organizations with a huge volume of 
   abuse cases, e.g. ISPs and web hotels. Instead of getting one email per data 
