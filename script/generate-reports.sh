@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This script creates Megatron reports (--create-xml) and using a semaphore 
+# This script creates Megatron reports (--create-reports) and using a semaphore 
 # file to signal when it is safe to copy the generated files.
 
 export SEMAPHORE_FILE=/var/megatron/flash-xml/reports-generated-successfully
@@ -14,7 +14,7 @@ else
     rm $SEMAPHORE_FILE
   fi
   
-  /usr/local/megatron/bin/megatron.sh --create-xml
+  /usr/local/megatron/bin/megatron.sh --create-reports
   MEGATRON_EXIT_CODE=${?}
   if [ $MEGATRON_EXIT_CODE -eq "0" ] ; then
     echo `date`: "Megatron Finished Successfully; reports generated"
