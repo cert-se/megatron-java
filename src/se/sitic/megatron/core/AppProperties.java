@@ -661,6 +661,8 @@ public class AppProperties {
                     globalProps.put(TypedProperties.CLI_JOB_INFO_KEY, TRUE);
                 } else if (arg.equals("--no-db") || arg.equals("-n")) {
                     globalProps.put(TypedProperties.CLI_NO_DB_KEY, TRUE);
+                } else if (arg.equals("--stdout") || arg.equals("-S")) {
+                    globalProps.put(TypedProperties.CLI_STDOUT_KEY, TRUE);
                 } else if (arg.equals("--import-contacts")) {
                     globalProps.put(TypedProperties.CLI_IMPORT_CONTACTS_KEY, TRUE);
                 } else if (arg.equals("--import-bgp")) {

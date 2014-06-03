@@ -73,8 +73,13 @@ public class FileExporter extends AbstractExporter {
 
     
     public void writeHeader(Job job) throws MegatronException {
-        log.info("Writing export file: " + file.getAbsolutePath());
-        openFile();
+        if (props.isStdout()) {
+            log.info("Writing export to stdout.");
+            out = null;
+        } else {
+            log.info("Writing export file: " + file.getAbsolutePath());
+            openFile();
+        }
         String template = readTemplate(AppProperties.EXPORT_HEADER_FILE_KEY, false);
         if (template != null) {
             String templateName = props.getString(AppProperties.EXPORT_HEADER_FILE_KEY, null);
@@ -128,11 +133,15 @@ public class FileExporter extends AbstractExporter {
     
     
     public void writeFinishedMessageToLog() {
-        String msg = "Export file created: @filename@ (@size@ bytes).";
-        msg = StringUtil.replace(msg, "@filename@", "" + file.getAbsolutePath());
-        msg = StringUtil.replace(msg, "@size@", "" + file.length());
-        jobContext.writeToConsole(msg);
-        log.info(msg);
+        if (props.isStdout()) {
+            log.info("Export to stdout finished.");
+        } else {
+            String msg = "Export file created: @filename@ (@size@ bytes).";
+            msg = StringUtil.replace(msg, "@filename@", "" + file.getAbsolutePath());
+            msg = StringUtil.replace(msg, "@size@", "" + file.length());
+            jobContext.writeToConsole(msg);
+            log.info(msg);
+        }
     }
     
     
@@ -152,15 +161,20 @@ public class FileExporter extends AbstractExporter {
     protected void init() throws MegatronException {
         super.init();
 
-        String dirName = props.getString(AppProperties.OUTPUT_DIR_KEY, "tmp/export");
         String rowFilename = props.getString(AppProperties.EXPORT_ROW_FILE_KEY, ".txt");
         String ext = rowFilename.endsWith(".xml") ? ".xml" : ".txt";
-        String filename = jobContext.getJob().getName();
-        if (filename.indexOf('.') == -1) {
-            filename = filename + ext;
+        if (props.isStdout()) {
+            this.file = null;
+            this.xmlFormat = ext.endsWith(".xml");
+        } else {
+            String filename = jobContext.getJob().getName();
+            if (filename.indexOf('.') == -1) {
+                filename = filename + ext;
+            }
+            String dirName = props.getString(AppProperties.OUTPUT_DIR_KEY, "tmp/export");
+            this.file = new File(dirName, filename);
+            this.xmlFormat = file.getName().toLowerCase().endsWith(".xml");
         }
-        this.file = new File(dirName, filename);
-        this.xmlFormat = file.getName().toLowerCase().endsWith(".xml");
     }
 
     
@@ -183,8 +197,10 @@ public class FileExporter extends AbstractExporter {
         addString(result, FILE_HASH, job.getFileHash());        
         addTimestamp(result, JOB_STARTED, job.getStarted());        
         addTimestamp(result, EXPORT_STARTED, SqlUtil.convertTimestampToSec(jobContext.getStartedTimestamp()));        
-        addString(result, EXPORT_FILENAME, file.getName());        
-        addString(result, EXPORT_FULL_FILENAME, file.getAbsolutePath());        
+        String filename = props.isStdout() ? "stdout" : file.getName(); 
+        addString(result, EXPORT_FILENAME, filename);        
+        String fullFilename = props.isStdout() ? "" : file.getAbsolutePath(); 
+        addString(result, EXPORT_FULL_FILENAME, fullFilename);        
 
         return result;
     }
@@ -200,11 +216,16 @@ public class FileExporter extends AbstractExporter {
             }
         }
         
-        try {
-            out.write(str);
-        } catch (IOException e) {
-            String msg = "Cannot write to export file: " + file.getAbsolutePath();
-            throw new MegatronException(msg, e);
+        if (props.isStdout()) {
+            str = StringUtil.removeSuffix(str, Constants.LINE_BREAK);
+            jobContext.writeToConsole(str);
+        } else {
+            try {
+                out.write(str);
+            } catch (IOException e) {
+                String msg = "Cannot write to export file: " + file.getAbsolutePath();
+                throw new MegatronException(msg, e);
+            }
         }
     }
 

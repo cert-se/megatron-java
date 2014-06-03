@@ -504,7 +504,12 @@ public class JobManager {
             String progressStr = format.format(progress);
             String lineInfoStr = lineNo + " of " + noOfLines + " lines";
             String linesPerSecondStr = format.format(linesPerSecond);
-            jobContext.writeToConsole(progressStr + "% (" + lineInfoStr + ", " + linesPerSecondStr + " lines/second)");
+            String msg = progressStr + "% (" + lineInfoStr + ", " + linesPerSecondStr + " lines/second)";
+            if (props.isStdout()) {
+                log.info(msg);
+            } else {
+                jobContext.writeToConsole(msg);
+            }
             lastProgressPrintLineNo = lineNo;
             lastProgressPrintTime = now;
         }
@@ -590,7 +595,9 @@ public class JobManager {
             "@noOfHighPriorityEntries@, Exported Entries: @noOfExportedEntries@, Filtered Lines: @noOfFilteredLines@, Parse errors: @noOfParseException@, Duration: @duration@";
         String linesAfterProcessorTemplate = "Lines (after @action@): @lineNoAfterProcessor@, ";
         String msg = createFinishedMessage(template, linesAfterProcessorTemplate);
-        jobContext.writeToConsole(msg);
+        if (!props.isStdout() || (jobContext.getNoOfParseExceptions() > 0)) {
+            jobContext.writeToConsole(msg);
+        }
         log.info(msg);
         // -- issue warning that file contains old timestamps?
         if (issueTimestampWarning()) {

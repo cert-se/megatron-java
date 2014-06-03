@@ -37,6 +37,8 @@ v1.0.11 [to be released]
 * New: Added rewriters for both parser and export (parser.rewriters, 
   export.rewriters). Example: can rewrite URLs from "http" to "hxxp",
   or mask IP addresses (10.20.x.x).
+  
+* New: Writes file export to stdout instead of to a file (--stdout).
 
 * New: Added property (rss.job.enabled) to turn on/off writing to job RSS file.
 
@@ -83,6 +85,7 @@ v1.0.11 [to be released]
   - Deprecated: --create-xml (use --create-reports instead)
   - New: --create-reports
   - New: --create-report
+  - New: --stdout
   
 * Config changes:
     - New: rss.job.enabled

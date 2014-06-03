@@ -241,7 +241,12 @@ public class MultithreadedDnsProcessor implements IFileProcessor {
             String progressStr = format.format(progress);
             String lineInfoStr = lineNo + " of " + noOfLines + " lines";
             String linesPerSecondStr = format.format(linesPerSecond);
-            jobContext.writeToConsole("DNS Prefetch: " + progressStr + "% (" + lineInfoStr + ", " + linesPerSecondStr + " lines/second)");
+            String msg = "DNS Prefetch: " + progressStr + "% (" + lineInfoStr + ", " + linesPerSecondStr + " lines/second)"; 
+            if (props.isStdout()) {
+                log.info(msg);
+            } else {
+                jobContext.writeToConsole(msg);
+            }
             lastProgressPrintLineNo = lineNo;
             lastProgressPrintTime = now;
         }

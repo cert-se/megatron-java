@@ -43,6 +43,7 @@ public class TypedProperties {
     public static final String CLI_DAYS_IN_LIST_JOBS_KEY = "cli.daysInListJobs";
     public static final String CLI_JOB_INFO_KEY = "cli.jobInfo";
     public static final String CLI_NO_DB_KEY = "cli.noDb";
+    public static final String CLI_STDOUT_KEY = "cli.stdout";
     public static final String CLI_IMPORT_CONTACTS_KEY = "cli.importContacts";
     public static final String CLI_IMPORT_BGP_KEY = "cli.importBgp";
     public static final String CLI_UPDATE_NETNAME_KEY = "cli.updateNetname";
@@ -466,6 +467,14 @@ public class TypedProperties {
      */
     public boolean isNoDb() {
         return getBoolean(CLI_NO_DB_KEY, false);
+    }
+
+    
+    /**
+     * Returns CLI switch: --stdout
+     */
+    public boolean isStdout() {
+        return getBoolean(CLI_STDOUT_KEY, false);
     }
 
     

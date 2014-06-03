@@ -66,6 +66,7 @@ public class Megatron {
         "  -P, --list-prios     List priorities." + Constants.LINE_BREAK +
         "  -I, --job-info       Print info about specified log job." + Constants.LINE_BREAK +
         "  -n, --no-db          Skip writes to the database."  + Constants.LINE_BREAK +
+        "  -S, --stdout         Writes to stdout instead of export file."  + Constants.LINE_BREAK +
         "  -1, --mail-dry-run   Create a mail report but does not send any mail." + Constants.LINE_BREAK +
         "  -2, --mail-dry-run2  As '--mail-dry-run' but more verbose." + Constants.LINE_BREAK +
         "  -m, --mail           Send mails for a job."  + Constants.LINE_BREAK +
