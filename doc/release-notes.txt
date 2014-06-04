@@ -7,6 +7,8 @@ v1.0.11 [to be released]
     - ddos-amplification
     - ip-flowing-fast
     - ip-flowing-verbose
+    - megatron-whois-ip
+    - megatron-whois-hostname
     - shadowserver-openresolver
     - shadowserver-qotd
     - shadowserver-chargen
@@ -29,6 +31,10 @@ v1.0.11 [to be released]
 * New: MultithreadedDnsProcessor makes DNS lookups and reverse lookups in 
   several threads to increase performance. See the following configurations:
   ip-flowing and ip-flowing-verbose. 
+
+* New: --whois takes a list of IPs, hostnames, or URLs and print the following
+  information to stdout for each item:  IP, AS, CC, hostname, AS name, and 
+  organization. Items may be specified in a file. 
 
 * New: Filter log entries by occurrence (OccurrenceFilter), e.g. "include first
   20 matches of the same IP address" or "include log entries with more than 10 
@@ -86,6 +92,7 @@ v1.0.11 [to be released]
   - New: --create-reports
   - New: --create-report
   - New: --stdout
+  - New: --whois  
   
 * Config changes:
     - New: rss.job.enabled

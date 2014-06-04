@@ -18,6 +18,7 @@ import se.sitic.megatron.core.MegatronException;
 import se.sitic.megatron.core.NetnameUpdater;
 import se.sitic.megatron.core.StatsRssGenerator;
 import se.sitic.megatron.core.TypedProperties;
+import se.sitic.megatron.core.WhoisWriter;
 import se.sitic.megatron.db.DbManager;
 import se.sitic.megatron.db.ImportBgpTable;
 import se.sitic.megatron.db.ImportSystemData;
@@ -55,6 +56,7 @@ public class Megatron {
         "  -h, --help           Print this help message." + Constants.LINE_BREAK +
         "  -s, --slurp          Process files in the slurp directory." + Constants.LINE_BREAK +
         "  -l, --list-jobs      List processed log jobs. No. of days may be specified." + Constants.LINE_BREAK +
+        "  -w, --whois          Print whois report for specified IPs or hostnames." + Constants.LINE_BREAK +
         "  -e, --export         Export log records to file." + Constants.LINE_BREAK +
         "  -d, --delete         Delete job including log records." + Constants.LINE_BREAK +
         "  -D, --delete-all     Delete job plus mail jobs." + Constants.LINE_BREAK +
@@ -102,9 +104,13 @@ public class Megatron {
         "    megatron.sh --export --job-type whois-cymru-verbose --no-db file1.txt file2.txt" + Constants.LINE_BREAK +
         "  Add email addresses listed in file to the database:" + Constants.LINE_BREAK +
         "    megatron.sh --add-addresses new-addresses.txt" + Constants.LINE_BREAK +
-        "  Start admin-UI for organizations, IP-blocks, ASNs, and domain names." + Constants.LINE_BREAK +
+        "  Start admin-UI for organizations, IP-blocks, ASNs, and domain names:" + Constants.LINE_BREAK +
         "    megatron.sh --ui-org" + Constants.LINE_BREAK +
-        "  Run the organization report (emails an abuse-report to selected organizations)." + Constants.LINE_BREAK +
+        "  Print whois report for specified IPs (hostnames or URLs will also work):" + Constants.LINE_BREAK +
+        "    megatron.sh --whois 192.121.218.90 1.1.1.1 2.2.2.2 8.8.8.8" + Constants.LINE_BREAK +
+        "  Print whois report for specified file with IPs, hostnames, or URLs:" + Constants.LINE_BREAK +
+        "    megatron.sh --whois infected.txt" + Constants.LINE_BREAK +
+        "  Run the organization report (emails an abuse-report to selected organizations):" + Constants.LINE_BREAK +
         "    megatron.sh --create-report se.sitic.megatron.report.OrganizationReportGenerator" + Constants.LINE_BREAK +
         "  Process files in the slurp directory and exports them to a different format:" + Constants.LINE_BREAK +
         "    megatron.sh --slurp --no-db --export" + Constants.LINE_BREAK +
@@ -240,6 +246,13 @@ public class Megatron {
     private void processCommands() throws MegatronException {
         TypedProperties globalProps = AppProperties.getInstance().getGlobalProperties();
 
+        if (globalProps.isWhois()) {
+            // inputFiles contains IPs and hostnames
+            WhoisWriter writer = new WhoisWriter(globalProps, true);
+            writer.execute();
+            return;
+        }
+        
         List<String> inputFiles = AppProperties.getInstance().getInputFiles();
         if (inputFiles.size() > 0) {
             for (Iterator<String> iterator = inputFiles.iterator(); iterator.hasNext();) {
@@ -256,12 +269,10 @@ public class Megatron {
             writer.execute();
         } else if (globalProps.isListPrios()) {
             listPrio(globalProps);
-        } 
-        else if (globalProps.isJobInfo()) {
+        } else if (globalProps.isJobInfo()) {
             JobInfoWriter writer = new JobInfoWriter(globalProps);
             writer.execute();
-        } 
-        else if (globalProps.isSlurp()) {
+        } else if (globalProps.isSlurp()) {
             JobScheduler.getInstance().processSlurpDirectory();
         } else if (globalProps.isExport()) {
             String jobName = globalProps.getJob();

@@ -645,6 +645,15 @@ public class AppProperties {
                         }
                         globalProps.put(TypedProperties.CLI_DAYS_IN_LIST_JOBS_KEY, val);
                     }
+                } else if (arg.equals("--whois") || arg.equals("-w")) {
+                    globalProps.put(TypedProperties.CLI_WHOIS_KEY, TRUE);
+                    if (++i >= args.length) {
+                        throw new CommandLineParseException("Missing list of IPs and hostnames (or file) to argument " + arg);
+                    }
+                    while (i < args.length) {
+                        inputFiles.add(args[i]);                        
+                        ++i;
+                    }
                 }  else if (arg.equals("--job-info") || arg.equals("-I")) {
                     // job specified after switch? 
                     int nextIndex = i + 1;

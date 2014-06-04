@@ -40,6 +40,7 @@ public class TypedProperties {
     public static final String CLI_PRIO_KEY = "cli.prio";    
     public static final String CLI_LIST_PRIOS_KEY = "cli.listPrios";
     public static final String CLI_LIST_JOBS_KEY = "cli.listJobs";
+    public static final String CLI_WHOIS_KEY = "cli.whois";    
     public static final String CLI_DAYS_IN_LIST_JOBS_KEY = "cli.daysInListJobs";
     public static final String CLI_JOB_INFO_KEY = "cli.jobInfo";
     public static final String CLI_NO_DB_KEY = "cli.noDb";
@@ -459,6 +460,14 @@ public class TypedProperties {
      */
     public boolean isJobInfo() {
         return getBoolean(CLI_JOB_INFO_KEY, false);
+    }
+
+    
+    /**
+     * Returns CLI switch: --whois
+     */
+    public boolean isWhois() {
+        return getBoolean(CLI_WHOIS_KEY, false);
     }
 
     
