@@ -14,10 +14,9 @@ fi
 # Use UTF-8 (e.g. in generated filenames) 
 export LC_ALL=en_US.UTF-8
 
-#export SITIC_JAVA=/usr/local/jdk-1.5.0/bin/java
 #export SITIC_JAVA=/usr/local/jdk-1.5.0/jre/bin/java
 export SITIC_JAVA=/usr/local/jdk-1.7.0/jre/bin/java
-export SITIC_JAVA_OPTIONS="-server -Xmx512M"
+export SITIC_JAVA_OPTIONS="-server -Xmx2048M"
 # export SITIC_JCONSOLE_OPTIONS="-Dcom.sun.management.jmxremote.port=51010 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 export SITIC_JCONSOLE_OPTIONS=
 export SITIC_LIB=/usr/local/megatron/lib
@@ -26,7 +25,8 @@ export SITIC_HIBERNATE_CLASSPATH=$SITIC_CONF:$SITIC_LIB/hibernate3.jar:$SITIC_LI
 export SITIC_CLASSPATH=$SITIC_HIBERNATE_CLASSPATH:$SITIC_LIB/sitic-megatron.jar:$SITIC_LIB/log4j.jar:$SITIC_LIB/mysql-connector.jar:$SITIC_LIB/geoip.jar:$SITIC_LIB/mail.jar:$SITIC_LIB/rome.jar:$SITIC_LIB/jdom.jar:$SITIC_LIB/dnsjava.jar:$SITIC_LIB/joda-time.jar:$SITIC_LIB/commons-net.jar
 
 ALL_PARAMS=$*
-SKIP_LOCKFILE=$(echo $ALL_PARAMS | egrep '.*--help.*|.*--version.*|.*--list-prios.*|.*--list-jobs.*|.*--job-info.*|.*--ui-org.*' | wc -l | sed 's/ //g')
+SKIP_LOCKFILE=$(echo $ALL_PARAMS | egrep '.*--help.*|.*--version.*|.*--list-prios.*|.*--list-jobs.*|.*--job-info.*|.*--ui-org.*|.*--whois.*' | wc -l | sed 's/ //g')
+QUIET=$(echo $ALL_PARAMS | egrep '.*--stdout.*|.*--whois.*' | wc -l | sed 's/ //g')
 
 if [ $SKIP_LOCKFILE == "0" ] ; then
   if test -f /var/megatron/megatron.pid ; then
@@ -45,15 +45,21 @@ if [ $SKIP_LOCKFILE == "0" ] ; then
     fi
   else
     echo $$ > /var/megatron/megatron.pid
-    echo `date`: "Megatron Starts (with lock-file)." PID=`more /var/megatron/megatron.pid`
+    if [ $QUIET = 0 ]; then
+      echo `date`: "Megatron Starts (with lock-file)." PID=`more /var/megatron/megatron.pid`
+    fi
   fi
 else
-    echo `date`: "Megatron Starts." PID=$$
+    if [ $QUIET = 0 ]; then
+      echo `date`: "Megatron Starts." PID=$$
+    fi
 fi
 
 $SITIC_JAVA $SITIC_JAVA_OPTIONS $SITIC_JCONSOLE_OPTIONS -cp $SITIC_CLASSPATH -Dfile.encoding=UTF-8 -Dmegatron.configfile=/etc/megatron/megatron-globals.properties Megatron $ALL_PARAMS
 MEGATRON_EXIT_CODE=$?
-echo `date`: "Megatron Finished."
+if [ $QUIET = 0 ]; then
+  echo `date`: "Megatron Finished."
+fi
 
 if [ $SKIP_LOCKFILE == "0" ] ; then
   rm /var/megatron/megatron.pid
