@@ -68,9 +68,9 @@ command line is only necessary in special cases.
 ### Download
 
 Binaries, config files, and source code are included in this tarball:
-* [megatron-pub-1.0.10.tar.gz](https://www.cert.se/megatron/megatron-pub-1.0.10.tar.gz)
-<pre>MD5: 2ee0e4a433eb21c64cdabc0a66eadffd
-SHA1: ab4c38019f56d84a43e3eb675ede0fba3c2bd05c</pre>
+* [megatron-pub-1.0.11.tar.gz](https://www.cert.se/megatron/megatron-pub-1.0.11.tar.gz)
+<pre>MD5: 52822f1f87164a3d7454b8e86d83b6d0
+SHA1: 644a18e4d5abf9f6f90cee7ebf71a98b2663d3ed</pre>
 * [Release Notes](https://github.com/cert-se/megatron-java/blob/master/doc/release-notes.txt)
 
 

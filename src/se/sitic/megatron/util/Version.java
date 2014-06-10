@@ -12,9 +12,9 @@ package se.sitic.megatron.util;
  */
 public class Version {
     private final static String APP_NAME = "Megatron";
-    private final static String APP_VERSION = "1.0.10";
-    private final static String APP_TAG = "none";
-    private final static String BUILD_DATE = "2013-07-08 12:55:55";
+    private final static String APP_VERSION = "1.0.11";
+    private final static String APP_TAG = "v1.0.11";
+    private final static String BUILD_DATE = "2014-06-10 08:22:24";
     private final static String ANT_VERSION = "Apache Ant(TM) version 1.8.4 compiled on May 22 2012";
     private final static String ANT_JAVA_VERSION = "1.7";
 
