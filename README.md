@@ -14,7 +14,8 @@ Major features:
 * Filtering: a wide variety of filters can be used to filter input records.
 * Data decoration: data may be added to the record before it is saved to the database. Types of lookups: 
   IP to ASN, IP to country code, IP to hostname, hostname to IP, URL to hostname, hostname to 
-  country code, and IP to geolocation.
+  country code, and IP to geolocation (longitude, latitude, and city). Three of MaxMind's databases
+  are supported (ASN, City, and Country).
 * Performance: large data volumes can be handled. All lookups except DNS queries are local, for instance 
   ASN lookups uses database queries by importing a BGP routing table to the database.
 
@@ -30,6 +31,19 @@ $ megatron.sh --job-type ip-flowing --export --no-db test-data/multiple-ips-per-
 As above but output file is tab-separated and contains geolocation data:
 ```
 $ megatron.sh --job-type ip-flowing-verbose --export --no-db test-data/multiple-ips-per-line3.log
+```
+
+Prints information about two IP addresses (hostnames or URLs works as well):
+```
+$ megatron.sh --whois 130.238.7.133 217.21.237.35
+IP              | AS     | CC | Hostname                                      | AS Name                                       | Organization
+130.238.7.133   | 1653   | SE | live.webb.uu.se                               | SUNET Swedish University Network              | Uppsala universitet
+217.21.237.35   | 29672  | SE | stockholm.se                                  | S:t Erik Kommunikation AB                     | Stockholms stad
+```
+
+Prints information about URLs in specified file:
+```
+$ megatron.sh --whois infection-urls.txt
 ```
 
 Process file and save result in the database:
@@ -72,6 +86,7 @@ To get a grasp of Megatron, we recommend skimming the following:
 * Database schema: [megatron-schema.sql](https://github.com/cert-se/megatron-java/blob/master/sql/megatron-schema.sql)
 * Configuration files: [conf/dev/megatron-globals.properties](https://github.com/cert-se/megatron-java/blob/master/conf/dev/megatron-globals.properties) 
 and [conf/job-type/*](https://github.com/cert-se/megatron-java/tree/master/conf/job-type)
+* The [FAQ](https://github.com/cert-se/megatron-java/wiki/Megatron-FAQ)
 * The source code
 
 Other resources are [this presentation](https://www.cert.se/megatron/megatron-telia2011.pdf) and the [projects Wiki](https://github.com/cert-se/megatron-java/wiki).
