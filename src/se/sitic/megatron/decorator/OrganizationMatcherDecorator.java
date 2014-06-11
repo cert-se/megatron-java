@@ -81,7 +81,7 @@ public class OrganizationMatcherDecorator implements IDecorator {
         boolean highPriorityEntryFound = false;
         DbManager dbManager = jobContext.getDbManager();
         
-        orgId = findOrganizationId(logEntry.getIpAddress(), logEntry.getHostname(), logEntry.getAsn());
+        orgId = findOrganizationId(logEntry.getIpAddress(), logEntry.getHostname(), getAsn(true, logEntry));
         if (orgId == -1) {
             orgId = findOrganizationId(logEntry.getIpRangeStart(), logEntry.getIpRangeEnd()); 
         }
@@ -96,7 +96,7 @@ public class OrganizationMatcherDecorator implements IDecorator {
             }
         }
 
-        orgId = findOrganizationId(logEntry.getIpAddress2(), logEntry.getHostname2(), logEntry.getAsn2());
+        orgId = findOrganizationId(logEntry.getIpAddress2(), logEntry.getHostname2(), getAsn(false, logEntry));
         if (orgId != -1) {
         	Organization organization2 = dbManager.getOrganization(orgId);
             logEntry.setOrganization2(organization2);
@@ -247,6 +247,29 @@ public class OrganizationMatcherDecorator implements IDecorator {
         matchHostname = jobContext.getProps().getBoolean(AppProperties.DECORATOR_MATCH_HOSTNAME_KEY, true);
         matchAsn = jobContext.getProps().getBoolean(AppProperties.DECORATOR_MATCH_ASN_KEY, true);
         checkHighPriorityOrganization = true;
+    }
+
+    
+    private Long getAsn(boolean usePrimaryOrg, LogEntry logEntry) {
+        Long result = null;
+        Long asn = usePrimaryOrg ? logEntry.getAsn() : logEntry.getAsn2();
+        String key = usePrimaryOrg ? AsnGeoIpDecorator.AS_NUMBER : AsnGeoIpDecorator.AS_NUMBER2;
+        if ((asn != null) && (asn.longValue() != 0L)) {
+            result = asn;
+        } else {
+            Map<String, String> additionalItems = logEntry.getAdditionalItems();
+            if (additionalItems != null) {
+                String longStr = additionalItems.get(key);
+                if (longStr != null) {
+                    try {
+                        result = new Long(longStr);
+                    } catch (NumberFormatException e) {
+                        log.error("Cannot parse ASN: " + longStr, e);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     

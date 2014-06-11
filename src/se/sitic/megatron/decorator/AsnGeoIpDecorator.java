@@ -30,10 +30,10 @@ import se.sitic.megatron.util.AppUtil;
 public class AsnGeoIpDecorator implements IDecorator {
     private static final Logger log = Logger.getLogger(AsnGeoIpDecorator.class);
 
-    private static final String AS_NUMBER = "asn";
-    private static final String AS_NUMBER2 = "asn2";
-    private static final String AS_NAME = "asName";
-    private static final String AS_NAME2 = "asName2";
+    public static final String AS_NUMBER = "asn";
+    public static final String AS_NUMBER2 = "asn2";
+    public static final String AS_NAME = "asName";
+    public static final String AS_NAME2 = "asName2";
     
     private GeoIpAsnManager geoIpAsnManager;
     private boolean useAsnInLogEntry;

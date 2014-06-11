@@ -1,3 +1,9 @@
+v1.0.12
+=======
+* Bug: ASN in log record is not matched with organization when 
+  "decorator.asnGeoIpDecorator.useAsnInLogEntry=false".
+
+
 v1.0.11
 =======
 * New: The following job types (configurations) are new:
