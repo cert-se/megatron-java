@@ -55,8 +55,7 @@ public abstract class BaseOrganization  implements Serializable {
 		boolean enabled,
 		java.lang.Long created,
 		java.lang.Long lastModified,
-		java.lang.String modifiedBy,
-		boolean autoUpdateEmail,
+		java.lang.String modifiedBy,		
 		boolean autoUpdateMatchFields) {
 
 		this.setId(id);
@@ -65,7 +64,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.setCreated(created);
 		this.setLastModified(lastModified);
 		this.setModifiedBy(modifiedBy);
-		this.setAutoUpdateEmail(autoUpdateEmail);
 		this.setAutoUpdateMatchFields(autoUpdateMatchFields);
 		initialize();
 	}
@@ -84,14 +82,12 @@ public abstract class BaseOrganization  implements Serializable {
 	private boolean enabled;
 	private java.lang.String countryCode;
 	private java.lang.String languageCode;
-	private java.lang.String emailAddresses;
 	private java.lang.String description;
 	private java.lang.String comment;
 	private java.lang.Long created;
 	private java.lang.Long lastModified;
 	private java.lang.String modifiedBy;
 	private java.lang.String registrationNo;
-	private boolean autoUpdateEmail;
 	private boolean autoUpdateMatchFields;
 
 	// many to one
@@ -101,6 +97,7 @@ public abstract class BaseOrganization  implements Serializable {
 	private java.util.Set<se.sitic.megatron.entity.IpRange> ipRanges;
 	private java.util.Set<se.sitic.megatron.entity.DomainName> domainNames;
 	private java.util.Set<se.sitic.megatron.entity.ASNumber> aSNumbers;
+	private java.util.Set<se.sitic.megatron.entity.Contact> contacts;
 
 
 
@@ -123,9 +120,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
-
-
-
 	/**
 	 * Return the value associated with the column: name
 	 */
@@ -140,8 +134,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setName (java.lang.String name) {
 		this.name = name;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: enabled
@@ -158,8 +150,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.enabled = enabled;
 	}
 
-
-
 	/**
 	 * Return the value associated with the column: country_code
 	 */
@@ -174,8 +164,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setCountryCode (java.lang.String countryCode) {
 		this.countryCode = countryCode;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: language_code
@@ -192,25 +180,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.languageCode = languageCode;
 	}
 
-
-
-	/**
-	 * Return the value associated with the column: email_addresses
-	 */
-	public java.lang.String getEmailAddresses () {
-		return emailAddresses;
-	}
-
-	/**
-	 * Set the value related to the column: email_addresses
-	 * @param emailAddresses the email_addresses value
-	 */
-	public void setEmailAddresses (java.lang.String emailAddresses) {
-		this.emailAddresses = emailAddresses;
-	}
-
-
-
 	/**
 	 * Return the value associated with the column: description
 	 */
@@ -225,8 +194,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setDescription (java.lang.String description) {
 		this.description = description;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: comment
@@ -243,8 +210,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.comment = comment;
 	}
 
-
-
 	/**
 	 * Return the value associated with the column: created
 	 */
@@ -259,8 +224,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setCreated (java.lang.Long created) {
 		this.created = created;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: last_modified
@@ -277,8 +240,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.lastModified = lastModified;
 	}
 
-
-
 	/**
 	 * Return the value associated with the column: modified_by
 	 */
@@ -293,8 +254,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setModifiedBy (java.lang.String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: registration_no
@@ -311,25 +270,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.registrationNo = registrationNo;
 	}
 
-
-
-	/**
-	 * Return the value associated with the column: auto_update_email
-	 */
-	public boolean isAutoUpdateEmail () {
-		return autoUpdateEmail;
-	}
-
-	/**
-	 * Set the value related to the column: auto_update_email
-	 * @param autoUpdateEmail the auto_update_email value
-	 */
-	public void setAutoUpdateEmail (boolean autoUpdateEmail) {
-		this.autoUpdateEmail = autoUpdateEmail;
-	}
-
-
-
 	/**
 	 * Return the value associated with the column: auto_update_match_fields
 	 */
@@ -345,8 +285,6 @@ public abstract class BaseOrganization  implements Serializable {
 		this.autoUpdateMatchFields = autoUpdateMatchFields;
 	}
 
-
-
 	/**
 	 * Return the value associated with the column: prio_id
 	 */
@@ -361,8 +299,6 @@ public abstract class BaseOrganization  implements Serializable {
 	public void setPriority (se.sitic.megatron.entity.Priority priority) {
 		this.priority = priority;
 	}
-
-
 
 	/**
 	 * Return the value associated with the column: IpRanges
@@ -384,8 +320,6 @@ public abstract class BaseOrganization  implements Serializable {
 		getIpRanges().add(ipRange);
 	}
 
-
-
 	/**
 	 * Return the value associated with the column: DomainNames
 	 */
@@ -405,8 +339,36 @@ public abstract class BaseOrganization  implements Serializable {
 		if (null == getDomainNames()) setDomainNames(new java.util.TreeSet<se.sitic.megatron.entity.DomainName>());
 		getDomainNames().add(domainName);
 	}
+	
+	/**
+	 * Return the value associated with the column: Contacts
+	 */
+	public java.util.Set<se.sitic.megatron.entity.Contact> getContacts () {
+		return contacts;
+	}
+	
+	// Temp method should be removed
+	public  String getEmailAddresses() {
+		return null;
+	}
 
+	// Temp method should be removed
+	public  void setEmailAddresses(String tmp) {
+		;
+	}
+	
+	/**
+	 * Set the value related to the column: Contacts
+	 * @param contacts the Contacts value
+	 */
+	public void setContacts (java.util.Set<se.sitic.megatron.entity.Contact> contacts) {
+		this.contacts = contacts;
+	}
 
+	public void addToContacts (se.sitic.megatron.entity.Contact contact) {
+		if (null == getContacts()) setContacts(new java.util.TreeSet<se.sitic.megatron.entity.Contact>());
+		getContacts().add(contact);
+	}
 
 	/**
 	 * Return the value associated with the column: ASNumbers
@@ -428,9 +390,6 @@ public abstract class BaseOrganization  implements Serializable {
 		getASNumbers().add(aSNumber);
 	}
 
-
-
-
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
 		if (!(obj instanceof se.sitic.megatron.entity.Organization)) return false;
@@ -451,7 +410,6 @@ public abstract class BaseOrganization  implements Serializable {
 		}
 		return this.hashCode;
 	}
-
 
 	public String toString () {
 		return super.toString();

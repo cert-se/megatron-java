@@ -49,12 +49,6 @@
 			length="2"
 		/>
 		<property
-			name="EmailAddresses"
-			column="email_addresses"
-			type="string"
-			not-null="false"
-		/>
-		<property
 			name="Description"
 			column="description"
 			type="string"
@@ -88,35 +82,33 @@
 			length="64"
 		/>
 		<property
-            name="RegistrationNo"
-            column="registration_no"
-            type="string"
-            not-null="false"
-            length="10"
-        />		
-       <property
-            name="AutoUpdateEmail"
-            column="auto_update_email"
-            type="boolean"
-            not-null="true"
-        /> 
-        <property
-            name="AutoUpdateMatchFields"
-            column="auto_update_match_fields"
-            type="boolean"
-            not-null="true"
-        />        
+      name="RegistrationNo"
+      column="registration_no"
+      type="string"
+      not-null="false"
+      length="10"
+    />		
+    <property
+      name="AutoUpdateMatchFields"
+      column="auto_update_match_fields"
+      type="boolean"
+      not-null="true"
+    />        
+    <set name="Contacts" table="contact" inverse="true"  cascade="all">
+      <key column="org_id" />
+        <one-to-many class="Contact" />
+    </set>     
 		<set name="IpRanges" table="ip_range" inverse="true"  cascade="all">
-            <key column="org_id" />
-            <one-to-many class="IpRange" />
-        </set>
-        <set name="DomainNames" table="domain_name" inverse="true"  cascade="all">
-            <key column="org_id" />
-            <one-to-many class="DomainName" />
-        </set>
-        <set name="ASNumbers" table="asn" inverse="true"  cascade="all">
-            <key column="org_id" />
-            <one-to-many class="ASNumber" />
-        </set>        
+      <key column="org_id" />
+      <one-to-many class="IpRange" />
+    </set>
+    <set name="DomainNames" table="domain_name" inverse="true"  cascade="all">
+      <key column="org_id" />
+      <one-to-many class="DomainName" />
+    </set>
+    <set name="ASNumbers" table="asn" inverse="true"  cascade="all">
+      <key column="org_id" />
+      <one-to-many class="ASNumber" />
+    </set>        
 	</class>	
 </hibernate-mapping>

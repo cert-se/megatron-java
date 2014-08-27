@@ -38,7 +38,7 @@ public class ReadOnlyDbManager extends  DbManager {
 	
 	
 	@Override
-    public void addOrganization(Organization org) 
+    public void addOrganization(Organization org, String modifiedBy) 
 	throws DbException {
 
 		

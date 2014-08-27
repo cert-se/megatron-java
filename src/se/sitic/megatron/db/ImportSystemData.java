@@ -91,8 +91,8 @@ public class ImportSystemData {
 	public void importFile(String fileName) throws MegatronException {
 	    
 	    if (fileName == null || fileName.equals("")) {	    
-	        //fileName = props.getString(AppProperties.CONTACTS_IMPORT_FILE_KEY, "/home/gope/workspace/megatron-java/conf/dev/systemdata.txt");
-	        fileName = props.getString(AppProperties.CONTACTS_IMPORT_FILE_KEY, "/home/gope/workspace/megatron-java/db-import/systemdata.txt");
+	        log.error("No import filename provided");
+	        return;
 	    }
 	    
 	    
@@ -273,7 +273,7 @@ public class ImportSystemData {
 	        organization.setEnabled(true);
 	        organization.setCountryCode("SE");
 	        organization.setLanguageCode("sv");
-            organization.setAutoUpdateEmail(true);
+            //organization.setAutoUpdateEmail(true);
             organization.setAutoUpdateMatchFields(true);
 	    }
 	}
@@ -479,7 +479,8 @@ public class ImportSystemData {
         //Check if class is Organization
         if (methodName.equals(SET_EMAILS_METHOD_NAME) && obj.getClass().getSimpleName() == ORGANIZATION_CLASS_NAME) {
             // Check if automatic update is allowed.
-            result = ((Organization)obj).isAutoUpdateEmail();
+            //result = ((Organization)obj).isAutoUpdateEmail();
+        	;
         }      
         return result;
     }
@@ -500,21 +501,4 @@ public class ImportSystemData {
 		return result;
 	}
 	
-	public static void main(String[] args) {
-	
-		
-		try {
-			
-			HashMap<String, String> propMap = new HashMap<String, String>();
-			propMap.put("import.dataFile", "/home/gope/workspace/megatron-java/db-import/systemdata.txt");
-			TypedProperties props = new TypedProperties(new HashMap<String, String>(), null);
-			
-			ImportSystemData sdp = new ImportSystemData(props);			
-			sdp.importFile();
-			
-		} catch (MegatronException e) {			
-			e.printStackTrace();
-			System.exit(1);
-		}			
-	}
 }
