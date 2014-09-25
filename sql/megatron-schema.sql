@@ -182,6 +182,34 @@ CREATE TABLE organization (
 ) ENGINE = MYISAM;
 
 
+# Contact db: contact.
+DROP TABLE IF EXISTS contact;
+CREATE TABLE contact (
+    id                MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    org_id            MEDIUMINT UNSIGNED NOT NULL,                # Organization that the contact belong to
+    first_name        VARCHAR(64),                               # Contact first name
+    last_name         VARCHAR(64),                               # Contact last name
+    role              VARCHAR(64),                               # Contact work role/responsability i.e. sysadmin, manager.
+    phone_number      VARCHAR(32),                               # Contact phone number
+    email_address     VARCHAR(128) NOT NULL,                      # Contact email address
+    email_type        CHAR(4) NOT NULL,                           # Email address type, i.e. To:, CC:, BCC.
+    enabled           BOOLEAN NOT NULL,                           # Is the contact active and valid[questionmark]
+    comment           TEXT,                                       # Multi-line comment
+    created           INT UNSIGNED NOT NULL,                      # Timestamp when first written to db
+    last_modified     INT UNSIGNED NOT NULL,                      # Timestamp when last written to db
+    modified_by       VARCHAR(64) NOT NULL,                       # Who modified this record[questionmark]	
+    external_reference VARCHAR(255),
+    auto_update_email BOOLEAN NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=MyISAM;
+
+
+
+
+
+
+
+
 # Contact db: prio for organisation.
 DROP TABLE IF EXISTS prio;
 CREATE TABLE prio (

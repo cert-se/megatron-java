@@ -91,6 +91,7 @@ public class AppProperties {
     public static final String MAIL_DEBUG_KEY = "mail.debug";
     public static final String MAIL_FROM_ADDRESS_KEY = "mail.fromAddress";
     public static final String MAIL_TO_ADDRESSES_KEY = "mail.toAddresses";
+    public static final String MAIL_CC_ADDRESSES_KEY = "mail.ccAddresses";
     public static final String MAIL_BCC_ADDRESSES_KEY = "mail.bccAddresses";
     public static final String MAIL_ARCHIVE_BCC_ADDRESSES_KEY = "mail.archiveBccAddresses";
     public static final String MAIL_SUMMARY_TO_ADDRESSES_KEY = "mail.mailJobSummary.toAddresses";
