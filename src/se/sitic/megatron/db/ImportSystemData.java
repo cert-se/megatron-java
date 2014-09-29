@@ -90,11 +90,11 @@ public class ImportSystemData {
 	
 	public void importFile(String fileName) throws MegatronException {
 	    
-	    if (fileName == null || fileName.equals("")) {	    
+	    if (fileName == null || fileName.equals("")) {	
+	        fileName = props.getString(AppProperties.CONTACTS_IMPORT_FILE_KEY, "conf/dev/systemdata.txt");
 	        log.error("No import filename provided");
 	        return;
-	    }
-	    
+	    }	    
 	    
         File file = new File(fileName);
         log.info("Reading system data from file: " + file.getAbsolutePath());               
@@ -273,7 +273,6 @@ public class ImportSystemData {
 	        organization.setEnabled(true);
 	        organization.setCountryCode("SE");
 	        organization.setLanguageCode("sv");
-            //organization.setAutoUpdateEmail(true);
             organization.setAutoUpdateMatchFields(true);
 	    }
 	}
@@ -348,7 +347,6 @@ public class ImportSystemData {
 					dbMethod.invoke(dbm, this.parentObject);					
 				}
 			}
-			//dbm.getClass().getMethod("add" + className, null).invoke(dbm, theObject);
 		} catch (Exception e) {			
 			throw handleException("setObjectAttributes", e);			
 		}
@@ -478,8 +476,7 @@ public class ImportSystemData {
         
         //Check if class is Organization
         if (methodName.equals(SET_EMAILS_METHOD_NAME) && obj.getClass().getSimpleName() == ORGANIZATION_CLASS_NAME) {
-            // Check if automatic update is allowed.
-            //result = ((Organization)obj).isAutoUpdateEmail();
+            // Check if automatic update is allowed.         
         	;
         }      
         return result;
