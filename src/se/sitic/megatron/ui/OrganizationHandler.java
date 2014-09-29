@@ -91,27 +91,22 @@ public class OrganizationHandler {
     static private final String DEFAULT_OUTPUT_FILE_PATH = "/tmp";
     static private final String CONTACT_EXPORT_FILE_NAME = "contact_export.txt";
     static private final String LOG_ENTRY_EXPORT_FILE_NAME = "log_entry_export.txt";
-    // Global property keys
-    static private final String KEY_DEFAULT_CC = "ui.organizationHandler.defaultCountryCode";
-    static private final String KEY_DEFAULT_LC = "ui.organizationHandler.defaultLanguageCode";
-    static private final String KEY_OUTPUT_FILE_PATH = "ui.organizationHandler.outputFilePath";
-    static private final String KEY_VALID_ROLES = "ui.organizationHandler.validRoles";
+    
 
     public OrganizationHandler(TypedProperties props) {
 
         in = new BufferedReader(new InputStreamReader(System.in));
         this.props = props;
 
-        this.defaultCountryCode = this.props.getString(KEY_DEFAULT_CC,
+        this.defaultCountryCode = this.props.getString(AppProperties.UI_DEFAULT_CC_KEY,
                 DEFAULT_CC);
-        this.defaultLanguageCode = this.props.getString(KEY_DEFAULT_LC,
+        this.defaultLanguageCode = this.props.getString(AppProperties.UI_DEFAULT_LC_KEY,
                 DEFAULT_LC);
-        this.outputFilePath = this.props.getString(KEY_OUTPUT_FILE_PATH,
+        this.outputFilePath = this.props.getString(AppProperties.UI_OUTPUT_FILE_PATH_KEY,
                 DEFAULT_OUTPUT_FILE_PATH);
         this.validRoles = this.props.getStringListFromCommaSeparatedValue(
-                KEY_VALID_ROLES, DEFAULT_ROLES, true);
-        this.exportTimstampFormat = this.props.getString(
-                AppProperties.EXPORT_TIMESTAMP_FORMAT_KEY,
+                AppProperties.UI_VALID_ROLES_KEY, DEFAULT_ROLES, true);
+        this.exportTimstampFormat = this.props.getString(AppProperties.UI_TIMESTAMP_FORMAT_KEY,                
                 DEFAULT_TIMESTAMP_FORMAT);
         this.log = Logger.getLogger(this.getClass());
         this.screenWriter = new PrintWriter(System.out, true);
@@ -1524,7 +1519,7 @@ public class OrganizationHandler {
                                     + " had been deleted");
                         }
                     }
-                    range = readInput("Enter IP range to delete (valid formats x.x.x.x-y.y.y.y or x.x.x.x/y, empty input will exit): ");
+                    range = readInput("Enter IP range to delete (valid formats x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y, empty input will exit): ");
                 }
             } else {
                 printInfoMessage("Exiting edit IP ranges");
