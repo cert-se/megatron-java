@@ -1,3 +1,8 @@
+v1.1.0 [to be released] 
+======
+* Improved: Class can be specified in megatron.sh using --class.
+
+
 v1.0.12
 =======
 * Bug: ASN in log record is not matched with organization when 

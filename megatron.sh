@@ -27,6 +27,13 @@ export SITIC_CLASSPATH=$SITIC_HIBERNATE_CLASSPATH:$SITIC_LIB/sitic-megatron.jar:
 ALL_PARAMS=$*
 SKIP_LOCKFILE=$(echo $ALL_PARAMS | egrep '.*--help.*|.*--version.*|.*--list-prios.*|.*--list-jobs.*|.*--job-info.*|.*--ui-org.*|.*--whois.*' | wc -l | sed 's/ //g')
 QUIET=$(echo $ALL_PARAMS | egrep '.*--stdout.*|.*--whois.*' | wc -l | sed 's/ //g')
+CLASS_SWITCH_EXISTS=$(echo $ALL_PARAMS | egrep '.*--class [a-zA-Z0-9\.]+' | wc -l | sed 's/ //g')
+if [ $CLASS_SWITCH_EXISTS == "0" ] ; then
+  JAVA_CLASS=Megatron
+else
+  JAVA_CLASS=$(echo $ALL_PARAMS | cut -d ' ' -f 2)
+  ALL_PARAMS=$(echo $ALL_PARAMS | cut -d ' ' -f 3-)
+fi
 
 if [ $SKIP_LOCKFILE == "0" ] ; then
   if test -f /var/megatron/megatron.pid ; then
@@ -55,7 +62,7 @@ else
     fi
 fi
 
-$SITIC_JAVA $SITIC_JAVA_OPTIONS $SITIC_JCONSOLE_OPTIONS -cp $SITIC_CLASSPATH -Dfile.encoding=UTF-8 -Dmegatron.configfile=/etc/megatron/megatron-globals.properties Megatron $ALL_PARAMS
+$SITIC_JAVA $SITIC_JAVA_OPTIONS $SITIC_JCONSOLE_OPTIONS -cp $SITIC_CLASSPATH -Dfile.encoding=UTF-8 -Dmegatron.configfile=/etc/megatron/megatron-globals.properties $JAVA_CLASS $ALL_PARAMS
 MEGATRON_EXIT_CODE=$?
 if [ $QUIET = 0 ]; then
   echo `date`: "Megatron Finished."
