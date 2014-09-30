@@ -87,7 +87,7 @@ public class OrganizationHandler {
             "Administrative", "Manager" };
     static private final String TEXT_EMPTY = "<EMPTY>";
     static private final String TEXT_NULL = "<NULL>";
-    static private final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    static private final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
     static private final String DEFAULT_OUTPUT_FILE_PATH = "/tmp";
     static private final String CONTACT_EXPORT_FILE_NAME = "contact_export.txt";
     static private final String LOG_ENTRY_EXPORT_FILE_NAME = "log_entry_export.txt";
