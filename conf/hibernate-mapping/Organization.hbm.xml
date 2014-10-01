@@ -1,93 +1,93 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD//EN"
-	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+  "-//Hibernate/Hibernate Mapping DTD//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="se.sitic.megatron.entity">
-	<class
-		name="Organization"
-		table="organization"
-	>
-		<meta attribute="sync-DAO">false</meta>
-		<id
-			name="Id"
-			type="integer"
-			column="id"
-		>
-			<generator class="native"/>
-		</id>
+  <class
+    name="Organization"
+    table="organization"
+  >
+    <meta attribute="sync-DAO">false</meta>
+    <id
+      name="Id"
+      type="integer"
+      column="id"
+    >
+      <generator class="native"/>
+    </id>
 
-		<many-to-one name="Priority"
+    <many-to-one name="Priority"
                     column="prio_id"
                     class="Priority" 
         />
-		<property
-			name="Name"
-			column="name"
-			type="string"
-			not-null="true"       
-			length="128"
-		/>
-		<property
-			name="Enabled"
-			column="enabled"
-			type="boolean"
-			not-null="true"
-		/>
-		<property
-			name="CountryCode"
-			column="country_code"
-			type="string"
-			not-null="false"
-			length="2"
-		/>
-		<property
-			name="LanguageCode"
-			column="language_code"
-			type="string"
-			not-null="false"
-			length="2"
-		/>
-		<property
-			name="Description"
-			column="description"
-			type="string"
-			not-null="false"
-		/>
-		<property
-			name="Comment"
-			column="comment"
-			type="string"
-			not-null="false"
-		/>
-		<property
-			name="Created"
-			column="created"
-			type="java.lang.Long"
-			not-null="true"
-			length="10"
-		/>
-		<property
-			name="LastModified"
-			column="last_modified"
-			type="java.lang.Long"
-			not-null="true"
-			length="10"
-		/>
-		<property
-			name="ModifiedBy"
-			column="modified_by"
-			type="string"
-			not-null="true"
-			length="64"
-		/>
-		<property
+    <property
+      name="Name"
+      column="name"
+      type="string"
+      not-null="true"       
+      length="128"
+    />
+    <property
+      name="Enabled"
+      column="enabled"
+      type="boolean"
+      not-null="true"
+    />
+    <property
+      name="CountryCode"
+      column="country_code"
+      type="string"
+      not-null="false"
+      length="2"
+    />
+    <property
+      name="LanguageCode"
+      column="language_code"
+      type="string"
+      not-null="false"
+      length="2"
+    />
+    <property
+      name="Description"
+      column="description"
+      type="string"
+      not-null="false"
+    />
+    <property
+      name="Comment"
+      column="comment"
+      type="string"
+      not-null="false"
+    />
+    <property
+      name="Created"
+      column="created"
+      type="java.lang.Long"
+      not-null="true"
+      length="10"
+    />
+    <property
+      name="LastModified"
+      column="last_modified"
+      type="java.lang.Long"
+      not-null="true"
+      length="10"
+    />
+    <property
+      name="ModifiedBy"
+      column="modified_by"
+      type="string"
+      not-null="true"
+      length="64"
+    />
+    <property
       name="RegistrationNo"
       column="registration_no"
       type="string"
       not-null="false"
       length="10"
-    />		
+    />    
     <property
       name="AutoUpdateMatchFields"
       column="auto_update_match_fields"
@@ -98,7 +98,7 @@
       <key column="org_id" />
         <one-to-many class="Contact" />
     </set>     
-		<set name="IpRanges" table="ip_range" inverse="true"  cascade="all">
+    <set name="IpRanges" table="ip_range" inverse="true"  cascade="all">
       <key column="org_id" />
       <one-to-many class="IpRange" />
     </set>
@@ -110,5 +110,5 @@
       <key column="org_id" />
       <one-to-many class="ASNumber" />
     </set>        
-	</class>	
+  </class>  
 </hibernate-mapping>

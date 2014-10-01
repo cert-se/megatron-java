@@ -98,7 +98,7 @@ public class OrganizationMatcherDecorator implements IDecorator {
 
         orgId = findOrganizationId(logEntry.getIpAddress2(), logEntry.getHostname2(), getAsn(false, logEntry));
         if (orgId != -1) {
-        	Organization organization2 = dbManager.getOrganization(orgId);
+            Organization organization2 = dbManager.getOrganization(orgId);
             logEntry.setOrganization2(organization2);
             ++noOfOrganizationsFound2;
             if (isHighPriorityOrganization(organization2)) {

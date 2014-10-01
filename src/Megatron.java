@@ -302,8 +302,8 @@ public class Megatron {
             TypedProperties props = AppProperties.getInstance().createTypedPropertiesForCli(jobType);
             JobScheduler.getInstance().processMailJob(props, jobName);
         } else if (globalProps.isImportContacts()) {
-        	ImportSystemData dataImporter = new ImportSystemData(globalProps);
-        	dataImporter.importFile();            
+            ImportSystemData dataImporter = new ImportSystemData(globalProps);
+            dataImporter.importFile();            
         } else if (globalProps.isImportBgp()) {
             ImportBgpTable importer = new ImportBgpTable(globalProps);
             importer.importFile();

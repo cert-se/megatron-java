@@ -158,23 +158,23 @@ public class MailSender {
             }
 
             if (encrypt || sign) {
-            	throw new UnsupportedOperationException("Mail signing and encryption not implemented.");
+                throw new UnsupportedOperationException("Mail signing and encryption not implemented.");
 
                 // TODO Add support for mail signing and encryption
 //                try {
-//            		String encryptionType = props.getString(AppProperties.MAIL_ENCRYPTION_TYPE, "PGP");
-//            		MailEncryptor encryptor = new MailEncryptor (encryptionType);
+//                    String encryptionType = props.getString(AppProperties.MAIL_ENCRYPTION_TYPE, "PGP");
+//                    MailEncryptor encryptor = new MailEncryptor (encryptionType);
 //
-//            		if (encrypt) {
-//            			System.out.println("Encrypt");
-//            			message = encryptor.encrypt(session, message);
-//            		}
-//            		if (sign) {
-//            			System.out.println("Sign");
-//            			message = encryptor.sign(session, message);
-//            		}
-//            	}
-//            	catch (EncryptionException e) {
+//                    if (encrypt) {
+//                        System.out.println("Encrypt");
+//                        message = encryptor.encrypt(session, message);
+//                    }
+//                    if (sign) {
+//                        System.out.println("Sign");
+//                        message = encryptor.sign(session, message);
+//                    }
+//                }
+//            catch (EncryptionException e) {
 //                    String msg = "Cannot sign or encrypt the mail: ";
 //                    log.error(msg, e);
 //                    throw new MailException(msg, e);
