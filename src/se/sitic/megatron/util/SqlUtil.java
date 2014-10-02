@@ -9,7 +9,7 @@ import java.util.Date;
 public abstract class SqlUtil {
     // UNUSED: private static final Logger log = Logger.getLogger(SqlUtil.class);
 
-	
+    
     /**
      * Converts specified timestamp in seconds to a Date.
      */

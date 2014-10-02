@@ -47,6 +47,7 @@ public class MailSender {
     private String fromAddress;
     private String toAddresses;
     private String bccAddresses;
+    private String ccAddresses;
     private String replyToAddresses;
     private String subject;
     private String body;
@@ -80,11 +81,14 @@ public class MailSender {
         String from = (fromAddress != null) ? fromAddress : props.getString(AppProperties.MAIL_FROM_ADDRESS_KEY, "megatron@example.org");
         String to = (toAddresses != null) ? toAddresses : props.getString(AppProperties.MAIL_TO_ADDRESSES_KEY, null);
         String bcc = (bccAddresses != null) ? bccAddresses : props.getString(AppProperties.MAIL_BCC_ADDRESSES_KEY, null);
+        String cc = (ccAddresses != null) ? ccAddresses : props.getString(AppProperties.MAIL_CC_ADDRESSES_KEY, null);
+
         String replyTo = (replyToAddresses != null) ? replyToAddresses : props.getString(AppProperties.MAIL_REPLY_TO_ADDRESSES_KEY, null);
 
         // -- Logging
         if (log.isDebugEnabled()) {
             log.debug("Sending mail to: " + (toAddresses != null ? to : to + " [default]"));
+            log.debug("  CC-address: " + (ccAddresses != null ? cc : cc + " [default]"));
             log.debug("  BCC-address: " + (bccAddresses != null ? bcc : bcc + " [default]"));
             log.debug("  From-address: " + (fromAddress != null ? from : from + " [default]"));
             log.debug("  ReplyTo-address: " + (replyToAddresses != null ? replyTo : replyTo + " [default]"));
@@ -113,7 +117,12 @@ public class MailSender {
             if (bcc != null) {
                 message.setRecipients(Message.RecipientType.BCC, parseAddresses(bcc));
             }
-
+            if (cc != null) {
+                message.setRecipients(Message.RecipientType.CC, parseAddresses(cc));
+            }
+            
+            
+            
             // -- Set subject and content
             message.setSubject(StringUtil.getNotNull(subject, "[Empty Subject]"));
             String mimeSubType = htmlMail ? "html" : "plain";
@@ -149,23 +158,23 @@ public class MailSender {
             }
 
             if (encrypt || sign) {
-            	throw new UnsupportedOperationException("Mail signing and encryption not implemented.");
+                throw new UnsupportedOperationException("Mail signing and encryption not implemented.");
 
                 // TODO Add support for mail signing and encryption
 //                try {
-//            		String encryptionType = props.getString(AppProperties.MAIL_ENCRYPTION_TYPE, "PGP");
-//            		MailEncryptor encryptor = new MailEncryptor (encryptionType);
+//                    String encryptionType = props.getString(AppProperties.MAIL_ENCRYPTION_TYPE, "PGP");
+//                    MailEncryptor encryptor = new MailEncryptor (encryptionType);
 //
-//            		if (encrypt) {
-//            			System.out.println("Encrypt");
-//            			message = encryptor.encrypt(session, message);
-//            		}
-//            		if (sign) {
-//            			System.out.println("Sign");
-//            			message = encryptor.sign(session, message);
-//            		}
-//            	}
-//            	catch (EncryptionException e) {
+//                    if (encrypt) {
+//                        System.out.println("Encrypt");
+//                        message = encryptor.encrypt(session, message);
+//                    }
+//                    if (sign) {
+//                        System.out.println("Sign");
+//                        message = encryptor.sign(session, message);
+//                    }
+//                }
+//            catch (EncryptionException e) {
 //                    String msg = "Cannot sign or encrypt the mail: ";
 //                    log.error(msg, e);
 //                    throw new MailException(msg, e);
@@ -193,9 +202,10 @@ public class MailSender {
             }
             log.debug("Mail sent.");
         } catch (AddressException e) {
-            String msg = "Cannot handle to-, from-, or replyTo-address. Mail not sent. To-address: " + toAddresses + "; BCC-address: " + bccAddresses +
+            String msg = "Cannot handle to-, from-, or replyTo-address. Mail not sent. To-address: " + toAddresses + "; CC-address: " + ccAddresses + "; BCC-address: " + bccAddresses +
                 "; From-address: " + fromAddress + "; ReplyTo-address: " + replyToAddresses;
             log.error(msg, e);
+                                   
             throw new MailException(msg, e);
         } catch (MessagingException e) {
             String msg = "Cannot send Mail; general error.";
@@ -211,6 +221,7 @@ public class MailSender {
     public void clear() {
         this.fromAddress = null;
         this.toAddresses = null;
+        this.ccAddresses = null;
         this.bccAddresses = null;
         this.replyToAddresses = null;
         this.subject = null;
@@ -236,6 +247,11 @@ public class MailSender {
         this.toAddresses = toAddresses;
     }
 
+    
+    public void setCcAddresses(String ccAddresses) {
+        this.ccAddresses = ccAddresses;
+     }
+    
     
     public void setBccAddresses(String bccAddresses) {
         this.bccAddresses = bccAddresses;

@@ -91,6 +91,7 @@ public class AppProperties {
     public static final String MAIL_DEBUG_KEY = "mail.debug";
     public static final String MAIL_FROM_ADDRESS_KEY = "mail.fromAddress";
     public static final String MAIL_TO_ADDRESSES_KEY = "mail.toAddresses";
+    public static final String MAIL_CC_ADDRESSES_KEY = "mail.ccAddresses";
     public static final String MAIL_BCC_ADDRESSES_KEY = "mail.bccAddresses";
     public static final String MAIL_ARCHIVE_BCC_ADDRESSES_KEY = "mail.archiveBccAddresses";
     public static final String MAIL_SUMMARY_TO_ADDRESSES_KEY = "mail.mailJobSummary.toAddresses";
@@ -253,10 +254,16 @@ public class AppProperties {
     public static final String REPORT_ORGANIZATION_NO_OF_HOURS_KEY = "report.organization.noOfHours";
     public static final String REPORT_ORGANIZATION_JOB_TYPES_KEY = "report.organization.jobTypes";
     public static final String REPORT_ORGANIZATION_RECIPIENTS_KEY = "report.organization.recipients";
-    
-    
+        
     // Import
     public static final String CONTACTS_IMPORT_FILE_KEY = "import.dataFile";
+    
+    // UI (management command line user interface)
+    public static final String UI_DEFAULT_CC_KEY = "ui.organizationHandler.defaultCountryCode";
+    public static final String UI_DEFAULT_LC_KEY = "ui.organizationHandler.defaultLanguageCode";
+    public static final String UI_OUTPUT_FILE_PATH_KEY = "ui.organizationHandler.outputFilePath";
+    public static final String UI_VALID_ROLES_KEY = "ui.organizationHandler.validRoles";
+    public static final String UI_TIMESTAMP_FORMAT_KEY = "ui.organizationHandler.timestampFormat";
 
     /** Filename for Megatron global properties. */
     public static final String GLOBALS_PROPS_FILE = "/etc/megatron/megatron-globals.properties";

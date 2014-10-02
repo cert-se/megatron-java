@@ -94,23 +94,23 @@ public class JobManager {
 
             // -- check if file already processed
             if (!props.isNoDb() && dbManager.existsFileHash(job.getFileHash())) {
-            	String action = props.getString(AppProperties.FILE_ALREADY_PROCESSED_ACTION_KEY, "error");
-            	if (action.equalsIgnoreCase("error")) {
+                String action = props.getString(AppProperties.FILE_ALREADY_PROCESSED_ACTION_KEY, "error");
+                if (action.equalsIgnoreCase("error")) {
                     String msg = "File have already been processed; file hash (" + job.getFileHash() + ") exists in the database. " + 
                     "Use --delete or --delete-all to rerun file.";
                     throw new MegatronException(msg);
-            	} else if (action.equalsIgnoreCase("skip")) {
-            	    String msg = "File is skipped because it have already been processed; file hash (" + job.getFileHash() + ") exists in the database.";
-            	    log.info(msg);
-            	    jobContext.writeToConsole(msg);
-            	    return;
-            	} else if (action.equalsIgnoreCase("rerun")) {
+                } else if (action.equalsIgnoreCase("skip")) {
+                    String msg = "File is skipped because it have already been processed; file hash (" + job.getFileHash() + ") exists in the database.";
+                    log.info(msg);
+                    jobContext.writeToConsole(msg);
+                    return;
+                } else if (action.equalsIgnoreCase("rerun")) {
                     String msg = "Rerunning file; file hash (" + job.getFileHash() + ") exists in the database.";
                     log.info(msg);
-            	} else {
+                } else {
                     String msg = "Invalid property value for " + AppProperties.FILE_ALREADY_PROCESSED_ACTION_KEY + ": " + action;
-            	    throw new MegatronException(msg);
-            	}
+                    throw new MegatronException(msg);
+                }
             }
             
             // -- process job
@@ -179,8 +179,8 @@ public class JobManager {
                 }
             }
         } catch (Exception e) {
-        	String jobName = (job != null) ? job.getName() : "[job name is null]";
-        	String msg = "Job (" + jobName + ") failed: " + e.getMessage();
+            String jobName = (job != null) ? job.getName() : "[job name is null]";
+            String msg = "Job (" + jobName + ") failed: " + e.getMessage();
             // stack-trace is logged elsewhere
             log.error(msg);
             MegatronException newException = (e instanceof MegatronException) ? (MegatronException)e : new MegatronException(msg, e);
@@ -193,7 +193,7 @@ public class JobManager {
                     dbManager.finishLogJob(job, msg);
                 } catch (MegatronException e2) {
                     String msg2 = "Cannot write error message to job; finishLogJob failed.";
-                	log.error(msg2, e2);
+                    log.error(msg2, e2);
                 }
             }
             throw newException;

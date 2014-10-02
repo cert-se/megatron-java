@@ -1,6 +1,6 @@
 package se.sitic.megatron.db;
 
-	/*   
+    /*   
     Read-only version of DbManager
     */
 
@@ -13,100 +13,100 @@ import se.sitic.megatron.entity.Organization;
 
 public class ReadOnlyDbManager extends  DbManager {
 
-	
-	public ReadOnlyDbManager() 
-	throws DbException {
+    
+    public ReadOnlyDbManager() 
+    throws DbException {
 
-		super();
-	}
+        super();
+    }
 
-	
-	@Override
+    
+    @Override
     public void addLogEntry(LogEntry logEntry) 
-	throws DbException {				
-		
+    throws DbException {                
+        
 
-	}
+    }
 
-	
-	@Override
+    
+    @Override
     public void updateLogEntry(LogEntry logEntry) 
-	throws DbException {				
-		
+    throws DbException {                
+        
 
-	}
-	
-	
-	@Override
-    public void addOrganization(Organization org) 
-	throws DbException {
+    }
+    
+    
+    @Override
+    public void addOrganization(Organization org, String modifiedBy) 
+    throws DbException {
 
-		
-	}
+        
+    }
 
-	
-	@Override
+    
+    @Override
     public void updateOrganization(Organization org, String modifiedBy) 
-	throws DbException {
+    throws DbException {
 
-		
-	}
+        
+    }
 
 
-	@Override
+    @Override
     public void addMailJob(MailJob mailJob) 
-	throws DbException {
-		
+    throws DbException {
+        
 
-	}
-	
+    }
+    
 
-	@Override
+    @Override
     @Deprecated
-	public void updateMailJob(MailJob mailJob) 
-	throws DbException {
-		
+    public void updateMailJob(MailJob mailJob) 
+    throws DbException {
+        
 
-	}
+    }
 
 
-	@Override
+    @Override
     public void finishMailJob(MailJob mailJob, String errorMsg) 
-	throws DbException {
-		
+    throws DbException {
+        
 
-	}
+    }
 
-	
-	@Override
+    
+    @Override
     public long deleteMailJob(MailJob mailJob) 
-	throws DbException {
+    throws DbException {
         return 0;
-	
-	}		
-	
+    
+    }        
+    
 
-	@Override
+    @Override
     public void addLogJob(Job job) 
-	throws DbException {	
-	    
-	}
+    throws DbException {    
+        
+    }
 
-	
-	@Override
+    
+    @Override
     public void finishLogJob(Job job, String errorMsg) 
-	throws DbException {
-		
+    throws DbException {
+        
 
-	}
+    }
 
-	
-	@Override
+    
+    @Override
     public long deleteLogJob(Job job) 
-	throws DbException {
-		return 0;
-	
-	}
-	
-	
+    throws DbException {
+        return 0;
+    
+    }
+    
+    
 }

@@ -4,35 +4,36 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-	<session-factory>
-		<!-- local connection properties -->
-		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost:3306/megatron
-		</property>
-		<property name="hibernate.connection.driver_class">
-			org.gjt.mm.mysql.Driver
-		</property>
-		<property name="hibernate.connection.username">megatron</property>
-		<property name="hibernate.connection.password">megatron</property>
-		<!-- property name="hibernate.connection.pool_size"></property -->
-		<!-- dialect for MySQL -->
-		<property name="dialect">
-			org.hibernate.dialect.MySQLDialect
-		</property>
-		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.transaction.factory_class">
-			org.hibernate.transaction.JDBCTransactionFactory
-		</property>
-		<mapping resource="EntryType.hbm.xml" />
-		<mapping resource="Priority.hbm.xml" />
-		<mapping resource="Organization.hbm.xml" />
-		<mapping resource="IpRange.hbm.xml" />
-		<mapping resource="AsNumber.hbm.xml" />
-		<mapping resource="DomainName.hbm.xml" />
-		<mapping resource="JobType.hbm.xml" />
-		<mapping resource="Job.hbm.xml" />
-		<mapping resource="MailJob.hbm.xml" />		
-		<mapping resource="LogEntry.hbm.xml" />
-		<mapping resource="OriginalLogEntry.hbm.xml" />		
-	</session-factory>
+  <session-factory>
+    <!-- local connection properties -->
+    <property name="hibernate.connection.url">
+      jdbc:mysql://localhost:3306/megatron
+    </property>
+    <property name="hibernate.connection.driver_class">
+      org.gjt.mm.mysql.Driver
+    </property>
+    <property name="hibernate.connection.username">megatron</property>
+    <property name="hibernate.connection.password">megatron</property>
+    <!-- property name="hibernate.connection.pool_size"></property -->
+    <!-- dialect for MySQL -->
+    <property name="dialect">
+      org.hibernate.dialect.MySQLDialect
+    </property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.transaction.factory_class">
+      org.hibernate.transaction.JDBCTransactionFactory
+    </property>
+    <mapping resource="EntryType.hbm.xml" />
+    <mapping resource="Priority.hbm.xml" />
+    <mapping resource="Organization.hbm.xml" />
+    <mapping resource="Contact.hbm.xml" />    
+    <mapping resource="IpRange.hbm.xml" />
+    <mapping resource="AsNumber.hbm.xml" />
+    <mapping resource="DomainName.hbm.xml" />
+    <mapping resource="JobType.hbm.xml" />
+    <mapping resource="Job.hbm.xml" />
+    <mapping resource="MailJob.hbm.xml" />    
+    <mapping resource="LogEntry.hbm.xml" />
+    <mapping resource="OriginalLogEntry.hbm.xml" />    
+  </session-factory>
 </hibernate-configuration>

@@ -14,8 +14,8 @@ import se.sitic.megatron.util.StringUtil;
  * Exports data in the database for a log job to file.
  */
 public class FileExportManager extends AbstractExportManager  {
-	private final Logger log = Logger.getLogger(FileExportManager.class);
-	private final int NO_OF_RECORDS = 1000;
+    private final Logger log = Logger.getLogger(FileExportManager.class);
+    private final int NO_OF_RECORDS = 1000;
 
     private FileExporter fileExporter;
 
@@ -25,7 +25,7 @@ public class FileExportManager extends AbstractExportManager  {
      */
     public FileExportManager(TypedProperties props) {
         super(props);
-	}
+    }
     
     
     /**
