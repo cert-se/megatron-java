@@ -200,6 +200,7 @@ CREATE TABLE contact (
     modified_by        VARCHAR(64) NOT NULL,                       # Who modified this record[questionmark]	
     external_reference VARCHAR(255),
     auto_update_email  BOOLEAN NOT NULL,
+
     PRIMARY KEY (id)
 ) ENGINE=MyISAM;
 

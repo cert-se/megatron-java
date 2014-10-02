@@ -102,7 +102,7 @@ public class OrganizationHandler {
                 DEFAULT_CC);
         this.defaultLanguageCode = this.props.getString(AppProperties.UI_DEFAULT_LC_KEY,
                 DEFAULT_LC);
-        this.outputFilePath = this.props.getString(AppProperties.UI_OUTPUT_FILE_PATH_KEY,
+        this.outputFilePath = this.props.getString(AppProperties.UI_OUTPUT_DIR_KEY,
                 DEFAULT_OUTPUT_FILE_PATH);
         this.validRoles = this.props.getStringListFromCommaSeparatedValue(
                 AppProperties.UI_VALID_ROLES_KEY, DEFAULT_ROLES, true);

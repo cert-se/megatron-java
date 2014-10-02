@@ -261,7 +261,7 @@ public class AppProperties {
     // UI (management command line user interface)
     public static final String UI_DEFAULT_CC_KEY = "ui.organizationHandler.defaultCountryCode";
     public static final String UI_DEFAULT_LC_KEY = "ui.organizationHandler.defaultLanguageCode";
-    public static final String UI_OUTPUT_FILE_PATH_KEY = "ui.organizationHandler.outputFilePath";
+    public static final String UI_OUTPUT_DIR_KEY = "ui.organizationHandler.outputDir";
     public static final String UI_VALID_ROLES_KEY = "ui.organizationHandler.validRoles";
     public static final String UI_TIMESTAMP_FORMAT_KEY = "ui.organizationHandler.timestampFormat";
 

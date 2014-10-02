@@ -82,7 +82,6 @@ public class MailSender {
         String to = (toAddresses != null) ? toAddresses : props.getString(AppProperties.MAIL_TO_ADDRESSES_KEY, null);
         String bcc = (bccAddresses != null) ? bccAddresses : props.getString(AppProperties.MAIL_BCC_ADDRESSES_KEY, null);
         String cc = (ccAddresses != null) ? ccAddresses : props.getString(AppProperties.MAIL_CC_ADDRESSES_KEY, null);
-
         String replyTo = (replyToAddresses != null) ? replyToAddresses : props.getString(AppProperties.MAIL_REPLY_TO_ADDRESSES_KEY, null);
 
         // -- Logging
@@ -120,8 +119,6 @@ public class MailSender {
             if (cc != null) {
                 message.setRecipients(Message.RecipientType.CC, parseAddresses(cc));
             }
-            
-            
             
             // -- Set subject and content
             message.setSubject(StringUtil.getNotNull(subject, "[Empty Subject]"));
@@ -202,10 +199,9 @@ public class MailSender {
             }
             log.debug("Mail sent.");
         } catch (AddressException e) {
-            String msg = "Cannot handle to-, from-, or replyTo-address. Mail not sent. To-address: " + toAddresses + "; CC-address: " + ccAddresses + "; BCC-address: " + bccAddresses +
-                "; From-address: " + fromAddress + "; ReplyTo-address: " + replyToAddresses;
+            String msg = "Cannot handle to-, from-, or replyTo-address. Mail not sent. To-address: " + toAddresses + "; CC-address: " + ccAddresses + 
+                "; BCC-address: " + bccAddresses +"; From-address: " + fromAddress + "; ReplyTo-address: " + replyToAddresses;
             log.error(msg, e);
-                                   
             throw new MailException(msg, e);
         } catch (MessagingException e) {
             String msg = "Cannot send Mail; general error.";
