@@ -179,8 +179,10 @@ public class MailExporter extends AbstractExporter {
             addToSummary(organization, messageData);
             log.info("Sending abuse mail: " + organization.getEmailAddresses());
             mailSender.clear();
-            mailSender.setToAddresses(organization.getEmailAddresses());
-            mailSender.setBccAddresses(props.getString(AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null));
+            mailSender.setToAddresses(organization.getEmailAddresses("To", true));
+            mailSender.setCcAddresses(organization.getEmailAddresses("Cc", true));
+            // Add BCC addresses plus any mail archive BCC addresses
+            mailSender.setBccAddresses(props.getString(organization.getEmailAddresses("Bcc", true) + " ," + AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null) );
             mailSender.setSubject(messageData.getSubject());
             mailSender.setBody(messageData.getBody());
             if (messageData.getAttachment() != null) {

@@ -161,22 +161,20 @@ CREATE TABLE mail_job_log_entry_mapping (
 # Contact db: organization.
 DROP TABLE IF EXISTS organization;
 CREATE TABLE organization (
-    id                MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name              VARCHAR(128) NOT NULL UNIQUE,
-    registration_no   VARCHAR(11),                                # Registration number should be "NOT NULL UNIQUE"
-                                                                  # but it will not work since we do not have it for all orgs.
-    enabled           BOOLEAN NOT NULL,                           # Is this organisation active[questionmark]
-    prio_id           MEDIUMINT UNSIGNED NOT NULL,                # Key in prio
-    country_code      CHAR(2),                                    # Country code, e.g. "SE". Always in upper-case.
-    language_code     CHAR(2),                                    # Language code, e.g. "sv". Always in lower-case. 
-    email_addresses   TEXT,                                       # Comma separated list of email addresses
-    description       TEXT,                                       # Multi-line description
-    comment           TEXT,                                       # Multi-line comment
-    auto_update_email BOOLEAN NOT NULL,                           # Auto update of email contact adresses allowed
-    auto_update_match_fields BOOLEAN NOT NULL,                    # Autot update of AS-no, domain name or IP-ranges allowed
-    created           INT UNSIGNED NOT NULL,                      # Timestamp when first written to db
-    last_modified     INT UNSIGNED NOT NULL,                      # Timestamp when last written to db
-    modified_by       VARCHAR(64) NOT NULL,                       # Who modified this record[questionmark] 
+    id                       MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name                     VARCHAR(128) NOT NULL UNIQUE,
+    registration_no          VARCHAR(11),                                # Registration number should be "NOT NULL UNIQUE"
+                                                                         # but it will not work since we do not have it for all orgs.
+    enabled                  BOOLEAN NOT NULL,                           # Is this organisation active[questionmark]
+    prio_id                  MEDIUMINT UNSIGNED NOT NULL,                # Key in prio
+    country_code             CHAR(2),                                    # Country code, e.g. "SE". Always in upper-case.
+    language_code            CHAR(2),                                    # Language code, e.g. "sv". Always in lower-case.     
+    description              TEXT,                                       # Multi-line description
+    comment                  TEXT,                                       # Multi-line comment
+    auto_update_match_fields BOOLEAN NOT NULL,                           # Autot update of AS-no, domain name or IP-ranges allowed
+    created                  INT UNSIGNED NOT NULL,                      # Timestamp when first written to db
+    last_modified            INT UNSIGNED NOT NULL,                      # Timestamp when last written to db
+    modified_by              VARCHAR(64) NOT NULL,                       # Who modified this record[questionmark] 
 
     PRIMARY KEY (id)
 ) ENGINE = MYISAM;

@@ -41,11 +41,11 @@ public class DbManager {
     protected Session session = null;    
     protected Logger log = null;    
     protected DbManager()
-    
-    throws DbException { 
+
+            throws DbException { 
 
         this.log = Logger.getLogger(this.getClass());
-                
+
         try {
             // This step will read hibernate.cfg.xml             
             //    and prepare hibernate for use
@@ -58,12 +58,12 @@ public class DbManager {
         }              
     }
 
-    
+
     public static DbManager createDbManager(TypedProperties props) 
-    throws DbException { 
-    
+            throws DbException { 
+
         DbManager dbm = null;
-        
+
         if (props.isNoDb() || props.isMailDryRun() ||  props.isMailDryRun2()) {
             dbm = new ReadOnlyDbManager();            
         }    
@@ -72,10 +72,10 @@ public class DbManager {
         }
         return dbm;
     }
-        
-    
+
+
     protected Object loadLongObject (Class<?> clazz,  long objId) 
-    throws DbException { 
+            throws DbException { 
 
         Object obj = session.get(clazz, objId);
 
@@ -86,9 +86,9 @@ public class DbManager {
         }
         return obj;
     }
-    
+
     protected Object loadIntegerObject (Class<?> clazz,  int objId) 
-    throws DbException { 
+            throws DbException { 
 
         Object obj = session.get(clazz, objId);
 
@@ -100,28 +100,28 @@ public class DbManager {
         return obj;
     }
 
-    
+
     public Object genericLoadObject(String className, String[] searchFields, Object[] values)
-    throws DbException { 
-                
+            throws DbException { 
+
         if (searchFields.length != values.length) {
             throw new DbException("Number of search fields and number of values are not maching");
         }
         if (searchFields.length < 1) {
             throw new DbException("Search fields are empty");
         }
-        
+
         Object obj = null;
-        
+
         String hql = "from " + className + " where ";                
-    
+
         try {
-            
+
             for (int i=0; i<searchFields.length; i++) {            
                 hql = hql + ( i == 0 ? searchFields[i] + "= ?" :  " AND " +  searchFields[i]  + "= ?");
             }
             Query query = session.createQuery(hql);
-            
+
             for (int i=0; i<searchFields.length; i++) {
 
                 String typeName = values[i].getClass().getSimpleName();
@@ -140,25 +140,25 @@ public class DbManager {
                 }                
             }                       
             obj = query.uniqueResult();
-            
+
         } catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in genericLoadObject", e);
         }
-        
+
         return obj;
     }
-                       
-    
-    
+
+
+
     public Object genericLoadObject(String className, String searchField, Object value)
-        throws DbException { 
-        
+            throws DbException { 
+
         Object obj = null;
-        
+
         Query query = session.createQuery("from " + className + " where " + searchField + "= ?");
-    
+
         String typeName = value.getClass().getSimpleName();
-        
+
         try {
 
             Method method = null;
@@ -173,19 +173,19 @@ public class DbManager {
                 Object[] args = {0, value};
                 method.invoke(query, args);
             }            
-            
+
             obj = query.uniqueResult();
-            
+
         } catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in genericLoadObject", e);
         }
-        
+
         return obj;
-        
+
     }
-    
+
     public void addPriority(Priority prio) 
-    throws DbException { 
+            throws DbException { 
 
         try {                
             session.saveOrUpdate(prio);
@@ -195,10 +195,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in addPriority", e);
         }
     }
-    
-    
+
+
     public void addEntryType(EntryType entryType) 
-    throws DbException { 
+            throws DbException { 
         try {                    
             session.saveOrUpdate(entryType);
             session.flush();
@@ -207,10 +207,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in addEntryType", e);
         }
     }
-    
-    
+
+
     public void addLogEntry(LogEntry logEntry) 
-    throws DbException { 
+            throws DbException { 
         try {                
             session.save(logEntry);
             session.flush();
@@ -220,10 +220,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in addLogEntry", e);
         }
     }
-        
+
 
     public void updateLogEntry(LogEntry logEntry) 
-    throws DbException { 
+            throws DbException { 
         try {                
             session.update(logEntry);
             session.flush();
@@ -233,12 +233,12 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in updateLogEntry", e);
         }
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<LogEntry> listLogEntries(long logJobId, int startIndex,
-              int noOfRecords) 
-    throws DbException { 
+            int noOfRecords) 
+                    throws DbException { 
         try {
             Query query = session.createQuery("from LogEntry where Job.Id = ? order by Id asc");
             query.setLong(0, logJobId);
@@ -250,13 +250,13 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in listLogEntries", e);
         }
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<LogEntry> listLogEntries(long logJobId, boolean usePrimaryOrg, int startIndex,
-              int noOfRecords) 
-    throws DbException { 
-    
+            int noOfRecords) 
+                    throws DbException { 
+
         try {
             Query query = null;
 
@@ -269,7 +269,7 @@ public class DbManager {
             query.setLong(0, logJobId);
             query.setMaxResults(noOfRecords);
             query.setFirstResult(startIndex);
-            
+
             return query.list();
         } 
         catch (Exception e) {
@@ -277,7 +277,7 @@ public class DbManager {
         }
     }
 
-    
+
     /**
      * Returns high priority entries for specified job. Both primary and 
      * secondary organization is checked (org_id and org_id2).
@@ -293,7 +293,7 @@ public class DbManager {
 
     @SuppressWarnings({ "deprecation" })
     public List<LogEntry> listLogEntries(long logJobId, int prio, int startIndex, int noOfRecords) throws DbException {
-        
+
         try {            
             ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
 
@@ -320,8 +320,8 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in listLogEntries", e);
         }                               
     }
-    
-    
+
+
     /**
      * Returns the log entry with the latest "created" timestamp, where 
      * ipAddress is equal to specified IP. Null is returned if not found.
@@ -334,7 +334,7 @@ public class DbManager {
     public LogEntry getLastSeenLogEntry(long ip, long jobId) throws DbException {
 
         LogEntry entry = null;
-        
+
         try {
             String sql = "select id from log_entry where ip_address = ? and job_id != ? order by created desc";    
             PreparedStatement ps = session.connection().prepareStatement(sql);
@@ -355,7 +355,7 @@ public class DbManager {
         return entry;
     }
 
-    
+
     /**
      * Returns the mail job with the latest "started" timestamp, which have
      * mailed specified IP. Null is returned if not found.
@@ -368,7 +368,7 @@ public class DbManager {
 
         try {
             String sql = "select mj.id from mail_job mj, mail_job_log_entry_mapping mjlem, log_entry le " + 
-            "where mjlem.log_entry_id = le.id and le.ip_address = ? and mjlem.mail_job_id = mj.id order by mj.started desc";
+                    "where mjlem.log_entry_id = le.id and le.ip_address = ? and mjlem.mail_job_id = mj.id order by mj.started desc";
 
             PreparedStatement ps = session.connection().prepareStatement(sql);
             ps.setLong(1, ip);                   
@@ -387,7 +387,7 @@ public class DbManager {
         return mailJob;
     }
 
-    
+
     public void addOrganization(Organization org, String modifiedBy) 
             throws DbException { 
         try {
@@ -401,16 +401,16 @@ public class DbManager {
             session.save(org);
             session.flush();
         } 
-        
+
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " not possible to add organiation", e);
         }
     }
 
 
-    
+
     public void updateOrganization(Organization org, String modifiedBy) 
-    throws DbException { 
+            throws DbException { 
         try {
             java.util.Date date = new java.util.Date();
             long time = SqlUtil.convertTimestamp(date);        
@@ -428,7 +428,7 @@ public class DbManager {
     @SuppressWarnings("unchecked")
     public List<Organization> searchOrganizations(String name, int startIndex,
             int noOfRecords) 
-            throws DbException { 
+                    throws DbException { 
         try {
             Query query = session.createQuery("from Organization where name like ?");
             query.setString(0, "%" + name +"%");
@@ -443,9 +443,9 @@ public class DbManager {
         }
     }
 
-    
+
     public Organization searchOrganization(String name) 
-    throws DbException { 
+            throws DbException { 
         try {
             Query query = session.createQuery("from Organization where name = ?");
             query.setString(0, name);
@@ -460,11 +460,11 @@ public class DbManager {
 
     }
 
-    
+
     @SuppressWarnings("unchecked")
     public List<Organization> listOrganizations(int startIndex, int noOfRecords) 
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
             Query query = session.createQuery("from Organization order by Name asc");        
             query.setMaxResults(noOfRecords);
@@ -477,10 +477,10 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     public Organization getOrganization(int orgId) 
-    throws DbException { 
+            throws DbException { 
 
         try {
             Organization org = (Organization)loadIntegerObject(Organization.class, orgId);
@@ -495,8 +495,8 @@ public class DbManager {
 
 
     public void addMailJob(MailJob mailJob) 
-    throws DbException { 
-    
+            throws DbException { 
+
         try {
             mailJob.setStarted(SqlUtil.convertTimestamp(new Date()));
             session.saveOrUpdate(mailJob);
@@ -506,18 +506,18 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in addMailJob", e);
         }
     }
-    
-    
+
+
     /*        
         The updateMailJob is deprecated due to a problem when persisting the MailJob object after
         a change in the LogEntry collection. The reason could be due to some missconfiguration in the
         Hibernate object mapping for MailJob or a bug in Hibernate. 
         Use finishMailJob to persist the MailJob once it has been completed.      
-    */
+     */
     @Deprecated
     public void updateMailJob(MailJob mailJob) 
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
             session.update(mailJob);        
             session.flush();
@@ -529,8 +529,8 @@ public class DbManager {
 
 
     public void finishMailJob(MailJob mailJob, String errorMsg) 
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
             mailJob.setErrorMsg(errorMsg);
             mailJob.setFinished(SqlUtil.convertTimestamp(new Date()));
@@ -542,13 +542,13 @@ public class DbManager {
         }
     }
 
-    
+
     public long deleteMailJob(MailJob mailJob) 
-    throws DbException { 
+            throws DbException { 
 
         try {
             Query query = session.createSQLQuery(
-            "SELECT COUNT(*) FROM mail_job_log_entry_mapping WHERE mail_job_id = ?");
+                    "SELECT COUNT(*) FROM mail_job_log_entry_mapping WHERE mail_job_id = ?");
             query.setLong(0, mailJob.getId());
             long noLogEntriesInJob = ((BigInteger)query.list().get(0)).longValue();
 
@@ -563,13 +563,13 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in deleteMailJob", e);
         }
     }
-    
-    
+
+
     // Search MailJob by Job entity
     @SuppressWarnings("unchecked")
     public List<MailJob> searchMailJobs(Date startTime,
             Date endTime, int startIndex, int noOfRecords) 
-            throws DbException { 
+                    throws DbException { 
         try {
             Query query = session.createQuery("from MailJob where started >= ? and started <= ? order by Id asc");
             query.setLong(0, SqlUtil.convertTimestamp(startTime));
@@ -583,13 +583,13 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in searchMailJobs", e);
         }
     }
-    
-    
+
+
     // Search MailJob by Job entity
     @SuppressWarnings("unchecked")
     public List<MailJob> searchMailJobs(Job job) 
             throws DbException { 
-        
+
         try {
             Query query = session.createQuery("from MailJob where Job = ?");
             query.setEntity(0, job);
@@ -603,7 +603,7 @@ public class DbManager {
 
 
     public void addJobType(JobType jobType) 
-    throws DbException { 
+            throws DbException { 
 
         try {                
             session.saveOrUpdate(jobType);
@@ -613,9 +613,9 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in addJobType", e);
         }
     }
-    
+
     public void addLogJob(Job job) 
-    throws DbException {
+            throws DbException {
 
         try {
             session.save(job);
@@ -627,8 +627,8 @@ public class DbManager {
     }
 
     public boolean existsFileHash(String hash)
-    throws DbException {
-    
+            throws DbException {
+
         try {
             Query query = session.createQuery("from Job where FileHash = ?");
             query.setString(0, hash);
@@ -639,12 +639,12 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in existsFileHash", e);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<Job> searchLogJobs(Date startTime, Date endTime, int startIndex,
             int noOfRecords) 
-            throws DbException { 
-        
+                    throws DbException { 
+
         try {
 
             Query query = session.createQuery("from Job where started >= ? and started <= ? order by Id asc");
@@ -661,10 +661,10 @@ public class DbManager {
 
     }                           
 
-    
+
     public Job searchLogJob(String name)
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
             Query query = session.createQuery("from Job where name = ?");
             query.setString(0, name);
@@ -677,10 +677,10 @@ public class DbManager {
 
     } 
 
-    
+
     public void finishLogJob(Job job, String errorMsg) 
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
             job.setFinished(SqlUtil.convertTimestamp(new Date()));
             job.setErrorMsg(errorMsg);
@@ -693,14 +693,14 @@ public class DbManager {
 
     }
 
-    
+
     @SuppressWarnings("deprecation")
     public long deleteLogJob(Job job) 
-    throws DbException {
-        
+            throws DbException {
+
         long jobId = job.getId();        
-        
-        
+
+
         // Use JDBC connection to delete additional_item, free_text & original_log_entry
         try {
 
@@ -750,12 +750,12 @@ public class DbManager {
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in deleteLogJob", e);
         }
-                  
+
     }
-    
-    
+
+
     public JobType searchJobType(String name) 
-    throws DbException { 
+            throws DbException { 
 
         try {
             Query query = session.createQuery("from JobType where name = ?");
@@ -768,10 +768,10 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     public EntryType searchEntryType(String name) 
-    throws DbException { 
+            throws DbException { 
 
         try {
 
@@ -785,10 +785,10 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     public Priority getPriority(int prio)
-    throws DbException { 
+            throws DbException { 
         try {
             Query query = session.createQuery("from Priority where prio = ?");
             query.setInteger(0, prio);
@@ -800,11 +800,11 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<Priority> getAllPriorities()
-    throws DbException { 
+            throws DbException { 
 
         try {
             Query query = session.createQuery("from Priority order by Prio desc");
@@ -817,12 +817,12 @@ public class DbManager {
         }
 
     }
-        
-    
+
+
     @SuppressWarnings("unchecked")
     public List<IpRange> getAllIpRanges(boolean includeDisabledOrgs)
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
 
             Query query = null;
@@ -841,12 +841,12 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<ASNumber> getAllASNumbers(boolean includeDisabledOrgs)
-    throws DbException { 
-                
+            throws DbException { 
+
         try {
 
             Query query = null;
@@ -865,11 +865,11 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<DomainName> getAllDomainNames(boolean includeDisabledOrgs)
-    throws DbException { 
+            throws DbException { 
 
         try {
 
@@ -888,184 +888,214 @@ public class DbManager {
         }
 
     }
-    
-    public Organization searchOrgForDomain(String domainName)
-    throws DbException { 
+
+    // Gets the organization with the given domain name
+    public Organization getOrgByDomainName(String domainName)
+            throws DbException { 
 
         try {
-            
+
             Organization org = null;
             // Ugly to step search...
             Query query = session.createQuery("from DomainName where Name = ?");
             query.setString(0, domainName);
-            
+
             DomainName dName = (DomainName) query.uniqueResult();
-           
+
             if (dName != null) {
                 org = (Organization)loadIntegerObject(Organization.class, dName.getOrganizationId());               
             }
             return org;
+
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgByDomainName", e);
+        }
+
+    }
+
+    // Searches for organizations with domain names like the input name
+    public List<Organization> searchOrgForDomainName(String domainName)
+            throws DbException { 
+
+        try {                       
+            //Query query = session.createQuery("OrganizationId from DomainName where Name like '%?%'");
+            //query.setString(0, domainName);
+
+            String sql = "SELECT DISTINCT org_id FROM domain_name WHERE domain_name LIKE ? ORDER BY org_id ASC";            
+            Query query = session.createSQLQuery(sql);
+            query.setString(0, "%" + domainName + "%");
+            List<Object> orgIDs = query.list();
+            List<Organization> orgs = new ArrayList<Organization>();    
+
+            Iterator<Object> itr = orgIDs.iterator();           
+            while (itr.hasNext()) { 
+                Organization org = getOrganization(((Integer)itr.next()).intValue());
+                if (org != null) {
+                    orgs.add(org);
+                }               
+            }           
+            return orgs;            
             
         }
         catch (Exception e) {
-            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgForDomain", e);
-        }
-        
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgForDomainName", e);
+        }        
     }
-    
-       public Organization searchOrganizationByASNumber(int asn)
-                throws DbException { 
 
-            try {
+    public Organization searchOrganizationByASNumber(int asn)
+            throws DbException { 
 
-                Organization org = null;
-                // Ugly two step search...
-                Query query = session.createQuery("from ASNumber where Number = ?");
-                query.setInteger(0, asn);
+        try {
 
-                ASNumber asnum = (ASNumber) query.uniqueResult();
+            Organization org = null;
+            // Ugly two step search...
+            Query query = session.createQuery("from ASNumber where Number = ?");
+            query.setInteger(0, asn);
 
-                if (asnum != null) {
-                    org = (Organization)loadIntegerObject(Organization.class, asnum.getOrganizationId());               
-                }
-                return org;
+            ASNumber asnum = (ASNumber) query.uniqueResult();
 
+            if (asnum != null) {
+                org = (Organization)loadIntegerObject(Organization.class, asnum.getOrganizationId());               
             }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchOrgByASNumber", e);
-            }
+            return org;
 
         }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgByASNumber", e);
+        }
+
+    }
 
 
-        @SuppressWarnings("unchecked")
-        public List<Organization> searchOrganizationsByIPrange(long start, long end) 
+    @SuppressWarnings("unchecked")
+    public List<Organization> searchOrganizationsByIPrange(long start, long end) 
             throws DbException { 
-            try {
-                String sql = "SELECT ORG_ID FROM ip_range WHERE (end_address >= ? AND end_address <= ?) OR (start_address <=  ? AND end_address >= ?) OR  (start_address >= ? AND start_address <= ?) OR (start_address >= ? AND end_address <= ?)";
+        try {
+            String sql = "SELECT DISTINCT org_id FROM ip_range WHERE (end_address >= ? AND end_address <= ?) OR (start_address <=  ? AND end_address >= ?) OR  (start_address >= ? AND start_address <= ?) OR (start_address >= ? AND end_address <= ?) ORDER BY org_id ASC";
 
-                Query query = session.createSQLQuery(sql);
-                query.setLong(0, start);   
-                query.setLong(1, end);
-                query.setLong(2, start);
-                query.setLong(3, end);
-                query.setLong(4, start);
-                query.setLong(5, end);
-                query.setLong(6, start);
-                query.setLong(7, end);
+            Query query = session.createSQLQuery(sql);
+            query.setLong(0, start);   
+            query.setLong(1, end);
+            query.setLong(2, start);
+            query.setLong(3, end);
+            query.setLong(4, start);
+            query.setLong(5, end);
+            query.setLong(6, start);
+            query.setLong(7, end);
 
 
-                List<Object> orgIDs = query.list();
-                List<Organization> orgs = new ArrayList<Organization>();    
-                
-                Iterator<Object> itr = orgIDs.iterator();           
-                while (itr.hasNext()) { 
-                    Organization org = getOrganization(((Integer)itr.next()).intValue());
-                    if (org != null) {
-                        orgs.add(org);
-                    }               
-                }           
-                return orgs;
-            }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchOrgsByIPrange", e);
+            List<Object> orgIDs = query.list();
+            List<Organization> orgs = new ArrayList<Organization>();    
+
+            Iterator<Object> itr = orgIDs.iterator();           
+            while (itr.hasNext()) { 
+                Organization org = getOrganization(((Integer)itr.next()).intValue());
+                if (org != null) {
+                    orgs.add(org);
+                }               
             }           
-        }   
+            return orgs;
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgsByIPrange", e);
+        }           
+    }   
 
-        
-        @SuppressWarnings("unchecked")
-        public List<LogEntry> searchLogEntriesByIPrange(long start, long end) 
-                throws DbException { 
-            try {
-                //String sql = "SELECT id FROM log_entry where (ip_address >= ? AND ip_address <= ?) OR (ip_address2 >= ? AND ip_address2 <= ?)";
-                Query query = session.createQuery("from LogEntry where (IpAddress >= ? AND IpAddress <= ?) OR (IpAddress2 >= ? AND IpAddress2 <= ?)");
-                
-                query.setLong(0, start);   
-                query.setLong(1, end);
-                query.setLong(2, start);
-                query.setLong(3, end);
-                
 
-                /*List<Object> entryIDs = query.list();
+    @SuppressWarnings("unchecked")
+    public List<LogEntry> searchLogEntriesByIPrange(long start, long end) 
+            throws DbException { 
+        try {
+            //String sql = "SELECT id FROM log_entry where (ip_address >= ? AND ip_address <= ?) OR (ip_address2 >= ? AND ip_address2 <= ?)";
+            Query query = session.createQuery("from LogEntry where (IpAddress >= ? AND IpAddress <= ?) OR (IpAddress2 >= ? AND IpAddress2 <= ?)");
+
+            query.setLong(0, start);   
+            query.setLong(1, end);
+            query.setLong(2, start);
+            query.setLong(3, end);
+
+
+            /*List<Object> entryIDs = query.list();
                 List<LogEntry> entries = new ArrayList<LogEntry>(); 
-                
+
                 Iterator<Object> itr = entryIDs.iterator();         
                 while (itr.hasNext()) {                                 
                     LogEntry entry = (LogEntry)loadLongObject(LogEntry.class, ((Long)itr.next()).longValue());                                  
-                    
+
                     if (entry != null) {
                         entries.add(entry);
                     }               
                 }           */
-                return query.list();
-            }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByIPrange", e);
-            }           
-        }   
-        
-        @SuppressWarnings("unchecked")
-        public List<LogEntry> searchLogEntriesByOrgId(int orgId)            
-                throws DbException { 
-            try {
-                Query query = session.createQuery("from LogEntry where Organization = ?");
-                query.setInteger(0, orgId);
+            return query.list();
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByIPrange", e);
+        }           
+    }   
 
-                return query.list();
-            }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByOrgId", e);
+    @SuppressWarnings("unchecked")
+    public List<LogEntry> searchLogEntriesByOrgId(int orgId)            
+            throws DbException { 
+        try {
+            Query query = session.createQuery("from LogEntry where Organization = ?");
+            query.setInteger(0, orgId);
+
+            return query.list();
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByOrgId", e);
+        }       
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<LogEntry> searchLogEntriesByASNumber(long asn) 
+            throws DbException { 
+        try {
+
+            Query query = session.createQuery("from LogEntry where Asn = ? or Asn2 = ?");           
+            query.setLong(0, asn);   
+            query.setLong(1, asn);
+
+            return query.list();
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByASNumber", e);
+        }           
+    }   
+
+
+    @SuppressWarnings("unchecked")
+    public List<Organization> searchOrganizationByEmailAddress(String address) 
+            throws DbException {
+
+        List<Organization> orgs = new ArrayList<Organization>();
+
+        try {
+            Query query = session.createQuery("from Contact where EmailAddress like ?");
+            query.setString(0, "%" + address +"%");
+            List<Contact> contacts = query.list();
+            for (Contact contact: contacts) {   
+                Organization org = (Organization)loadIntegerObject(Organization.class, contact.getOrganizationId());                
+                if (orgs.contains(org) == false) {              
+                    orgs.add(org);
+                }
             }       
+            return orgs;
         }
-        
-        @SuppressWarnings("unchecked")
-        public List<LogEntry> searchLogEntriesByASNumber(long asn) 
-                throws DbException { 
-            try {
-                            
-                Query query = session.createQuery("from LogEntry where Asn = ? or Asn2 = ?");           
-                query.setLong(0, asn);   
-                query.setLong(1, asn);
-                
-                return query.list();
-            }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchLogEntriesByASNumber", e);
-            }           
-        }   
-        
-        
-        @SuppressWarnings("unchecked")
-        public List<Organization> searchOrganizationByEmailAddress(String address) 
-                throws DbException {
-
-            List<Organization> orgs = new ArrayList<Organization>();
-
-            try {
-                Query query = session.createQuery("from Contact where EmailAddress like ?");
-                query.setString(0, "%" + address +"%");
-                List<Contact> contacts = query.list();
-                for (Contact contact: contacts) {   
-                    Organization org = (Organization)loadIntegerObject(Organization.class, contact.getOrganizationId());                
-                    if (orgs.contains(org) == false) {              
-                        orgs.add(org);
-                    }
-                }       
-                return orgs;
-            }
-            catch (Exception e) {
-                throw handleException(e.getClass().getSimpleName() + " exception in searchOrganizationByEmailAddress", e);
-            }
-
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrganizationByEmailAddress", e);
         }
 
-    
+    }
+
+
     public long getNumberOfLogEntries()
-    throws DbException { 
+            throws DbException { 
         try {
 
             Query query = session.createSQLQuery(
-            "SELECT COUNT(*) FROM log_entry");
+                    "SELECT COUNT(*) FROM log_entry");
 
             return ((BigInteger)query.list().get(0)).longValue();
         } 
@@ -1074,11 +1104,11 @@ public class DbManager {
         }
 
     }
-        
-    
+
+
     public boolean existsMailForIp(long ip, Organization organization, long periodInSecs, boolean usePrimaryOrg)
-    throws DbException { 
-        
+            throws DbException { 
+
         try {        
             String orgIdColName = "org_id";
             String ipAddrColName = "ip_address";
@@ -1086,18 +1116,18 @@ public class DbManager {
                 orgIdColName = "org_id2";
                 ipAddrColName = "ip_address2";
             }
-            
+
             String select = "SELECT COUNT(*) FROM log_entry le, mail_job_log_entry_mapping map, mail_job mj where mj.started >= ? AND mj.finished <= ? AND mj.id = map.mail_job_id AND map.log_entry_id = le.id AND le." + orgIdColName + " = ? AND le." + ipAddrColName + " = ?";                  
             Query query = session.createSQLQuery(select); 
 
             long endTime = SqlUtil.convertTimestamp(new Date());        
             long startTime = endTime - periodInSecs;
-            
+
             query.setLong(0, startTime);
             query.setLong(1, endTime);    
             query.setInteger(2, organization.getId());
             query.setLong(3, ip);
-                    
+
             return ((BigInteger)query.list().get(0)).intValue() > 0 ? true:false;
         } 
         catch (Exception e) {
@@ -1105,10 +1135,10 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     public DbStatisticsData fetchStatistics(Date startDate, Date endDate)
-    throws DbException { 
+            throws DbException { 
         try {
 
             DbStatisticsData dbStats = new DbStatisticsData(startDate, endDate);
@@ -1139,13 +1169,13 @@ public class DbManager {
      */
     @SuppressWarnings("unchecked")
     public Map<String, Long> fetchNoOfProcessedLinesPerEntryType(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
 
             Map<String, Long> result = new HashMap<String, Long>();
 
             String select = "SELECT et.name, sum(j.processed_lines) FROM job j, job_type jt, entry_type et WHERE job_type_id = jt.id AND jt.entry_type_id = et.id AND finished >= ? AND finished <= ? group by et.name;";
-            
+
             Query query = session.createSQLQuery(select);        
             query.setLong(0, SqlUtil.convertTimestamp(startDate));
             query.setLong(1, SqlUtil.convertTimestamp(endDate));
@@ -1165,7 +1195,7 @@ public class DbManager {
         }
     }
 
-    
+
     /**
      * Fetches number of log entries for successful jobs per job type.
      * 
@@ -1177,8 +1207,8 @@ public class DbManager {
      */
     @SuppressWarnings("unchecked")
     public Map<String, Long> fetchNoOfLogEntriesPerEntryType(Date startDate, Date endDate, boolean onlyMatchedEntries) 
-    throws DbException { 
-        
+            throws DbException { 
+
         try {
 
             Map<String, Long> result = new HashMap<String, Long>();
@@ -1207,10 +1237,10 @@ public class DbManager {
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in fetchNoOfLogEntriesPerJobType", e);
         }
-        
+
     }
 
-    
+
     /**
      * Fetches log entries for use in GeolocationXmlReportGenerator. Hibernate 
      * is not used due to memory constraints and complexity of the query.  
@@ -1224,24 +1254,24 @@ public class DbManager {
         try {
             // -- build query
             String queryStr = 
-                "select log_entry.id, log_timestamp, log_entry.created, ip_address, ip_range_start, port, hostname, asn, prio.name, additional_item.name, additional_item.value " +
-                "from (log_entry, job, job_type) " +
-                "left join additional_item on log_entry.id = additional_item.log_entry_id " +
-                "left join organization on log_entry.org_id = organization.id " +
-                "left join prio on organization.prio_id = prio.id " + 
-                "where " +
-                "log_entry.log_timestamp >= ? and log_entry.log_timestamp <= ? and " +
-                "log_entry.job_id = job.id and " +
-                "job.job_type_id = job_type.id and " +
-                "job_type.name not in (@inList@) " + 
-                "order by log_entry.log_timestamp, log_entry.id asc;";
+                    "select log_entry.id, log_timestamp, log_entry.created, ip_address, ip_range_start, port, hostname, asn, prio.name, additional_item.name, additional_item.value " +
+                            "from (log_entry, job, job_type) " +
+                            "left join additional_item on log_entry.id = additional_item.log_entry_id " +
+                            "left join organization on log_entry.org_id = organization.id " +
+                            "left join prio on organization.prio_id = prio.id " + 
+                            "where " +
+                            "log_entry.log_timestamp >= ? and log_entry.log_timestamp <= ? and " +
+                            "log_entry.job_id = job.id and " +
+                            "job.job_type_id = job_type.id and " +
+                            "job_type.name not in (@inList@) " + 
+                            "order by log_entry.log_timestamp, log_entry.id asc;";
             if ((jobTypeKillList == null) || jobTypeKillList.isEmpty()) {
                 jobTypeKillList = new ArrayList<String>();
                 jobTypeKillList.add("");
             }
             String inList = StringUtil.toSingleQuotedString(jobTypeKillList);
             queryStr = StringUtil.replace(queryStr, "@inList@", inList);
-            
+
             // -- execute query
             log.debug("Executing query: " + queryStr);
             long t1 = System.currentTimeMillis();
@@ -1317,10 +1347,10 @@ public class DbManager {
         } finally {
             try { if (ps != null) ps.close(); } catch (SQLException ignored) { }
         }
-        
+
         return result;
     }
-    
+
 
     /**
      * Fetches log entries for specified organization for use in OrganizationReportGenerator.
@@ -1328,18 +1358,19 @@ public class DbManager {
      * @param jobTypes list of job types (db-field "job_type.name") for log entries to be included in the result.
      */
     @SuppressWarnings("deprecation")
-    public List<LogEntry> fetchLogEntriesForOrganizationReport(int orgId, Date startDate, Date endDate, List<String> jobTypes) throws DbException {
+    public List<LogEntry> fetchLogEntriesForOrganizationReport(int orgId, Date startDate, Date endDate, List<String> jobTypes) 
+            throws DbException {
         List<LogEntry> entries = new ArrayList<LogEntry>(2048);
         PreparedStatement ps = null;
         if ((jobTypes == null) || jobTypes.isEmpty()) {
             return entries;
         }
-        
+
         try {
             String inList = StringUtil.toSingleQuotedString(jobTypes);
             String sql = 
-                 "SELECT le.id from log_entry le, job j, job_type jt " +
-                 "WHERE j.finished >= ? AND j.finished <= ? AND j.job_type_id = jt.id AND jt.name in (" + inList + ") AND le.job_id = j.id AND le.org_id = ?;";
+                    "SELECT le.id from log_entry le, job j, job_type jt " +
+                            "WHERE j.finished >= ? AND j.finished <= ? AND j.job_type_id = jt.id AND jt.name in (" + inList + ") AND le.job_id = j.id AND le.org_id = ?;";
 
             log.debug("Executing query: " + sql);
             ps = session.connection().prepareStatement(sql);            
@@ -1347,7 +1378,7 @@ public class DbManager {
             ps.setLong(2, SqlUtil.convertTimestamp(endDate));
             ps.setInt(3, orgId);
             boolean successful = ps.execute();
-            
+
             if (successful) {
                 ResultSet resultSet = ps.getResultSet(); 
                 while (resultSet.next()) {
@@ -1361,13 +1392,13 @@ public class DbManager {
         } finally {
             try { if (ps != null) ps.close(); } catch (SQLException ignored) { }
         }
-        
+
         return entries;
     }
 
-    
+
     public long getNumberOfSuccessfulLogJobs(Date startDate, Date endDate) 
-    throws DbException {
+            throws DbException {
         try {
             /** No. of successful log jobs (excluding mail jobs). */
             String sql = "SELECT COUNT(*) FROM job WHERE finished >= ? AND finished <= ? AND error_msg IS NULL";
@@ -1383,10 +1414,10 @@ public class DbManager {
         }
 
     }
-    
-    
+
+
     public long getNumberOfFailedLogJobs(Date startDate, Date endDate) 
-    throws DbException {
+            throws DbException {
         try {    
             /** No. of failed log jobs (excluding mail jobs). */
             String sql = "SELECT COUNT(*) FROM job WHERE started >= ? AND started <= ? AND finished is null";
@@ -1400,10 +1431,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfFailedLogJobs", e);
         }   
     }
-    
-    
+
+
     public long getNumberOfProcessedLines(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
             /** No. of processed lines (after possible split or merge). */
             String sql = "SELECT SUM(processed_lines) FROM job WHERE finished >= ? AND finished <= ?";
@@ -1417,10 +1448,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfProcessedLines", e);
         }
     }
-    
-    
+
+
     public long getNumberOfLogEntries(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
 
             /** No. of processed lines (after possible split or merge). */
@@ -1435,10 +1466,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfLogEntries", e);
         }
     }
-    
-    
+
+
     public long getNumberOfMatchedLogEntries(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
 
             /** No. of log entries that have been matched to an organisation. */
@@ -1453,10 +1484,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfMatchedLogEntries", e);
         }
     }
-        
-    
+
+
     public long getNumberOfSentEmails(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
 
             /** No. of sent emails in all mail jobs. */
@@ -1474,10 +1505,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfSentEmails", e);
         }
     }
-        
-    
+
+
     public long getNumberOfNewOrganizations(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {
             /** No. of created organizations. */        
             String sql = "SELECT COUNT(*) FROM organization WHERE created >= ? AND created <= ?";
@@ -1491,10 +1522,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfNewOrganizations", e);
         }
     }
-    
-    
+
+
     public long getNumberOfModifiedOrganizations(Date startDate, Date endDate) 
-    throws DbException { 
+            throws DbException { 
         try {    
             /** No. of modified organizations. */        
             String sql = "SELECT COUNT(*) FROM organization WHERE last_modified >= ? AND last_modified <= ? AND created <  last_modified";
@@ -1508,10 +1539,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in getNumberOfModifiedOrganizations", e);
         }   
     }
-          
-    
+
+
     public boolean isRangeOverlapping(long start, long end) 
-    throws DbException { 
+            throws DbException { 
         try {
             String sql = "SELECT COUNT(*) FROM ip_range WHERE (end_address >= ? AND end_address <= ?) OR (start_address <=  ? AND end_address >= ?) OR  (start_address >= ? AND start_address <= ?) OR (start_address >= ? AND end_address <= ?)";
 
@@ -1525,42 +1556,42 @@ public class DbManager {
             query.setLong(6, start);
             query.setLong(7, end);
 
-           long result = ((BigInteger)query.list().get(0)).longValue();
-            
+            long result = ((BigInteger)query.list().get(0)).longValue();
+
             return query.list() != null && result > 0;
         }
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in isRangeOverlapping", e);
         }           
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public List<BigInteger> isRangeOverlappingOrgId(long start, long end)
-                throws DbException {
-         
-             try {
-                 String sql = "SELECT ORG_ID FROM ip_range WHERE (end_address >= ? AND end_address <= ?) OR (start_address <=  ? AND end_address >= ?) OR  (start_address >= ? AND start_address <= ?) OR (start_address >= ? AND end_address <= ?)";
-     
-                 Query query = session.createSQLQuery(sql);
-                 query.setLong(0, start);
-                 query.setLong(1, end);
-                 query.setLong(2, start);
-                 query.setLong(3, end);
-                 query.setLong(4, start);
-                 query.setLong(5, end);
-                 query.setLong(6, start);
-                 query.setLong(7, end);
-     
-                 return query.list();
-     
-             } catch (Exception e) {
-                 throw handleException(e.getClass().getSimpleName()
-                         + " exception in isRangeOverlappingOrgId", e);
-             }
-         }
-    
-    
+            throws DbException {
+
+        try {
+            String sql = "SELECT ORG_ID FROM ip_range WHERE (end_address >= ? AND end_address <= ?) OR (start_address <=  ? AND end_address >= ?) OR  (start_address >= ? AND start_address <= ?) OR (start_address >= ? AND end_address <= ?)";
+
+            Query query = session.createSQLQuery(sql);
+            query.setLong(0, start);
+            query.setLong(1, end);
+            query.setLong(2, start);
+            query.setLong(3, end);
+            query.setLong(4, start);
+            query.setLong(5, end);
+            query.setLong(6, start);
+            query.setLong(7, end);
+
+            return query.list();
+
+        } catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName()
+                    + " exception in isRangeOverlappingOrgId", e);
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     public List<Contact> searchContactsByOrgIDsAndRoles(String[] orgIDs, String roles) 
             throws DbException {
@@ -1571,8 +1602,8 @@ public class DbManager {
          */
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         Query query = null;
-        
-        
+
+
         if (orgIDs != null && orgIDs.length > 0) {
             for (String orgID : orgIDs) {           
                 if (roles != null && roles.isEmpty() == false) {
@@ -1597,7 +1628,7 @@ public class DbManager {
             }
         }
         else {
-            
+
             if (roles != null && roles.isEmpty() == false) {    
                 // Search by roles only
                 query = session.createQuery("from Contact where Role in (:roles)");             
@@ -1607,7 +1638,7 @@ public class DbManager {
                 // Search all contacts
                 query = session.createQuery("from Contact");
             }
-            
+
             contacts.addAll((List<Contact>)query.list());
         }
         return contacts;
@@ -1636,7 +1667,7 @@ public class DbManager {
                     if (searchRoles != null && searchRoles.isEmpty() == false) {
                         for (Contact contact : orgContacts) {
                             if (contact != null && contact.getRole() != null && searchRoles.contains(contact.getRole())) {
-                                
+
                                 contacts.add(contact);                              
                             }
                         }
@@ -1654,23 +1685,24 @@ public class DbManager {
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> getAllContactRoleNames() throws DbException {
+    public List<String> getAllContactRoleNames() 
+            throws DbException {
         try {
             String sql = "SELECT DISTINCT role FROM contact where role is not null ORDER BY role";
             Query query = session.createSQLQuery(sql);
-            
+
             return (List<String>)query.list();
-            
+
         }
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in getAllContactRoleNames", e);
         }
-        
+
     }
 
-    
+
     public void genericDelete(Object obj) 
-    throws DbException {
+            throws DbException {
         try {
             session.delete(obj);
         }
@@ -1678,10 +1710,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in genericDelete", e);
         }
     }
-    
-    
+
+
     public void flushSession()
-    throws DbException {
+            throws DbException {
         try {    
             session.flush();
         }
@@ -1689,10 +1721,10 @@ public class DbManager {
             throw handleException(e.getClass().getSimpleName() + " exception in flushSession", e);
         }
     }    
-    
+
     public void close() 
-    throws DbException {
-    
+            throws DbException {
+
         try {
             session.close();
         }
@@ -1702,9 +1734,9 @@ public class DbManager {
     }
 
     private DbException handleException (String msg, Exception e) {
-        
+
         return new DbException(msg, e);
-        
+
     }
 
 }

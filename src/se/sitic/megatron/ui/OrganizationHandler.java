@@ -148,6 +148,7 @@ public class OrganizationHandler {
 
     private void println(String msg) {
         getScreenWriter().println(msg);
+        getScreenWriter().flush();
     }
 
     private void print(String msg) {
@@ -161,18 +162,26 @@ public class OrganizationHandler {
 
     private String[] readCommand() {
 
+        //TODO: Validate input type
+        
         String[] command = new String[2];
-        String tmpCommand = readInput("\n> ");
-
-        if (tmpCommand != null && tmpCommand.length() == 1) {
-            command[0] = (String) tmpCommand.subSequence(0, 1);
-            command[1] = null;
-        } else if (tmpCommand != null && tmpCommand.length() > 2) {
-            command[0] = (String) tmpCommand.subSequence(0, 1);
-            command[1] = tmpCommand.substring(2);
-        } else {
-            return readCommand();
-        }
+        
+        boolean valid = false;        
+        while (!valid) {
+            String tmpCommand = readInput("\n> ");                   
+            if (tmpCommand != null && tmpCommand.length() == 1) {
+                command[0] = (String) tmpCommand.subSequence(0, 1);
+                command[1] = null;
+                valid = true;
+            } else if (tmpCommand != null && tmpCommand.length() > 2) {
+                command[0] = (String) tmpCommand.subSequence(0, 1);
+                command[1] = tmpCommand.substring(2);
+                valid = true;
+            } else {
+                usage();
+                valid = false;
+            }          
+        }        
         return command;
     }
 
@@ -351,7 +360,8 @@ public class OrganizationHandler {
 
         try {
             Organization org = null;
-            if (command[1] != null) {
+            // Check if organization id is supplied with the command
+            if (command[1] != null && command[1].matches("^[0-9]+$")) {
                 org = fetchOrganization(command[1]);
             }
 
@@ -457,7 +467,7 @@ public class OrganizationHandler {
             findOrganizationByASNumber();
             break;
         case D:
-            findOrganizationByDomainName();
+            findOrganizationsByDomainName();
             break;
         case E:
             findOrganizationByEmailAddress();
@@ -657,12 +667,16 @@ public class OrganizationHandler {
                 if (orgs.size() == 1) {
                     showOrgSearchResult(orgs.get(0), true);
                 } else {
+                    printInfoMessage("Multiple organizations found matching the given input: " + address);
+                    listOrganizations(orgs);
+                    /*
                     String orgIds = "";
                     for (Object tmpOrg : orgs.toArray()) {
-                        orgIds = orgIds + ((Organization) tmpOrg).getId() + " ";
+                        orgIds = orgIds + ((Organization) tmpOrg).getId() + ", ";
                     }
-                    printInfoMessage("Multiple organizations found matching the given input : "
+                    
                             + orgIds.trim());
+                   */         
                 }
             } else {
                 // Generate no orgs found message
@@ -710,18 +724,38 @@ public class OrganizationHandler {
         showOrgSearchResult(org, false);
     }
 
-    private void findOrganizationByDomainName() {
+    private void findOrganizationsByDomainName() {
 
         String domainName = readInput("\nEnter domain name to search for: ");
         Organization org = null;
 
         try {
-            org = dbManager.searchOrgForDomain(domainName);
+            List<Organization> orgs = dbManager.searchOrgForDomainName(domainName);
+            
+            if (orgs.isEmpty() == false) {
+                if (orgs.size() == 1) {
+                    showOrgSearchResult(orgs.get(0), false);
+                } else {
+                    printInfoMessage("Multiple organizations found matching the given domain name : " + domainName);
+                    listOrganizations(orgs);
+                    /*
+                    String orgIds = "";
+                    for (Object tmpOrg : orgs.toArray()) {
+                        orgIds = orgIds + ((Organization) tmpOrg).getId()
+                                + ", ";
+                    }
+                    printInfoMessage("Multiple organizations found matching the given domain name : "
+                            + orgIds.trim());
+                   */
+                }
+            } else {
+                // Generate no orgs found message
+                showOrgSearchResult(null, false);
+            }                        
         } catch (DbException e) {
             handleException(
                     "could not search for organizations by domain name", e);
-        }
-        showOrgSearchResult(org, false);
+        }        
     }
 
     private void findOrganizationByIPRange(String range) {
@@ -745,13 +779,15 @@ public class OrganizationHandler {
                     if (orgs.size() == 1) {
                         showOrgSearchResult(orgs.get(0), false);
                     } else {
-                        String orgIds = "";
+                        printInfoMessage("Multiple organizations found matching the given IP range : " + range);
+                        listOrganizations(orgs);
+                        /*String orgIds = "";
                         for (Object tmpOrg : orgs.toArray()) {
                             orgIds = orgIds + ((Organization) tmpOrg).getId()
-                                    + " ";
+                                    + ", ";
                         }
-                        printInfoMessage("Multiple organizations found matching the given IP range : "
-                                + orgIds.trim());
+                        
+                                + orgIds.trim());*/
                     }
                 } else {
                     // Generate no orgs found message
@@ -775,27 +811,32 @@ public class OrganizationHandler {
         try {
             List<Organization> organizations = dbManager.searchOrganizations(
                     orgSearchName, 0, 1000);
-
             if (organizations.size() > 0) {
-                println("\nOrganizations:");
-                println("+------+----------------------------------------------------------------------------+");
-                println("|   Id | Name                                                                       |");
-                println("+------+----------------------------------------------------------------------------+");
-                for (Iterator<Organization> iterator = organizations.iterator(); iterator
-                        .hasNext();) {
-                    Organization org = iterator.next();
-                    printf("| %4d | %-74s |\n", org.getId(), org.getName());
-                }
-                println("+------+----------------------------------------------------------------------------+");
+                listOrganizations(organizations);
             } else {
                 printInfoMessage("No organization with name containing '"
                         + orgSearchName + "' was found");
-            }
+            }            
         } catch (DbException e) {
             handleException("could not search for organizations", e);
         }
     }
 
+
+    private void listOrganizations(List<Organization> organizations) {
+        
+            println("\nOrganizations:");
+            println("+------+----------------------------------------------------------------------------+");
+            println("|   Id | Name                                                                       |");
+            println("+------+----------------------------------------------------------------------------+");
+            for (Iterator<Organization> iterator = organizations.iterator(); iterator
+                    .hasNext();) {
+                Organization org = iterator.next();
+                printf("| %4d | %-74s |\n", org.getId(), org.getName());
+            }
+            println("+------+----------------------------------------------------------------------------+");        
+    }
+    
     private void initNewOrg(Organization org) {
 
         // Setting default values
@@ -838,7 +879,7 @@ public class OrganizationHandler {
                 handleException("could not find Organisation with id = "
                         + orgId, e);
             } catch (NumberFormatException e) {
-                handleException("not a valid org id: " + orgId, e);
+                handleException("not a valid organization id: " + orgId, e);
             } catch (org.hibernate.ObjectNotFoundException e) {
                 handleException("Error: could not find Organisation with id = "
                         + orgId, e);
@@ -1645,11 +1686,11 @@ public class OrganizationHandler {
             try {
                 org = dbManager.getOrganization(Integer.valueOf(orgId));
             } catch (DbException e) {
-                handleException("could not find an Organization with id = "
+                handleException("could not find an organization with id: "
                         + orgId, e);
                 return;
             } catch (NumberFormatException e) {
-                handleException("not a valid Organization id format: " + orgId,
+                handleException("not a valid organization id: " + orgId,
                         e);
                 return;
             } catch (Exception e) {
@@ -1660,10 +1701,7 @@ public class OrganizationHandler {
 
         println("\n");
         printOrganizationBanner();
-        println("");
-        // println("+-----------------------------------------------------------------------------------+");
-        // printf("| %14s:  %-64s |\n", "Organization" , org.getName());
-        // println("+-----------------------------------------------------------------------------------+\n");
+        println("");        
         printf(" %-16s: %d\n", "Id", org.getId());
         printf(" %-16s: %s\n", "Name", org.getName());
         printf(" %-16s: %s\n", "Org/Reg no", replaceNullValue(org

@@ -92,7 +92,7 @@ public class EmailAddressBatchUpdater {
 
             Organization org = null;
             try {
-                org = dbm.searchOrgForDomain(domainName);
+                org = dbm.getOrgByDomainName(domainName);
             } catch (DbException e) {
                 log.error("DbException i processEmailRow line no = " + this.readLinesC);
                 e.printStackTrace();

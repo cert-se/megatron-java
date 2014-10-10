@@ -76,6 +76,11 @@ public class Organization extends BaseOrganization {
         asNumber.setOrganizationId(this.getId());
         super.addToASNumbers(asNumber);
     }
+    
+    // Returning all enabled email addresses
+    public String getEmailAddresses(){        
+        return this.getEmailAddresses(null, true);
+    }
 
     // This method returns all email addresses for the organization that matches the given email type and 
     // the enabledOnly flag. If the email type is null or empty, all addresses matching the enabledOnly

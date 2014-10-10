@@ -123,9 +123,12 @@ public class OrganizationContactMigrator {
                 + "external_reference VARCHAR(255), "
                 + "auto_update_email BOOLEAN NOT NULL, " + "PRIMARY KEY (id)"
                 + ") ENGINE=MyISAM";
-
         result = executeUpdate(sql);
 
+        // Change default value for auto_update_email until migration is completed
+        sql = "ALTER TABLE organization ALTER auto_update_email SET DEFAULT 1;";
+        result = executeUpdate(sql);
+        
         addHistory(step, "completed", "Create contact table.");
 
         log.info("Create contact table result = " + result);
@@ -147,7 +150,7 @@ public class OrganizationContactMigrator {
 
         String sql = "UPDATE organization SET comment = CONCAT (comment, ' "
                 + timeStamp
-                + "Emailaddresses copied by OrganizationContactMigrator: ' , email_addresses) where email_addresses is not null and email_addresses like '%@%'";
+                + "\nEmail addresses copied by OrganizationContactMigrator: ' , email_addresses ) where email_addresses is not null and email_addresses like '%@%'";
 
         executeUpdate(sql);
 
