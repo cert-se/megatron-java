@@ -14,7 +14,7 @@ public class Version {
     private final static String APP_NAME = "Megatron";
     private final static String APP_VERSION = "1.1.0";
     private final static String APP_TAG = "v1.1.0";
-    private final static String BUILD_DATE = "2014-11-17 09:43:12";
+    private final static String BUILD_DATE = "2014-11-17 10:27:17";
     private final static String ANT_VERSION = "Apache Ant(TM) version 1.8.2 compiled on December 3 2011";
     private final static String ANT_JAVA_VERSION = "1.7";
 
