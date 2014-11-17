@@ -64,20 +64,20 @@ v1.1.0
 
     Hibernate mapping:
     - New: Contact.hbm.xml 
-           - new table contact and class Contact.
+      - new table contact and class Contact.
     - Changed: Organization.hbm.xml
-	   - removed EmailAddresses and AutoUpdateEmail
-           - added set of Contacts
+      - removed EmailAddresses and AutoUpdateEmail
+      - added set of Contacts
 
     Hibernate config:
     - Changed: hibernate.cfg.xml
            - added mapping resource Contact.hbm.xml 
 
 * Database schema changes:
-    
-  - New table contact, see file sql/megatron-schema.sql for details.
-  - Moved column auto_update_email from organization table to contact table.
-  - Removed column email_addresses in organization table
+  - Changed: megatron-schema.sql:
+    - New table contact, see file sql/megatron-schema.sql for details.
+    - Moved column auto_update_email from organization table to contact table.
+    - Removed column email_addresses in organization table
 
 v1.0.12
 =======
