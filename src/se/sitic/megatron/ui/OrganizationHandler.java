@@ -31,6 +31,7 @@ import se.sitic.megatron.entity.Contact;
 import se.sitic.megatron.entity.DomainName;
 import se.sitic.megatron.entity.IpRange;
 import se.sitic.megatron.entity.LogEntry;
+import se.sitic.megatron.entity.MailJob;
 import se.sitic.megatron.entity.Organization;
 import se.sitic.megatron.entity.Priority;
 import se.sitic.megatron.util.DateUtil;
@@ -46,7 +47,7 @@ public class OrganizationHandler {
     // Commands: Add org, Edit org , Find org , View org , Quit, Help, Debug,
     // Edit contact, Extract contacts, Search log entries
     private enum Commands {
-        A, E, F, V, Q, H, D, C, X, L
+        A, E, F, V, Q, H, D, C, P, X, L, T
     }
 
     // Search types: Name, ASN, E-mail, Domain, IP, Range, Cancel, OrgId
@@ -54,9 +55,9 @@ public class OrganizationHandler {
         N, A, E, D, I, R, C, O, V
     }
 
-    // Organization edit types: ASN, Domain, Range, Contact, Properities"
+    // Organization edit types: ASN, Domain, Range, Properities, Cancel"
     private enum EditTypes {
-        A, D, R, C, P
+        A, D, R, P, C
     }
 
     private PrintWriter screenWriter = null;
@@ -77,6 +78,7 @@ public class OrganizationHandler {
 
     static private final boolean MANDATORY = true;
     static private final boolean NOT_MANDATORY = false;
+    static private final String COMMAND_FORMAT_REGEXP = "^([A-Z,a-z])(\\s{1}\\d+)?$";
     static private final String DEFAULT_CC = "SE";
     static private final String DEFAULT_LC = "sv";
     static private final String[] EMAIL_TYPES = {
@@ -84,7 +86,7 @@ public class OrganizationHandler {
             Message.RecipientType.CC.toString(),
             Message.RecipientType.BCC.toString() };
     static private final String[] DEFAULT_ROLES = { "Abuse", "Technical",
-            "Administrative", "Manager" };
+            "Administrative", "Manager", "Unknown" };
     static private final String TEXT_EMPTY = "<EMPTY>";
     static private final String TEXT_NULL = "<NULL>";
     static private final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -160,27 +162,43 @@ public class OrganizationHandler {
         getScreenWriter().printf(msg, args);
     }
 
-    private String[] readCommand() {
-
-        //TODO: Validate input type
+    
+    private boolean validateInput(String input, String expr) {
         
+        boolean valid = false;
+        
+        if (input != null && (input.matches(expr))) {
+            debug("Command is valid");
+            valid = true;
+        }        
+                
+        return valid;        
+    }
+    
+    private String[] readCommand() {
+   
         String[] command = new String[2];
         
         boolean valid = false;        
         while (!valid) {
-            String tmpCommand = readInput("\n> ");                   
-            if (tmpCommand != null && tmpCommand.length() == 1) {
-                command[0] = (String) tmpCommand.subSequence(0, 1);
-                command[1] = null;
-                valid = true;
-            } else if (tmpCommand != null && tmpCommand.length() > 2) {
-                command[0] = (String) tmpCommand.subSequence(0, 1);
-                command[1] = tmpCommand.substring(2);
-                valid = true;
-            } else {
+            String tmpCommand = readInput("\n> ");  
+            
+            if (validateInput(tmpCommand, COMMAND_FORMAT_REGEXP)) {
+                if (tmpCommand != null && tmpCommand.length() == 1) {
+                    command[0] = (String) tmpCommand.subSequence(0, 1);
+                    command[1] = null;
+                    valid = true;
+                } else if (tmpCommand != null && tmpCommand.length() > 2) {
+                    command[0] = (String) tmpCommand.subSequence(0, 1);
+                    command[1] = tmpCommand.substring(2);
+                    valid = true;
+                }      
+            }
+            else {
+                printErrorMessage("Invalid command format");
                 usage();
                 valid = false;
-            }          
+            }                 
         }        
         return command;
     }
@@ -296,10 +314,17 @@ public class OrganizationHandler {
         println(" └─┘┴└─└─┘┴ ┴┘└┘┴└─┘┴ ┴ ┴ ┴└─┘┘└┘");
         println(" ────────────────────────────────");
     }
-
+    
+    private void printPrioritiesBanner() {
+        println(" ┌─┐┬─┐┬┌─┐┬─┐┬┌┬┐┬┌─┐┌─┐");
+        println(" ├─┘├┬┘││ │├┬┘│ │ │├┤ └─┐");
+        println(" ┴  ┴└─┴└─┘┴└─┴ ┴ ┴└─┘└─┘");
+        println(" ────────────────────────");
+    }
+    
     private void usage() {
         printMainMenuBanner();
-        println("\n Valid commands are: \n\n\tF - Find organization \n\tA - Add organization \n\tE - Edit organization \n\tV - View organization \n\tC - Edit organization contacts \n\tL - Search Log entries \n\tX - Export contacts \n\n\tD - Debug \n\tH - Help\n\tQ - Quit \n\n");
+        println("\n Valid commands are: \n\n\tF - Find organization \n\tA - Add organization \n\tE - Edit organization \n\tV - View organization \n\tC - Edit organization contacts \n\tP - List all priorities \n\tL - Search Log entries \n\tX - Export contacts \n\n\tD - Debug \n\tH - Help\n\tQ - Quit \n\n");
     }
 
     private void help() {
@@ -311,6 +336,7 @@ public class OrganizationHandler {
         println("Edit organization, takes org-id as input.");
         println("View organization, takes org-id as input.");
         println("Contacts, edit organization contact information, takes org-id as input.");
+        println("Priorities, list all valid priorities.");
         println("Search for log entries.");
         println("Export selected organization contacts.");
         println("");
@@ -394,6 +420,9 @@ public class OrganizationHandler {
             case X:
                 exportContacts();
                 return;
+            case P:    
+                viewAllPriorities();
+                return;
             case D:
                 toggleDebug();
                 return;
@@ -424,31 +453,36 @@ public class OrganizationHandler {
         println("\n Select search method:  \n\n\tO - Organization ID \n\tA - by AS number \n\tR - by IP range \n\tI - by IP address\n\tV - View log entry\n\n\tC - Cancel \n");
 
         String input = readInput("\nEnter search method: ");
+        
+        if  (validateInput(input, "^[OoAaRrIiVvCc]$")) {
 
-        switch (SearchTypes.valueOf(input.toUpperCase())) {
-        case O:
-            searchLogEntriesByOrgId();
-            break;
-        case A:
-            searchLogEntriesByASNumber();
-            break;
-        // case D: searchLogEntriesByDomainName(); break;
-        case R:
-            searchLogEntriesByIPRange();
-            break;
-        case I:
-            searchLogEntriesByIPAddress();
-            break;
-        case V:
-            viewLogEntry();
-            break;
-        case C:
-            return;
-        default:
-            printErrorMessage("invalid search method");
-            break;
+            switch (SearchTypes.valueOf(input.toUpperCase())) {
+            case O:
+                searchLogEntriesByOrgId();
+                break;
+            case A:
+                searchLogEntriesByASNumber();
+                break;
+                // case D: searchLogEntriesByDomainName(); break;
+            case R:
+                searchLogEntriesByIPRange();
+                break;
+            case I:
+                searchLogEntriesByIPAddress();
+                break;
+            case V:
+                viewLogEntry();
+                break;
+            case C:
+                return;
+            default:
+                printErrorMessage("invalid search method");
+                break;
+            }
+        }        
+        else {
+            printErrorMessage("invalid search method input");
         }
-
     }
 
     private void findOrganization() {
@@ -457,33 +491,40 @@ public class OrganizationHandler {
         println("\n Select search method:  \n\n\tN - by part of name \n\tA - by AS number \n\tD - by domain name \n\tE - by contact email address \n\tR - by IP range \n\tI - by IP address\n\n\tC - Cancel \n");
 
         String input = readInput("\nEnter search method: ");
+        
+        if (validateInput(input, "^[NnAaDdEeRrIiCc]$")) {
 
-        switch (SearchTypes.valueOf(input.toUpperCase())) {
+            switch (SearchTypes.valueOf(input.toUpperCase())) {
 
-        case N:
-            listOrganizations();
-            break;
-        case A:
-            findOrganizationByASNumber();
-            break;
-        case D:
-            findOrganizationsByDomainName();
-            break;
-        case E:
-            findOrganizationByEmailAddress();
-            break;
-        case R:
-            findOrganizationByIPRange(null);
-            break;
-        case I:
-            findOrganizationByIPAddress();
-            break;
-        case C:
-            return;
-        default:
-            printErrorMessage("invalid search method");
-            break;
+            case N:
+                listOrganizations();
+                break;
+            case A:
+                findOrganizationByASNumber();
+                break;
+            case D:
+                findOrganizationsByDomainName();
+                break;
+            case E:
+                findOrganizationByEmailAddress();
+                break;
+            case R:
+                findOrganizationByIPRange(null);
+                break;
+            case I:
+                findOrganizationByIPAddress();
+                break;
+            case C:
+                return;
+            default:
+                printErrorMessage("invalid search method");
+                break;
+            }
         }
+        else {
+            printErrorMessage("invalid search method input");
+        }
+        
     }
 
     private void editOrganization(Organization org) {
@@ -497,25 +538,31 @@ public class OrganizationHandler {
                 printEditOrgBanner();
                 print("\n Select edit method: \n\n\tA - AS number \n\tD - Domain names \n\tR - IP ranges \n\tP - organization Properties\n\n\tC - Cancel \n");
                 String input = readInput("\nEnter edit option: ");
+                
+                if (validateInput(input, "^[AaDdRrPpCc]$")) {
 
-                switch (EditTypes.valueOf(input.toUpperCase())) {
-                case A:
-                    editASNumbers(org);
-                    break;
-                case D:
-                    editDomainNames(org);
-                    break;
-                case R:
-                    editIpRanges(org);
-                    break;
-                case P:
-                    editOrgProperties(org);
-                    break;
-                case C:
-                    return;
-                default:
-                    printErrorMessage("invalid edit option");
-                    break;
+                    switch (EditTypes.valueOf(input.toUpperCase())) {
+                    case A:
+                        editASNumbers(org);
+                        break;
+                    case D:
+                        editDomainNames(org);
+                        break;
+                    case R:
+                        editIpRanges(org);
+                        break;
+                    case P:
+                        editOrgProperties(org);
+                        break;
+                    case C:
+                        return;
+                    default:
+                        printErrorMessage("invalid edit option");
+                        break;
+                    }
+                }
+                else {
+                    printErrorMessage("invalid edit option input");
                 }
             }
         } catch (DbException e) {
@@ -598,8 +645,13 @@ public class OrganizationHandler {
             LogEntry entry = (LogEntry) dbManager.genericLoadObject("LogEntry",
                     "Id", new Long(id));
             List<LogEntry> entries = new ArrayList<LogEntry>();
-            entries.add(entry);
-            outputLogEntries(entries, "T", true, getScreenWriter());
+            if (entry != null) {
+                entries.add(entry);                
+                outputLogEntries(entries, "T", true, getScreenWriter());
+            }
+            else {
+                printInfoMessage("\nNo log entry with id: " + id + " was found");
+            }
         } catch (DbException e) {
             handleException(e.getMessage(), e);
         }
@@ -637,19 +689,20 @@ public class OrganizationHandler {
 
     private void searchLogEntriesByIPRange() {
 
-        String range = readInput("\nEnter IP range to search for (use format: x.x.x.x-y.y.y.y): ");
+        String range = readInput("\nEnter IP range to search for (use format: x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y): ");
         Long startAddress;
         Long endAddress;
         List<LogEntry> entries = null;
 
         try {
-            startAddress = IpAddressUtil.convertIpAddress(range.split("-")[0]);
-            endAddress = IpAddressUtil.convertIpAddress(range.split("-")[1]);
+            long[] IPrange = se.sitic.megatron.util.IpAddressUtil.convertIpRange(range);
+            startAddress = IPrange[0];
+            endAddress = IPrange[1];
             entries = dbManager.searchLogEntriesByIPrange(startAddress,
                     endAddress);
         } catch (DbException e) {
             handleException("could not search for log entries by IP range", e);
-        } catch (UnknownHostException e) {
+        } catch (MegatronException e) {
             handleException("something wrong with the given IP range", e);
         }
         outputLogEntrySearchResult(entries);
@@ -669,14 +722,6 @@ public class OrganizationHandler {
                 } else {
                     printInfoMessage("Multiple organizations found matching the given input: " + address);
                     listOrganizations(orgs);
-                    /*
-                    String orgIds = "";
-                    for (Object tmpOrg : orgs.toArray()) {
-                        orgIds = orgIds + ((Organization) tmpOrg).getId() + ", ";
-                    }
-                    
-                            + orgIds.trim());
-                   */         
                 }
             } else {
                 // Generate no orgs found message
@@ -738,15 +783,6 @@ public class OrganizationHandler {
                 } else {
                     printInfoMessage("Multiple organizations found matching the given domain name : " + domainName);
                     listOrganizations(orgs);
-                    /*
-                    String orgIds = "";
-                    for (Object tmpOrg : orgs.toArray()) {
-                        orgIds = orgIds + ((Organization) tmpOrg).getId()
-                                + ", ";
-                    }
-                    printInfoMessage("Multiple organizations found matching the given domain name : "
-                            + orgIds.trim());
-                   */
                 }
             } else {
                 // Generate no orgs found message
@@ -761,17 +797,16 @@ public class OrganizationHandler {
     private void findOrganizationByIPRange(String range) {
 
         if (range == null) {
-            range = readInput("\nEnter IP range to search for (use format: x.x.x.x-y.y.y.y): ");
+            range = readInput("\nEnter IP range to search for (use format: x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y): ");
         }
 
         Long startAddress;
         Long endAddress;
         if (range.trim().equals("") == false) {
             try {
-                startAddress = IpAddressUtil
-                        .convertIpAddress(range.split("-")[0]);
-                endAddress = IpAddressUtil
-                        .convertIpAddress(range.split("-")[1]);
+                long[] IPrange = se.sitic.megatron.util.IpAddressUtil.convertIpRange(range);
+                startAddress = IPrange[0];
+                endAddress = IPrange[1];                
                 List<Organization> orgs = dbManager
                         .searchOrganizationsByIPrange(startAddress, endAddress);
 
@@ -781,13 +816,6 @@ public class OrganizationHandler {
                     } else {
                         printInfoMessage("Multiple organizations found matching the given IP range : " + range);
                         listOrganizations(orgs);
-                        /*String orgIds = "";
-                        for (Object tmpOrg : orgs.toArray()) {
-                            orgIds = orgIds + ((Organization) tmpOrg).getId()
-                                    + ", ";
-                        }
-                        
-                                + orgIds.trim());*/
                     }
                 } else {
                     // Generate no orgs found message
@@ -796,7 +824,7 @@ public class OrganizationHandler {
             } catch (DbException e) {
                 handleException(
                         "could not search for organizations by IP range", e);
-            } catch (UnknownHostException e) {
+            } catch (MegatronException e) {
                 handleException(
                         "could not search for organizations by IP range", e);
             }
@@ -979,12 +1007,6 @@ public class OrganizationHandler {
 
         this.orgChanged = enterValue("Description is", "Description", org,
                 NOT_MANDATORY, "", null) ? true : this.orgChanged;
-        /*
-         * if (confirm("Current description is: " + org.getDescription() +
-         * ". Edit?")) {
-         * org.setDescription(readInput("Enter new description: "));
-         * this.orgChanged = true; }
-         */
     }
 
     private void editLanguageCode(Organization org) {
@@ -1396,13 +1418,11 @@ public class OrganizationHandler {
                     contact.setLastName(contactInfo[1].trim());
 
                     if (contactInfo[2] != null && contactInfo[2].length() > 2) {
-                        String emailAddress = contactInfo[2].trim();
-                        debug("1 email address = " + emailAddress);
+                        String emailAddress = contactInfo[2].trim();                       
                         if (emailAddress.startsWith("<")
                                 && emailAddress.endsWith(">")) {
                             emailAddress = emailAddress.substring(1,
-                                    emailAddress.length() - 1);
-                            debug("2 email address = " + emailAddress);
+                                    emailAddress.length() - 1);                            
                             contact.setEmailAddress(emailAddress);
                         }
                         namesAndEmailDone = true;
@@ -1442,13 +1462,7 @@ public class OrganizationHandler {
         editContactEnabled(contact);
 
         // Comment
-        String comment = null;
-        if (this.newContact) {
-            comment = "Contact created.";
-            orgComment = comment;
-        } else {
-            orgComment = "Edited contact ID: " + contact.getId();
-        }
+        String comment = null;        
         while (comment == null || comment.isEmpty()) {
             comment = readInput("Please enter a comment:\n> ");
         }
@@ -1608,18 +1622,31 @@ public class OrganizationHandler {
             this.orgChanged = true;
         }
     }
+    
+    private void viewAllPriorities() {
+        
+        try {
+            println("\n");
+            printPrioritiesBanner();
+
+            List<Priority> prios = dbManager.getAllPriorities();
+            listPriorities(prios);
+        }
+        catch (DbException e) {
+            handleException("database exception in viewAllPriorities", e);
+        }
+    }
 
     private void listPriorities(List<Priority> prios) {
 
-        println("\nPriorities:");
-        println("+------+----------------------------------------------------------------------------+");
-        println("| Prio | Name                                                                       |");
-        println("+------+----------------------------------------------------------------------------+");
+        println(" +------+----------------------------------------------------------------------------+");
+        println(" | Prio | Name                                                                       |");
+        println(" +------+----------------------------------------------------------------------------+");
         for (Priority prio : prios) {
-            System.out.printf("| %4d | %-74s |\n", prio.getPrio(), prio
+            System.out.printf(" | %4d | %-74s |\n", prio.getPrio(), prio
                     .getName());
         }
-        println("+------+----------------------------------------------------------------------------+");
+        println(" +------+----------------------------------------------------------------------------+");
     }
 
     private void editPriority(Organization org) {
@@ -1636,6 +1663,7 @@ public class OrganizationHandler {
                 List<Priority> prios = dbManager.getAllPriorities();
                 Priority newPrio = null;
                 while (newPrio == null) {
+                    println("\nPriorities:");
                     listPriorities(prios);
                     println("\nEnter prio-number of one of the above priorities: ");
                     String prioNo = readInput("> ");
@@ -1745,10 +1773,6 @@ public class OrganizationHandler {
 
     private void showContact(Contact contact) {
 
-        // println("+-----------------------------------------------------------------------------------+");
-        // printf("| %8s:  %-70s |\n", "Contact" , contact.getFirstName() + " "
-        // + contact.getLastName());
-        // println("+-----------------------------------------------------------------------------------+\n");
         println("");
         printf(" %-18s: %d\n", "Id", contact.getId());
         printf(" %-18s: %s\n", "First name", contact.getFirstName());
@@ -1779,11 +1803,12 @@ public class OrganizationHandler {
             debug("CSV format");
             out.append("# id,org id,IP address,port,host name,ASN,country code,URL,IP range start,IP range end,"
                     + "org id 2,IP address 2,port 2,host name 2,ASN 2,country code 2,log timestamp,created,"
-                    + "original log entry,job id,job type,additional items\n");
+                    + "original log entry,job id,job type,mail-job id,mail-job timestamp, additional items\n");
 
             for (LogEntry entry : entries) {
                 out.append(entry.getId() + ",");
-                out.append(entry.getOrganization().getId() + ",");
+                out.append((entry.getOrganization() != null ? entry
+                           .getOrganization().getId() : TEXT_NULL) + ",");
                 out.append((entry.getIpAddress() != null ? IpAddressUtil
                         .convertIpAddress(entry.getIpAddress(), false) : "")
                         + ",");
@@ -1799,7 +1824,7 @@ public class OrganizationHandler {
                         .convertIpAddress(entry.getIpRangeEnd(), false) : "")
                         + ",");
                 out.append((entry.getOrganization2() != null ? entry
-                        .getOrganization2().getId() : "")
+                        .getOrganization2().getId() : TEXT_NULL)
                         + ",");
                 out.append((entry.getIpAddress2() != null ? IpAddressUtil
                         .convertIpAddress(entry.getIpAddress2(), false) : "")
@@ -1812,12 +1837,27 @@ public class OrganizationHandler {
                         : toStringDate(entry.getLogTimestamp()) + ",");
                 out.append(entry.getCreated() == null ? TEXT_NULL
                         : toStringDate(entry.getCreated()) + ",");
-                out.append("\""
-                        + replaceNullValue(entry.getOriginalLogEntry()
-                                .getEntry()
-                                + "\"", "") + ",");
+                String originalLogEntry = null;
+                try {
+                    originalLogEntry = entry.getOriginalLogEntry().getEntry();
+                }
+                catch (Exception e) {
+                    handleException("exception when fetching original log entry", e);
+                }
+                out.append("\"" + replaceNullValue(originalLogEntry) + "\""  + ",");
                 out.append(entry.getJob().getId() + ",");
                 out.append(entry.getJob().getJobType().getName() + ",");
+                try {
+                    // Mail job data
+                    MailJob mailJob = dbManager.searchMailJob(entry);
+                    out.append((mailJob == null ? TEXT_NULL : mailJob.getId().toString()) + ",");
+                    if (mailJob != null) {                                        
+                        out.append(toStringDate(mailJob.getFinished()) + ",");                            
+                    }    
+                }
+                catch (DbException e) {
+                    handleException("database exception in outputLogEntries", e);
+                }   
                 // Print any additional items
                 if (entry.getAdditionalItems() != null
                         && entry.getAdditionalItems().size() > 0) {
@@ -1836,72 +1876,93 @@ public class OrganizationHandler {
         else {
 
             for (LogEntry entry : entries) {
-                debug("Table format");
-                out.printf("\n+-----------------------------------------------------------------------------------+\n");
-                out.printf("| %12s:  %-66d |\n", "Log Entry ID", entry.getId());
-                out.printf("+-----------------------------------------------------------------------------------+\n");
-                out.printf(" %-18s: %s\n", "Organization name", entry
-                        .getOrganization().getName());
-                out.printf(" %-18s: %s\n", "Organization ID", entry
-                        .getOrganization().getId());
-                out.printf(" %-18s: %s\n", "IP address",
-                        (entry.getIpAddress() != null ? IpAddressUtil
-                                .convertIpAddress(entry.getIpAddress(), false)
-                                : TEXT_NULL));
-                out.printf(" %-18s: %s\n", "Port", replaceNullValue(entry
-                        .getPort()));
-                out.printf(" %-18s: %s\n", "Host name", replaceNullValue(entry
-                        .getHostname()));
-                out.printf(" %-18s: %s\n", "ASN", replaceNullValue(entry
-                        .getAsn()));
-                out.printf(" %-18s: %s\n", "Country code",
-                        replaceNullValue(entry.getCountryCode()));
-                out.printf(" %-18s: %s\n", "URL", replaceNullValue(entry
-                        .getUrl()));
-                if (showFull) {
-                    // Print the rest
-                    out.printf(" %-18s: %s\n", "Organization ID 2", entry
-                            .getOrganization2() != null ? entry
-                            .getOrganization2().getId() : TEXT_NULL);
-                    out.printf(" %-18s: %s\n", "IP address 2", (entry
-                            .getIpAddress2() != null ? IpAddressUtil
-                            .convertIpAddress(entry.getIpAddress2(), false)
-                            : TEXT_NULL));
-                    out.printf(" %-18s: %s\n", "Port 2", replaceNullValue(entry
-                            .getPort2()));
-                    out.printf(" %-18s: %s\n", "Host name 2",
-                            replaceNullValue(entry.getHostname2()));
-                    out.printf(" %-18s: %s\n", "ASN 2", replaceNullValue(entry
-                            .getAsn2()));
-                    out.printf(" %-18s: %s\n", "Country code 2",
-                            replaceNullValue(entry.getCountryCode2()));
-                    out.printf(" %-18s: %s\n", "IP range start", (entry
-                            .getIpRangeStart() != null ? IpAddressUtil
-                            .convertIpAddress(entry.getIpRangeStart(), false)
-                            : TEXT_NULL));
-                    out.printf(" %-18s: %s\n", "IP range end", (entry
-                            .getIpRangeEnd() != null ? IpAddressUtil
-                            .convertIpAddress(entry.getIpRangeEnd(), false)
-                            : TEXT_NULL));
-                }
-                out.printf(" %-18s: %s\n", "Log timestamp", entry
-                        .getLogTimestamp() == null ? TEXT_NULL
-                        : toStringDate(entry.getLogTimestamp()));
-                out.printf(" %-18s: %s\n", "Created timestamp",
-                        toStringDate(entry.getCreated()));
-                out.printf(
-                        " %-18s: %s\n",
-                        "Original log entry",
-                        replaceNullValue(entry.getOriginalLogEntry().getEntry()));
-                out.printf(" %-18s: %s\n", "Job ID", entry.getJob().getId());
-                out.printf(" %-18s: %s\n", "Job type", entry.getJob()
-                        .getJobType().getName());
-                // Print any additional items
-                if (entry.getAdditionalItems() != null
-                        && entry.getAdditionalItems().size() > 0) {
-                    Map<String, String> items = entry.getAdditionalItems();
-                    for (String key : items.keySet()) {
-                        out.printf(" %-18s: %s\n", key, items.get(key));
+                if (entry != null) {
+                    debug("Table format");
+                    out.printf("\n+-----------------------------------------------------------------------------------+\n");
+                    out.printf("| %12s:  %-66d |\n", "Log Entry ID", entry.getId());
+                    out.printf("+-----------------------------------------------------------------------------------+\n");                
+                    out.printf(" %-18s: %s\n", "Organization name",entry
+                            .getOrganization() != null ? entry
+                                    .getOrganization().getName() : TEXT_NULL);                        
+                    out.printf(" %-18s: %s\n", "Organization ID", entry
+                            .getOrganization() != null ? entry
+                                    .getOrganization().getId() : TEXT_NULL);
+                    out.printf(" %-18s: %s\n", "IP address",
+                            (entry.getIpAddress() != null ? IpAddressUtil
+                                    .convertIpAddress(entry.getIpAddress(), false)
+                                    : TEXT_NULL));
+                    out.printf(" %-18s: %s\n", "Port", replaceNullValue(entry
+                            .getPort()));
+                    out.printf(" %-18s: %s\n", "Host name", replaceNullValue(entry
+                            .getHostname()));
+                    out.printf(" %-18s: %s\n", "ASN", replaceNullValue(entry
+                            .getAsn()));
+                    out.printf(" %-18s: %s\n", "Country code",
+                            replaceNullValue(entry.getCountryCode()));
+                    out.printf(" %-18s: %s\n", "URL", replaceNullValue(entry
+                            .getUrl()));
+                    if (showFull) {
+                        // Print the rest
+                        out.printf(" %-18s: %s\n", "Organization ID 2", entry
+                                .getOrganization2() != null ? entry
+                                        .getOrganization2().getId() : TEXT_NULL);
+                        out.printf(" %-18s: %s\n", "IP address 2", (entry
+                                .getIpAddress2() != null ? IpAddressUtil
+                                        .convertIpAddress(entry.getIpAddress2(), false)
+                                        : TEXT_NULL));
+                        out.printf(" %-18s: %s\n", "Port 2", replaceNullValue(entry
+                                .getPort2()));
+                        out.printf(" %-18s: %s\n", "Host name 2",
+                                replaceNullValue(entry.getHostname2()));
+                        out.printf(" %-18s: %s\n", "ASN 2", replaceNullValue(entry
+                                .getAsn2()));
+                        out.printf(" %-18s: %s\n", "Country code 2",
+                                replaceNullValue(entry.getCountryCode2()));
+                        out.printf(" %-18s: %s\n", "IP range start", (entry
+                                .getIpRangeStart() != null ? IpAddressUtil
+                                        .convertIpAddress(entry.getIpRangeStart(), false)
+                                        : TEXT_NULL));
+                        out.printf(" %-18s: %s\n", "IP range end", (entry
+                                .getIpRangeEnd() != null ? IpAddressUtil
+                                        .convertIpAddress(entry.getIpRangeEnd(), false)
+                                        : TEXT_NULL));
+                    }
+                    out.printf(" %-18s: %s\n", "Log timestamp", entry
+                            .getLogTimestamp() == null ? TEXT_NULL
+                                    : toStringDate(entry.getLogTimestamp()));
+                    out.printf(" %-18s: %s\n", "Created timestamp",
+                            toStringDate(entry.getCreated()));                
+                    String originalLogEntry = null;
+                    try {
+                        originalLogEntry = entry.getOriginalLogEntry().getEntry();
+                    }
+                    catch (Exception e) {
+                        handleException("exception when fetching original log entry", e);
+                    }
+                    out.printf(" %-18s: %s\n", "Original log entry",                                                
+                            replaceNullValue(originalLogEntry));
+
+                    out.printf(" %-18s: %s\n", "Job ID", entry.getJob().getId());
+                    out.printf(" %-18s: %s\n", "Job type", entry.getJob()
+                            .getJobType().getName());                
+                    try {
+                        // Mail job data
+                        MailJob mailJob = dbManager.searchMailJob(entry);
+                        out.printf(" %-18s: %s\n", "Mailjob ID", mailJob == null ? TEXT_NULL : mailJob.getId().toString());
+                        if (mailJob != null) {                                        
+                            out.printf(" %-18s: %s\n", "Mail job finished", toStringDate(mailJob.getFinished()));                            
+                        }    
+                    }
+                    catch (DbException e) {
+                        handleException("database exception in outputLogEntries", e);
+                    }
+                    // Print any additional items
+                    if (entry.getAdditionalItems() != null
+                            && entry.getAdditionalItems().size() > 0) {
+                        Map<String, String> items = entry.getAdditionalItems();
+                        for (String key : items.keySet()) {
+                            out.printf(" %-18s: %s\n", "Additional item",  key + ":" + items.get(key));
+                        }
                     }
                 }
             }
@@ -2009,9 +2070,9 @@ public class OrganizationHandler {
             }
         }
 
-        String outputType = readInput("Enter output type [a] all, [e| email only: ");
-        String outputFormat = readInput("Enter output format [t] tab separated or [c] comma separated: ");
-        String outputLocation = readInput("Enter output location [s] screen, [f] file: ");
+        String outputType = readInput("Enter output type [A] all, [E| email only: ");
+        String outputFormat = readInput("Enter output format [T] tab separated or [C] comma separated: ");
+        String outputLocation = readInput("Enter output location [S] screen, [F] file: ");
 
         if (contacts != null && contacts.isEmpty() == false) {
             outputContacts((Set<Contact>) contacts, outputType, outputFormat,
@@ -2083,4 +2144,5 @@ public class OrganizationHandler {
                 this.exportTimstampFormat, SqlUtil.convertTimestamp(timeStamp))
                 : "";
     }
+    
 }

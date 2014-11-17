@@ -1,7 +1,83 @@
-v1.1.0 [to be released] 
+v1.1.0
 ======
+
+* New: Contact, new class that contains additional information about the 
+  organization contact data e.g. email address, name, phone number.
+  The information is stored in the contact table in the database. See the
+  OrganizationHandler improvements below.
+
+* New: OrganizationContactMigrator, helper class that is used to migrate
+  the database from the previous schema to the schema in this relase. The class
+  is invoked from the megatron.sh script using the --class option.
+  
+* New: ITicketHandler, interface for an otional ticket handler implementation.
+  The implementing class should be used if interaction with a ticketing
+  system is needed. The current interface has a method for getting a new ticket
+  ID from the tickeing system. That ID can be used in the e-mail subject in the
+  abuse notification e-mails. The implementing class in configurable and also
+  if the e-mail should be sent by Megatron or through the ticketing system.
+  An implementing class in not included in this release.
+
+* Improved: OrganizationHandler, the command line interface for managing 
+  organizations had been improved with several new functions and improvments to
+  existing features.
+
+  Additional features:
+  - Search organizations by name, ASN, domain name, contact e-mail address,
+    IP-address or IP-range.
+  - Adding of organization contacts. One organization can have multiple 
+    contacts. Each contact can consist of first & last name, e-mail address, 
+    e-mail type (To, Cc or Bcc), contact role (configurable e.g. Abuse, 
+    Administrative etc.) and an reference to an external contact database if
+    that is used to maintain the organization contacts.
+  - Possible to list all existing organization priority levels.
+  - Search log entries by organizaton ID, ASN, IP-address or IP-range.
+  - View specific log entries.
+  - Export contact information (to file or screen) by organization and role or
+    organization priority level.
+  - Individual contacts (e-mail addesses) can be enabled/disabled.
+
+  Improvements:
+  - IP-ranges can be entered in the formats: x.x.x.x-y.y.y.y, x.x.x.x-y or 
+    x.x.x.x/y when administrating organizations or searching by ranges.
+  - Better error message when entrering overlaping IP-ranges.
+  - Easier editing of organization search properties.
+
 * Improved: Class can be specified in megatron.sh using --class.
 
+* Config changes:
+    Megatron properties:
+    - New ui.organizationHandler.defaultCountryCode
+    - New ui.organizationHandler.defaultLanguageCode
+    - New ui.organizationHandler.outputDir
+    - New ui.organizationHandler.validRoles
+    - New ui.organizationHandler.timestampFormat
+    - New ticketHandler.className
+    - New ticketHandler.createChild
+    - New ticketHandler.valueKeys
+    - New ticketHandler.sendsMail
+    - New ticketHandler.queueName
+    - New ticketHandler.user
+    - New ticketHandler.password
+    - New ticketHandler.ticketOwner
+    - New ticketHandler.url
+
+    Hibernate mapping:
+    - New: Contact.hbm.xml 
+           - new table contact and class Contact.
+    - Changed: Organization.hbm.xml
+	   - removed EmailAddresses and AutoUpdateEmail
+           - added set of Contacts
+
+    Hibernate config:
+    - Changed: hibernate.cfg.xml
+           - added mapping resource Contact.hbm.xml 
+
+* Database schema changes:
+    
+  - New table contact, see file sql/megatron-schema.sql for details.
+  - Moved column auto_update_email from organization table to contact table.
+  - Removed column email_addresses in organization table
 
 v1.0.12
 =======
@@ -126,7 +202,7 @@ v1.0.11
     - New: report.organization.jobTypes
     - New: report.organization.recipients
 
-
+AutoUpdateEmail
 v1.0.10
 =======
 * New: Support for MaxMind's ASN database. Add AS number and AS name to a log 

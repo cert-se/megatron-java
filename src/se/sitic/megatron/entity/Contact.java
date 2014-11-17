@@ -22,7 +22,7 @@ public class Contact extends BaseContact {
      */
     public Contact(
 
-    java.lang.Integer id, java.lang.String firstName,
+            java.lang.Integer id, java.lang.String firstName,
             java.lang.String lastName, java.lang.String comment,
             java.lang.String emailAddress, java.lang.String emailType,
             java.lang.String phoneNumber, java.lang.String role,
@@ -40,23 +40,7 @@ public class Contact extends BaseContact {
 
     @Override
     public int compareTo(Object obj) {
-
-        int result = 0;
-
-        if (this.getId() == 0 || ((Contact) obj).getId() == 0) {
-
-            // Assert that only objects that have been persisted are used.
-            throw new java.lang.AssertionError("Contact ID is undefined (0)");
-        }
-
-        if (this.getId() == ((Contact) obj).getId()) {
-            result = 0;
-        } else if (this.getId() < ((Contact) obj).getId()) {
-            result = -1;
-        } else {
-            return 1;
-        }
-        return result;
+        
+        return this.getEmailAddress().compareToIgnoreCase(((Contact)obj).getEmailAddress());
     }
-
 }

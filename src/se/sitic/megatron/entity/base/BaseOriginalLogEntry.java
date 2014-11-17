@@ -113,7 +113,13 @@ public abstract class BaseOriginalLogEntry  implements Serializable {
 	 * Return the value associated with the column: entry
 	 */
 	public java.lang.String getEntry () {
-		return entry;
+	    // Special try/catch statement for the case when no entry exists
+	    try {
+	        return entry;
+	    }
+	    catch (org.hibernate.ObjectNotFoundException e){	        
+	        return null;
+	    }		
 	}
 
 	/**

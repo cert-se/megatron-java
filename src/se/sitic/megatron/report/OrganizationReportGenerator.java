@@ -165,7 +165,7 @@ public class OrganizationReportGenerator implements IReportGenerator {
         }
         
         // -- write finished message to log and console
-        String template = "Mail sending finished. Sent Mails: @noOfSentMails@, Sent Entries: @noOfSentLogEntries@, " + "RTIR ID: @rtirId@, Duration: @duration@";
+        String template = "Mail sending finished. Sent Mails: @noOfSentMails@, Sent Entries: @noOfSentLogEntries@, " + "RTIR Parent ID: @rtirParentId@, Duration: @duration@";
         String msg = createFinishedMessage(template);
         mailJobContext.writeToConsole(msg);
         log.info(msg);
@@ -174,8 +174,8 @@ public class OrganizationReportGenerator implements IReportGenerator {
     
     private String createFinishedMessage(String template) {
         String result = template;
-        String rtirId = StringUtil.isNullOrEmpty(props.getId()) ? "-" : props.getId(); 
-        result = StringUtil.replace(result, "@rtirId@", rtirId);
+        String rtirId = StringUtil.isNullOrEmpty(props.getParentTicketId()) ? "-" : props.getParentTicketId(); 
+        result = StringUtil.replace(result, "@rtirParentId@", rtirId);
         result = StringUtil.replace(result, "@noOfSentMails@", "" + mailJobContext.getNoOfSentMails());
         result = StringUtil.replace(result, "@noOfSentLogEntries@", "" + mailJobContext.getNoOfSentLogEntries());
         String durationStr = DateUtil.formatDuration(System.currentTimeMillis() - mailJobContext.getStartedTimestamp());

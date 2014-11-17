@@ -264,6 +264,18 @@ public class AppProperties {
     public static final String UI_OUTPUT_DIR_KEY = "ui.organizationHandler.outputDir";
     public static final String UI_VALID_ROLES_KEY = "ui.organizationHandler.validRoles";
     public static final String UI_TIMESTAMP_FORMAT_KEY = "ui.organizationHandler.timestampFormat";
+    
+    // TicketHandler
+    public static final String TICKET_HANDLER_CLASS = "ticketHandler.className";
+    public static final String TICKET_HANDLER_CREATE_CHILD = "ticketHandler.createChild";
+    public static final String TICKET_HANDLER_VALUE_KEYS = "ticketHandler.valueKeys";
+    public static final String TICKET_HANDLER_SENDS_MAIL = "ticketHandler.sendsMail";
+    public static final String TICKET_HANDLER_QUEUE_NAME = "ticketHandler.queueName";
+    public static final String TICKET_HANDLER_USER = "ticketHandler.user";
+    public static final String TICKET_HANDLER_PASSWORD = "ticketHandler.password";
+    public static final String TICKET_HANDLER_TICKET_OWNER = "ticketHandler.ticketOwner";
+    public static final String TICKET_HANDLER_URL = "ticketHandler.url";
+    
 
     /** Filename for Megatron global properties. */
     public static final String GLOBALS_PROPS_FILE = "/etc/megatron/megatron-globals.properties";

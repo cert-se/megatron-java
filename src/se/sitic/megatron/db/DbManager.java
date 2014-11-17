@@ -21,6 +21,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import se.sitic.megatron.core.TypedProperties;
+import se.sitic.megatron.db.DbException;
+import se.sitic.megatron.db.DbStatisticsData;
+import se.sitic.megatron.db.ReadOnlyDbManager;
 import se.sitic.megatron.entity.ASNumber;
 import se.sitic.megatron.entity.Contact;
 import se.sitic.megatron.entity.DomainName;
@@ -565,7 +568,7 @@ public class DbManager {
     }
 
 
-    // Search MailJob by Job entity
+    // Search MailJob by time frame
     @SuppressWarnings("unchecked")
     public List<MailJob> searchMailJobs(Date startTime,
             Date endTime, int startIndex, int noOfRecords) 
@@ -598,6 +601,28 @@ public class DbManager {
         } 
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in searchMailJobs", e);
+        }
+    }
+
+    
+    // Search MailJob by log entry
+    public MailJob searchMailJob(LogEntry entry)
+        throws DbException {
+        
+        try {
+            Query query = session.createSQLQuery("select mail_job_id from mail_job_log_entry_mapping where log_entry_id = ?");
+            query.setLong(0, entry.getId());
+          
+            Object result = query.uniqueResult();
+            MailJob mailJob = null;
+            if (result != null) {
+                Long mailJobId = Long.valueOf(result.toString());
+                mailJob = (MailJob)this.loadLongObject(MailJob.class, mailJobId.longValue());
+            }    
+            return mailJob;
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchMailJob", e);
         }
     }
 

@@ -9,6 +9,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import se.sitic.megatron.core.AbstractExporter;
+import se.sitic.megatron.core.AppProperties;
+import se.sitic.megatron.core.MailJobContext;
+import se.sitic.megatron.core.MegatronException;
 import se.sitic.megatron.db.DbManager;
 import se.sitic.megatron.entity.LogEntry;
 import se.sitic.megatron.entity.MailJob;
@@ -17,6 +21,7 @@ import se.sitic.megatron.entity.Organization;
 import se.sitic.megatron.mail.MailAttachment;
 import se.sitic.megatron.mail.MailSender;
 import se.sitic.megatron.parser.LogEntryMapper;
+import se.sitic.megatron.tickethandler.ITicketHandler;
 import se.sitic.megatron.util.AppUtil;
 import se.sitic.megatron.util.Constants;
 import se.sitic.megatron.util.IpAddressUtil;
@@ -28,13 +33,13 @@ import se.sitic.megatron.util.StringUtil;
  * Sends mail from log entries in the database. 
  */
 public class MailExporter extends AbstractExporter {
-    // protected due to acess from innner class 
+    // protected due to access from inner class 
     protected static final Logger log = Logger.getLogger(MailExporter.class);
     
     private static final String JOB_INFO_HEADER = "---- Job Info ----" + Constants.LINE_BREAK;
     private static final String MESSAGE_HEADER = "---- Sample Message ----" + Constants.LINE_BREAK;
     private static final String RECIPIENTS_HEADER = "---- Recipients ----" + Constants.LINE_BREAK;
-    private static final String SUMMARY_SUBJECT_TEMPLATE = "Megatron: Mail job #$mailJobId with RTIR ID #$rtirId finished";
+    private static final String SUMMARY_SUBJECT_TEMPLATE = "Megatron: Mail job #$mailJobId with RTIR Parent ID #$rtirParentId finished";
     private static final String JOB_INFO_TEMPLATE = 
         JOB_INFO_HEADER +
         "No. of Sent Emails: $noOfSentMails" + Constants.LINE_BREAK +
@@ -44,7 +49,7 @@ public class MailExporter extends AbstractExporter {
         "Mail Job Started: $mailJobStarted" + Constants.LINE_BREAK +
         "Job Name: $jobName" + Constants.LINE_BREAK +
         "Filename: $jobFilename" + Constants.LINE_BREAK +
-        "RTIR ID: $rtirId" + Constants.LINE_BREAK +
+        "RTIR Parent ID: $rtirParentId" + Constants.LINE_BREAK +
         "Use Secondary Org.: $useOrg2" + Constants.LINE_BREAK +
         "Comment:" + Constants.LINE_BREAK + "$mailJobComment" + Constants.LINE_BREAK + Constants.LINE_BREAK;
     
@@ -54,18 +59,20 @@ public class MailExporter extends AbstractExporter {
     private static final String MAIL_JOB_COMMENT = "mailJobComment";
     private static final String JOB_STARTED = "jobStarted";
     private static final String JOB_NAME = "jobName";
-    private static final String JOB_FILENAME = "jobFilename";
-    private static final String RTIR_ID = "rtirId";  
+    private static final String JOB_FILENAME = "jobFilename";    
+    private static final String RTIR_PARENT_ID = "rtirParentId";
     private static final String ORGANIZATION_NAME = "organizationName";
     private static final String EMAIL_ADDRESSES = "emailAddresses";
     private static final String JOB_TYPE_NAME = "jobTypeName";
-    
+        
     private MailJobContext mailJobContext;
     private MailJob mailJob;
     private DbManager dbManager;
     private MailSender mailSender;
     private StringBuilder summaryBody;
     private Map<String, String> globalAttributeMap;
+    private ITicketHandler ticketHandler;
+    
 
     
     /**
@@ -75,7 +82,7 @@ public class MailExporter extends AbstractExporter {
         super(mailJobContext);
         this.mailJobContext = mailJobContext;
         this.props = mailJobContext.getProps();
-        this.mailJob = mailJobContext.getMailJob();
+        this.mailJob = mailJobContext.getMailJob();        
         init();
     }
 
@@ -176,18 +183,67 @@ public class MailExporter extends AbstractExporter {
             addToSummary(organization, messageData);
             mailJobContext.incNoOfMailsTobeSent(1);
         } else {
+            
+            
             addToSummary(organization, messageData);
-            log.info("Sending abuse mail: " + organization.getEmailAddresses());
+            log.info("Sending abuse mail To: " + organization.getEmailAddresses("To", true) + 
+                    " Cc: " + organization.getEmailAddresses("To", true) + 
+                    " Bcc: " + organization.getEmailAddresses("Bcc", true) + 
+                    ", " + props.getString(AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null));
             mailSender.clear();
-            mailSender.setToAddresses(organization.getEmailAddresses("To", true));
-            mailSender.setCcAddresses(organization.getEmailAddresses("Cc", true));
-            // Add BCC addresses plus any mail archive BCC addresses
-            mailSender.setBccAddresses(props.getString(organization.getEmailAddresses("Bcc", true) + " ," + AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null) );
-            mailSender.setSubject(messageData.getSubject());
+                        
+            // Set ticket id in subject
+            String parentTicketId = StringUtil.isNullOrEmpty(props.getParentTicketId()) ? "-" : props.getParentTicketId();
+            // Check if child ticket should be created
+            boolean createChildTicket = props.getBoolean(AppProperties.TICKET_HANDLER_CREATE_CHILD, false);
+            if (this.ticketHandler != null && createChildTicket) { 
+                log.debug("Creating child ticket.");
+                String ticketSubject = StringUtil.replace(messageData.getSubject(), "$rtirId", "-");                
+                Map<String, String> values = new HashMap<String, String> ();
+                String[] valueKeys = props.getStringListFromCommaSeparatedValue(AppProperties.TICKET_HANDLER_VALUE_KEYS, null, true);
+                if (valueKeys != null && valueKeys.length == 4) {
+                    values.put(valueKeys[0], organization.getEmailAddresses("To", true));
+                    values.put(valueKeys[1], organization.getEmailAddresses("Cc", true));
+                    values.put(valueKeys[2], ticketSubject);
+                    values.put(valueKeys[3], parentTicketId);
+                    
+                    // Get child ticket
+                    String ticketId = ticketHandler.getNewTicketId(values); 
+                    // Set child ticket ID in message subject
+                    log.debug("Got ticket ID " + ticketId + " replacing subject " + messageData.getSubject());
+                    String subject = StringUtil.replace(messageData.getSubject(), "$rtirId", ticketId);
+                    mailSender.setSubject(subject);
+                }
+                else {
+                    log.fatal("Not enough ticketHandler value keys found to create child ticket.");
+                }
+            }
+            else {
+                log.debug("Not creating childTicket.");
+                String subject = StringUtil.replace(messageData.getSubject(), "$rtirId", parentTicketId);
+                mailSender.setSubject(subject);
+            }
             mailSender.setBody(messageData.getBody());
             if (messageData.getAttachment() != null) {
                 mailSender.addAttachment(messageData.getAttachment());
+            }        
+            // Check if ticket system should send out mails to "To" and "Cc"" receivers
+            boolean ticketSystemSendsMail = props.getBoolean(AppProperties.TICKET_HANDLER_SENDS_MAIL, false);
+            if (this.ticketHandler != null && ticketSystemSendsMail) {
+                log.info("Ticket handler is mailing");
+                // Requests that the real To and Cc addresses has been set in the ticket
+                mailSender.setToAddresses("megatron-rt@cert.se");
+                mailSender.setFromAddress("mr_megatron@cert.se"); 
+                mailSender.setBccAddresses("megatron-archive@cert.se");
             }
+            else {
+                log.info("Ticket handler is not mailing");
+                mailSender.setToAddresses(organization.getEmailAddresses("To", true));
+                mailSender.setCcAddresses(organization.getEmailAddresses("Cc", true));
+                // Add BCC addresses plus mail archive BCC addresses
+                mailSender.setBccAddresses(organization.getEmailAddresses("Bcc", true) + ", " + props.getString(AppProperties.MAIL_ARCHIVE_BCC_ADDRESSES_KEY, null) );
+            }
+            
             mailSender.send(props);
             mailJobContext.incNoOfSentMails(1);
             mailJobContext.incNoOfSentLogEntries(logEntriesToSend.size());
@@ -270,6 +326,18 @@ public class MailExporter extends AbstractExporter {
         
         this.dbManager = mailJobContext.getDbManager();
         this.mailSender = new MailSender();
+        this.ticketHandler = null;
+        
+        String ticketHandlerClassName = props.getString(AppProperties.TICKET_HANDLER_CLASS, null);
+        if (ticketHandlerClassName != null)
+        try {
+            Class<?> ticketHandlerClass = Class.forName(ticketHandlerClassName);
+            ticketHandler = (ITicketHandler)ticketHandlerClass.newInstance();
+        } catch (Exception e) {
+            // ClassNotFoundException, InstantiationException, IllegalAccessException
+            String msg = "Class name must be for a Java-class that implements ITicketHandler: " + ticketHandlerClassName;
+            throw new MegatronException(msg, e);
+        }        
     }
     
     
@@ -295,8 +363,8 @@ public class MailExporter extends AbstractExporter {
             if (template == null) {
                 throw new MegatronException("Mandatory property not defined: " + AppProperties.MAIL_SUBJECT_TEMPLATE_KEY);
             }
-        }
-        String subject = AppUtil.replaceVariables(template, attributeMap, false, templateName);
+        }       
+        String subject = template;
 
         // -- body and attachment
         StringBuilder body = new StringBuilder(2*1024);
@@ -365,8 +433,8 @@ public class MailExporter extends AbstractExporter {
             addTimestamp(globalAttributeMap, JOB_STARTED, SqlUtil.convertTimestampToSec(mailJobContext.getJob().getStarted()));
             addString(globalAttributeMap, JOB_NAME, mailJob.getJob().getName());
             addString(globalAttributeMap, JOB_FILENAME, mailJob.getJob().getFilename());
-            String rtirId = StringUtil.isNullOrEmpty(props.getId()) ? "-" : props.getId(); 
-            addString(globalAttributeMap, RTIR_ID, rtirId);
+            String rtirParentId = StringUtil.isNullOrEmpty(props.getParentTicketId()) ? "-" : props.getParentTicketId(); 
+            addString(globalAttributeMap, RTIR_PARENT_ID, rtirParentId);
         }
         
         Map<String, String> result = new HashMap<String, String>();

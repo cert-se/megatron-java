@@ -19,7 +19,41 @@ import se.sitic.megatron.util.Version;
 /**
  * !!! IMPORTANT !!! This code should only be run to migrate data and schema for
  * the organisation database from version 1.0.12 to version 1.1.0.
- */
+ *
+ *
+ * This class migrates the database schema for the releases prior from version 
+ * 1.1.0 to the schema introduced in version 1.1.0. 
+ * 
+ * The tasks done by this class in sequential order are:
+ *  
+ * 1. Creating a migration history table to keep track of the migration state
+ * 2. Backing up the organization table to the table organization_bak
+ * 3. Creating the contact table
+ * 4. Copying the email addresses to the comment column, can be skipped with
+ *    the '-n' command switch.
+ * 5. Insert a contact row for each email address found in each organization.
+ * 6. Completes the migration, is invoked with the command switch '-c'.
+ *    This step removed the migration history table and the organization
+ *    backup table. It also removes the columns auto_update_email and
+ *    email_adresses in the organization table.
+ * 
+ * The migration is done in two steps where task 1-5 is performed in step 1.
+ * After step 1 the system can be used for a test period if needed. 
+ * When the migration tests are done successfully the last step (task 6) should be
+ * performed.
+ * 
+ * USAGE:
+ * 
+ * This migraton tool is invoked through the megatron.sh script using the --class 
+ * switch. 
+ * 
+ * Additional switches are:
+ *   -n if the e-mail addresses should not be copied in to the comment field
+ *      for the organization.
+ *   -c to complete the migration
+ *
+ * 
+ **/
 
 public class OrganizationContactMigrator {
     private static final Logger log = Logger

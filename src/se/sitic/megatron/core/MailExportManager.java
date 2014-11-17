@@ -199,7 +199,7 @@ public class MailExportManager extends AbstractExportManager {
         
         // -- write finished message to log and console
         String template = "Mail sending finished. Sent Mails: @noOfSentMails@, Sent Entries: @noOfSentLogEntries@, " + 
-            "Quarantined Entries: @noOfQuarantineLogEntries@, Filtered Entries: @noOfFilteredLines@, ID: @mailJobId@, RTIR ID: @rtirId@, Duration: @duration@";
+            "Quarantined Entries: @noOfQuarantineLogEntries@, Filtered Entries: @noOfFilteredLines@, ID: @mailJobId@, RTIR Parent ID: @rtirParentId@, Duration: @duration@";
         String msg = createFinishedMessage(template);
         mailJobContext.writeToConsole(msg);
         log.info(msg);
@@ -207,7 +207,7 @@ public class MailExportManager extends AbstractExportManager {
         // -- write finished message to RSS
         if (!(props.isMailDryRun() || props.isMailDryRun2())) {
             template = "Sent Mails: @noOfSentMails@<br>Sent Entries: @noOfSentLogEntries@<br>" + 
-                "Quarantined Entries: @noOfQuarantineLogEntries@<br>Filtered Entries: @noOfFilteredLines@<br>ID: @mailJobId@<br>RTIR ID: @rtirId@<br>Duration: @duration@";
+                "Quarantined Entries: @noOfQuarantineLogEntries@<br>Filtered Entries: @noOfFilteredLines@<br>ID: @mailJobId@<br>RTIR Parent ID: @rtirParentId@<br>Duration: @duration@";
             String titleTemplate = "Mail Job: @jobName@. Sent Mails: @noOfSentMails@";
             String title = createFinishedMessage(titleTemplate);
             String description = createFinishedMessage(template);
@@ -222,8 +222,8 @@ public class MailExportManager extends AbstractExportManager {
         result = StringUtil.replace(result, "@jobName@", "" + jobName);
         String mailJobId = (mailJob.getId() != null) ? mailJob.getId().toString() : "-"; 
         result = StringUtil.replace(result, "@mailJobId@", "" + mailJobId);
-        String rtirId = StringUtil.isNullOrEmpty(props.getId()) ? "-" : props.getId(); 
-        result = StringUtil.replace(result, "@rtirId@", rtirId);
+        String rtirParentId = StringUtil.isNullOrEmpty(props.getParentTicketId()) ? "-" : props.getParentTicketId(); 
+        result = StringUtil.replace(result, "@rtirParentId@", rtirParentId);
         result = StringUtil.replace(result, "@noOfSentMails@", "" + mailJobContext.getNoOfSentMails());
         result = StringUtil.replace(result, "@noOfSentLogEntries@", "" + mailJobContext.getNoOfSentLogEntries());
         result = StringUtil.replace(result, "@noOfQuarantineLogEntries@", "" + mailJobContext.getNoOfQuarantineLogEntries());

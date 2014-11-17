@@ -411,7 +411,7 @@ public class TypedProperties {
     /**
      * Returns CLI switch: --id
      */
-    public String getId() {
+    public String getParentTicketId() {
         return getString(CLI_ID_KEY, "");
     }
 

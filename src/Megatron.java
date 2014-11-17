@@ -285,7 +285,7 @@ public class Megatron {
             JobScheduler.getInstance().processFileExport(props, jobName);
         } else if (globalProps.isMail() || globalProps.isMailDryRun() || globalProps.isMailDryRun2()) {
             // check CLI args
-            String id = globalProps.getId();
+            String id = globalProps.getParentTicketId();
             if (id == null) {
                 throw new MegatronException("Invalid command line: No RTIR-id ('--id') specified.");
             }

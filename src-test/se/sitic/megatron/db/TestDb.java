@@ -3,6 +3,7 @@ package se.sitic.megatron.db;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -231,7 +232,7 @@ public class TestDb {
         long time = SqlUtil.convertTimestamp(date);
         org.setCreated(time);
         org.setLastModified(time);
-        dBm.addOrganization(org);
+        dBm.addOrganization(org, "Tester");
         return org;
     }
 
@@ -276,8 +277,7 @@ public class TestDb {
             String name = "Job1";
             Job job1 = testAddLogJob(time, jobType, name);
             name = "Job2";
-            
-            @SuppressWarnings("unused")
+                        
             Job job2 = testAddLogJob(time, jobType, name);
 
             job1 = testSearchLogJob(job1);
@@ -505,6 +505,7 @@ public class TestDb {
         return mailJob;
     }
 
+    @SuppressWarnings("deprecation")
     private static void testUpdateMailJob(MailJob mailJob) throws DbException {
 
         logMethod("testUpdateMailJob start");
@@ -776,10 +777,12 @@ public class TestDb {
         
         String name = "www.test.se";
         
-        Organization org = dBm.searchOrgForDomain(name);                
+        List<Organization> orgs = dBm.searchOrgForDomainName(name);                
         
-        if (org != null) {
-            log.debug("Found organization id " + org.getId() + " with matching domainName " + name);
+        if (orgs != null) {
+            for (Organization org : orgs) {
+                log.debug("Found organization id " + org.getId() + " with matching domainName " + name);
+            }
         }
         else {
             log.error("No organization with matching domainName " + name + " was found" );
