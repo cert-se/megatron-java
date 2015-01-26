@@ -10,6 +10,7 @@ import se.sitic.megatron.entity.LogEntry;
 import se.sitic.megatron.entity.MailJob;
 import se.sitic.megatron.entity.Organization;
 import se.sitic.megatron.rss.JobRssFile;
+import se.sitic.megatron.tickethandler.ITicketHandler;
 import se.sitic.megatron.util.Constants;
 import se.sitic.megatron.util.DateUtil;
 import se.sitic.megatron.util.SqlUtil;
@@ -116,6 +117,7 @@ public class MailExportManager extends AbstractExportManager {
         }
 
         writeFinishedMessage();
+        closeTickets();
     }
     
     
@@ -234,4 +236,47 @@ public class MailExportManager extends AbstractExportManager {
         return result;
     }
 
+    private void closeTickets() {
+
+        // Will only close tickets if AppProperties.TICKET_HANDLER_RESOLVE_AFTER_SEND is true
+
+        ITicketHandler ticketHandler = null;
+
+        boolean resolveTicketAfterSend = props.getBoolean(AppProperties.TICKET_HANDLER_RESOLVE_AFTER_SEND, false);
+        int ticketResolveSleepTime = props.getInt(AppProperties.TICKET_HANDLER_RESOLVE_SLEEP_TIME, 0);
+
+
+        if (resolveTicketAfterSend) {
+            String ticketHandlerClassName = props.getString(AppProperties.TICKET_HANDLER_CLASS, null);
+            if (ticketHandlerClassName != null) {
+                try {
+                    Class<?> ticketHandlerClass = Class.forName(ticketHandlerClassName);
+                    ticketHandler = (ITicketHandler)ticketHandlerClass.newInstance();
+                } catch (Exception e) {
+                    // ClassNotFoundException, InstantiationException, IllegalAccessException
+                    String msg = "Class name must be for a Java-class that implements ITicketHandler: " + ticketHandlerClassName;
+                    log.error(msg, e);
+                }        
+
+                List<String> childTicketIDs = mailJobContext.getCreatedChildTicketIDs();
+                String resolvedStatus = props.getString(AppProperties.TICKET_HANDLER_RESOLVED_STATUS, "resolved");
+                
+                // Sleep for a few second to make sure that all mails has been sent before closing tickets
+                try {
+                    Thread.sleep(ticketResolveSleepTime);                
+                } catch (InterruptedException e) {
+                    log.error("Error during ticket closing sleep", e);                    
+                }
+                for (Iterator<String> iterator = childTicketIDs.iterator(); iterator.hasNext(); ) {
+                    String childTicketId = iterator.next();
+                    ticketHandler.updateTicketStatus(resolvedStatus, childTicketId);
+                }
+                String parentTicketId = props.getParentTicketId();
+                if (ticketHandler != null && parentTicketId != null) {                
+                    // Resolve/close the parent ticket                                    
+                    ticketHandler.updateTicketStatus(resolvedStatus, parentTicketId);
+                }
+            }
+        }
+    }
 }

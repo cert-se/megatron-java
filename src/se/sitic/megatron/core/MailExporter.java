@@ -9,10 +9,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import se.sitic.megatron.core.AbstractExporter;
-import se.sitic.megatron.core.AppProperties;
-import se.sitic.megatron.core.MailJobContext;
-import se.sitic.megatron.core.MegatronException;
 import se.sitic.megatron.db.DbManager;
 import se.sitic.megatron.entity.LogEntry;
 import se.sitic.megatron.entity.MailJob;
@@ -196,22 +192,21 @@ public class MailExporter extends AbstractExporter {
             String parentTicketId = StringUtil.isNullOrEmpty(props.getParentTicketId()) ? "-" : props.getParentTicketId();
             // Check if child ticket should be created
             boolean createChildTicket = props.getBoolean(AppProperties.TICKET_HANDLER_CREATE_CHILD, false);
+            String childTicketId = null;
             if (this.ticketHandler != null && createChildTicket) { 
-                log.debug("Creating child ticket.");
-                String ticketSubject = StringUtil.replace(messageData.getSubject(), "$rtirId", "-");                
+                log.debug("Creating child ticket.");                
                 Map<String, String> values = new HashMap<String, String> ();
                 String[] valueKeys = props.getStringListFromCommaSeparatedValue(AppProperties.TICKET_HANDLER_VALUE_KEYS, null, true);
                 if (valueKeys != null && valueKeys.length == 4) {
                     values.put(valueKeys[0], organization.getEmailAddresses("To", true));
                     values.put(valueKeys[1], organization.getEmailAddresses("Cc", true));
-                    values.put(valueKeys[2], ticketSubject);
-                    values.put(valueKeys[3], parentTicketId);
-                    
+                    values.put(valueKeys[2], messageData.getSubject());
+                    values.put(valueKeys[3], parentTicketId);                    
                     // Get child ticket
-                    String ticketId = ticketHandler.getNewTicketId(values); 
+                    childTicketId = ticketHandler.getNewTicketId(values); 
                     // Set child ticket ID in message subject
-                    log.debug("Got ticket ID " + ticketId + " replacing subject " + messageData.getSubject());
-                    String subject = StringUtil.replace(messageData.getSubject(), "$rtirId", ticketId);
+                    log.debug("Got ticket ID " + childTicketId + " replacing subject " + messageData.getSubject());
+                    String subject = StringUtil.replace(messageData.getSubject(), "$rtirId", childTicketId);                                                                 
                     mailSender.setSubject(subject);
                 }
                 else {
@@ -252,6 +247,16 @@ public class MailExporter extends AbstractExporter {
                 log.debug("Adding log entry to mail job. LogEntry#" + logEntry.getId());
                 mailJob.addToLogEntries(logEntry);
             }
+            
+            // Check if the ticket should be closed/resolved after the message is sent.
+            boolean resolveTicketAfterSend = props.getBoolean(AppProperties.TICKET_HANDLER_RESOLVE_AFTER_SEND, false);
+            if (this.ticketHandler != null && resolveTicketAfterSend == true && childTicketId != null) {
+            // Add childTicketId to mailcontext
+                mailJobContext.addCreatedChildTicketID(childTicketId);
+                //String resolvedStatus = props.getString(AppProperties.TICKET_HANDLER_RESOLVED_STATUS, "resolved");
+                //this.ticketHandler.updateTicketStatus(resolvedStatus, childTicketId);
+            }
+                        
             // Removing the line below due to deprication of the update method in DbManager
             // The method is depricated since there have been problems with Hibernate persisting the MailJob object
             // properly after a LogEntry has been added to the LogEntry collection.

@@ -19,4 +19,6 @@ public interface ITicketHandler {
     
     public String getNewTicketId(Map<String,String> values);
 
+    public void updateTicketStatus(String status, String ticketId);
+    
 }

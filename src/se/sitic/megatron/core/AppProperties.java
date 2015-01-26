@@ -43,7 +43,7 @@ public class AppProperties {
     public static final String OUTPUT_DIR_KEY = "general.outputDir";
     public static final String TMP_DIR_KEY = "general.tmpDir";
     public static final String INPUT_CHAR_SET_KEY = "general.inputCharSet";
-    // Deprecated: geoIp.databaseFile (use geoIp.countryDatabaseFile instead)
+    // Deprecated: geoIp.databaseFile (use defaultValuegeoIp.countryDatabaseFile instead)
     public static final String GEO_IP_DATABASE_FILE_KEY = "geoIp.databaseFile";
     public static final String GEO_IP_COUNTRY_DATABASE_FILE_KEY = "geoIp.countryDatabaseFile";
     public static final String GEO_IP_ASN_DATABASE_FILE_KEY = "geoIp.asnDatabaseFile";
@@ -275,6 +275,9 @@ public class AppProperties {
     public static final String TICKET_HANDLER_PASSWORD = "ticketHandler.password";
     public static final String TICKET_HANDLER_TICKET_OWNER = "ticketHandler.ticketOwner";
     public static final String TICKET_HANDLER_URL = "ticketHandler.url";
+    public static final String TICKET_HANDLER_RESOLVE_AFTER_SEND = "ticketHandler.resolveAfterSend";
+    public static final String TICKET_HANDLER_RESOLVED_STATUS = "ticketHandler.resolvedStatus";
+    public static final String TICKET_HANDLER_RESOLVE_SLEEP_TIME = "ticketHandler.resolveSleepTime";
     
 
     /** Filename for Megatron global properties. */

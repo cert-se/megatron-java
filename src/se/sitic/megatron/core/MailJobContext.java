@@ -1,5 +1,8 @@
 package se.sitic.megatron.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.sitic.megatron.entity.MailJob;
 
 
@@ -20,11 +23,15 @@ public class MailJobContext extends JobContext {
 
     /** No. of mails to be sent. Used when --dry-run is specified. */
     private long noOfMailsTobeSent = 0L;
+    
+    /** List of child created childTickets */
+    private List<String> createdChildTicketIDs = null; 
 
     
     public MailJobContext(TypedProperties props, MailJob mailJob) {
         super(props, mailJob.getJob());
         this.mailJob = mailJob;
+        this.createdChildTicketIDs = new ArrayList<String>();
     }
 
     
@@ -70,6 +77,14 @@ public class MailJobContext extends JobContext {
     
     public void incNoOfMailsTobeSent(int incValue) {
         this.noOfMailsTobeSent += incValue;
+    }
+    
+    public void addCreatedChildTicketID(String ticketID) {
+        this.createdChildTicketIDs.add(ticketID);
+    }
+    
+    public List<String> getCreatedChildTicketIDs() {
+        return this.createdChildTicketIDs;
     }
 
 }
