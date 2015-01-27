@@ -227,9 +227,12 @@ public class MailExporter extends AbstractExporter {
             if (this.ticketHandler != null && ticketSystemSendsMail) {
                 log.info("Ticket handler is mailing");
                 // Requests that the real To and Cc addresses has been set in the ticket
-                mailSender.setToAddresses("megatron-rt@cert.se");
-                mailSender.setFromAddress("mr_megatron@cert.se"); 
-                mailSender.setBccAddresses("megatron-archive@cert.se");
+                String toAddress = props.getString(AppProperties.TICKET_HANDLER_TO_ADDRESS, null);
+                String fromAddress = props.getString(AppProperties.TICKET_HANDLER_FROM_ADDRESS, null);
+                String archiveAddress = props.getString(AppProperties.TICKET_HANDLER_ARCHIVE_ADDRESS, null);                                
+                mailSender.setToAddresses(toAddress);
+                mailSender.setFromAddress(fromAddress); 
+                mailSender.setBccAddresses(archiveAddress);
             }
             else {
                 log.info("Ticket handler is not mailing");

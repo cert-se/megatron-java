@@ -278,6 +278,10 @@ public class AppProperties {
     public static final String TICKET_HANDLER_RESOLVE_AFTER_SEND = "ticketHandler.resolveAfterSend";
     public static final String TICKET_HANDLER_RESOLVED_STATUS = "ticketHandler.resolvedStatus";
     public static final String TICKET_HANDLER_RESOLVE_SLEEP_TIME = "ticketHandler.resolveSleepTime";
+    public static final String TICKET_HANDLER_TO_ADDRESS = "ticketHandler.toAddress";
+    public static final String TICKET_HANDLER_FROM_ADDRESS = "ticketHandler.fromAddress";
+    public static final String TICKET_HANDLER_ARCHIVE_ADDRESS = "ticketHandler.archiveAddress";
+    
     
 
     /** Filename for Megatron global properties. */
