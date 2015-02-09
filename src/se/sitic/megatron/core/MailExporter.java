@@ -254,10 +254,8 @@ public class MailExporter extends AbstractExporter {
             // Check if the ticket should be closed/resolved after the message is sent.
             boolean resolveTicketAfterSend = props.getBoolean(AppProperties.TICKET_HANDLER_RESOLVE_AFTER_SEND, false);
             if (this.ticketHandler != null && resolveTicketAfterSend == true && childTicketId != null) {
-            // Add childTicketId to mailcontext
-                mailJobContext.addCreatedChildTicketID(childTicketId);
-                //String resolvedStatus = props.getString(AppProperties.TICKET_HANDLER_RESOLVED_STATUS, "resolved");
-                //this.ticketHandler.updateTicketStatus(resolvedStatus, childTicketId);
+                // Add childTicketId to mailcontext
+                mailJobContext.addCreatedChildTicketID(childTicketId);                
             }
                         
             // Removing the line below due to deprication of the update method in DbManager
