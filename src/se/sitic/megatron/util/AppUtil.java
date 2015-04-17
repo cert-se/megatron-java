@@ -230,8 +230,10 @@ public abstract class AppUtil {
                 }
             }
             if (!dollarSignInvalues) {
-                String msg = "The template '" + templateName + "' may contain unused variables because '$' is present. Replaced template: " + result;
-                throw new ConversionException(msg);
+                String msg = "The template '" + templateName + "' may contain unused variables because '$' is present. Replaced template: " + result;               
+               // Issue Warning message instead of exception until a better solution is implemented
+               //TODO Fix issue with two stage variable replacement
+               log.warn(msg);
             }
         }
         

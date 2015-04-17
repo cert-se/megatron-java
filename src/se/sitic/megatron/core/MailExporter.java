@@ -370,7 +370,8 @@ public class MailExporter extends AbstractExporter {
                 throw new MegatronException("Mandatory property not defined: " + AppProperties.MAIL_SUBJECT_TEMPLATE_KEY);
             }
         }       
-        String subject = template;
+        String subject = AppUtil.replaceVariables(template, attributeMap, false, templateName);
+        
 
         // -- body and attachment
         StringBuilder body = new StringBuilder(2*1024);
