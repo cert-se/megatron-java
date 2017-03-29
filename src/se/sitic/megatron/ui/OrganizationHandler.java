@@ -45,22 +45,22 @@ public class OrganizationHandler {
     private Logger log = null;
 
     // Commands: Add org, Edit org , Find org , View org , Quit, Help, Debug,
-    // Edit contact, Extract contacts, Search log entries
+    // Edit contact, Export contacts, Search log entries, List priorities, List organisation contacts
     private enum Commands {
-        A, E, F, V, Q, H, D, C, P, X, L, T
+        A, E, F, V, Q, H, D, C, P, X, S, T, L
     }
 
-    // Search types: Name, ASN, E-mail, Domain, IP, Range, Cancel, OrgId
+    // Search types: Name, ASN, E-mail, Domain, IP, Range, Cancel, OrgId, Prio
     private enum SearchTypes {
-        N, A, E, D, I, R, C, O, V
+        N, A, E, D, I, R, C, O, V, P
     }
 
-    // Organization edit types: ASN, Domain, Range, Properities, Cancel"
+    // Organization edit types: ASN, Domain, Range, Properties, Cancel"
     private enum EditTypes {
         A, D, R, P, C
     }
 
-    private PrintWriter screenWriter = null;
+    private PrintWriter screenWriter = null;    
     private boolean newContact = false;
     private boolean newOrg = false;
     private BufferedReader in = null;
@@ -88,7 +88,7 @@ public class OrganizationHandler {
     static private final String[] DEFAULT_ROLES = { "Abuse", "Technical",
             "Administrative", "Manager", "Unknown" };
     static private final String TEXT_EMPTY = "<EMPTY>";
-    static private final String TEXT_NULL = "<NULL>";
+    static private final String TEXT_NULL = "-";
     static private final String DEFAULT_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
     static private final String DEFAULT_OUTPUT_FILE_PATH = "/tmp";
     static private final String CONTACT_EXPORT_FILE_NAME = "contact_export.txt";
@@ -240,7 +240,7 @@ public class OrganizationHandler {
         println("");
         println(" ███████████████████████████████████████████████████████████████████████");
         println(" ██      ╔═╗╦═╗╔═╗╔═╗╔╗╔╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔  ╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗╦═╗      ██");
-        println(" ██      ║ ║╠╦╝║ ╦╠═╣║║║║╔═╝╠═╣ ║ ║║ ║║║║  ║║║╠═╣║║║╠═╣║ ╦║╣ ╠╦╝      ██");
+        println(" ██      ║ ║╠╦╝║ ╦╠═╣║║║║╔═╝╠═╣ ║ ║║ ║║║║  ║║║╠═╣║║║╠═╣║ ╦╠╣ ╠╦╝      ██");
         println(" ██      ╚═╝╩╚═╚═╝╩ ╩╝╚╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩╚═      ██");
         print(" ███████████████████████████████████████████████████████████████████████");
     }
@@ -302,6 +302,8 @@ public class OrganizationHandler {
     }
 
     private void printContactsBanner() {
+        
+        println("\n\n");
         println(" ┌─┐┌─┐┌┐┌┌┬┐┌─┐┌─┐┌┬┐┌─┐");
         println(" │  │ ││││ │ ├─┤│   │ └─┐");
         println(" └─┘└─┘┘└┘ ┴ ┴ ┴└─┘ ┴ └─┘");
@@ -324,7 +326,7 @@ public class OrganizationHandler {
     
     private void usage() {
         printMainMenuBanner();
-        println("\n Valid commands are: \n\n\tF - Find organization \n\tA - Add organization \n\tE - Edit organization \n\tV - View organization \n\tC - Edit organization contacts \n\tP - List all priorities \n\tL - Search Log entries \n\tX - Export contacts \n\n\tD - Debug \n\tH - Help\n\tQ - Quit \n\n");
+        println("\n Valid commands are: \n\n\tF - Find organization \n\tA - Add organization \n\tE - Edit organization \n\tV - View organization \n\tL - List organisation contacts \n\tC - Edit organization contacts \n\tP - List all priorities \n\tS - Search Log entries \n\tX - Export contacts \n\n\tD - Debug \n\tH - Help\n\tQ - Quit \n\n");
     }
 
     private void help() {
@@ -336,7 +338,8 @@ public class OrganizationHandler {
         println("Edit organization, takes org-id as input.");
         println("View organization, takes org-id as input.");
         println("Contacts, edit organization contact information, takes org-id as input.");
-        println("Priorities, list all valid priorities.");
+        println("List organisation contacts");
+        println("Priorities, list all valid organization priorities.");
         println("Search for log entries.");
         println("Export selected organization contacts.");
         println("");
@@ -400,8 +403,11 @@ public class OrganizationHandler {
                 editOrganization(org);
                 return;
             case V:
-                viewOrganization(org, true);
+                viewOrganization(org, false);
                 return;
+            case L:
+                 listContacts(org);
+                 return;
             case Q:
                 quit();
                 return;
@@ -414,7 +420,7 @@ public class OrganizationHandler {
             case F:
                 findOrganization();
                 return;
-            case L:
+            case S:
                 searchLogEntries();
                 return;
             case X:
@@ -426,6 +432,8 @@ public class OrganizationHandler {
             case D:
                 toggleDebug();
                 return;
+            default:
+                break;
             }
         } catch (java.lang.IllegalArgumentException e) {
             handleException("unknown command: " + command[0], e);
@@ -488,16 +496,16 @@ public class OrganizationHandler {
     private void findOrganization() {
 
         printFindOrgBanner();
-        println("\n Select search method:  \n\n\tN - by part of name \n\tA - by AS number \n\tD - by domain name \n\tE - by contact email address \n\tR - by IP range \n\tI - by IP address\n\n\tC - Cancel \n");
+        println("\n Select search method:  \n\n\tN - by part of name \n\tA - by AS number \n\tD - by domain name \n\tE - by contact email address \n\tR - by IP range \n\tI - by IP address\n\tP - by Priority number\n\n\tC - Cancel \n");
 
         String input = readInput("\nEnter search method: ");
         
-        if (validateInput(input, "^[NnAaDdEeRrIiCc]$")) {
+        if (validateInput(input, "^[NnAaDdEeRrIiPpCc]$")) {
 
             switch (SearchTypes.valueOf(input.toUpperCase())) {
 
             case N:
-                listOrganizations();
+                searchOrganizations();
                 break;
             case A:
                 findOrganizationByASNumber();
@@ -513,6 +521,9 @@ public class OrganizationHandler {
                 break;
             case I:
                 findOrganizationByIPAddress();
+                break;
+            case P:
+                findOrganizationByPriority();
                 break;
             case C:
                 return;
@@ -752,6 +763,35 @@ public class OrganizationHandler {
         }
         showOrgSearchResult(org, false);
     }
+    
+    private void findOrganizationByPriority() {
+        String prio = readInput("\nEnter priority number to search for: ");
+                       
+        List<Organization> orgs = null;
+
+        try {
+            orgs = dbManager.searchOrganizationByPrioNumber(Integer.valueOf(prio));
+
+            if (orgs.isEmpty() == false) {
+                if (orgs.size() == 1) {
+                    showOrgSearchResult(orgs.get(0), true);
+                } else {
+                    printInfoMessage("\n" + orgs.size() + " organizations with priority " + prio + " were found");
+                    listOrganizations(orgs);
+                }
+            } else {
+                // Generate no orgs found message
+                showOrgSearchResult(null, false);
+            }
+        } 
+        catch (DbException e) {
+            handleException("could not search for organizations by priority number", e);
+        }
+        catch (NumberFormatException e) {
+        handleException("invalid priority number", e);
+       }
+        
+    }
 
     private void findOrganizationByASNumber() {
 
@@ -772,7 +812,6 @@ public class OrganizationHandler {
     private void findOrganizationsByDomainName() {
 
         String domainName = readInput("\nEnter domain name to search for: ");
-        Organization org = null;
 
         try {
             List<Organization> orgs = dbManager.searchOrgForDomainName(domainName);
@@ -831,7 +870,7 @@ public class OrganizationHandler {
         }
     }
 
-    private void listOrganizations() {
+    private void searchOrganizations() {
 
         String orgSearchName = this
                 .readInput("Organization name to seach for (<enter>=all) : ");
@@ -908,7 +947,8 @@ public class OrganizationHandler {
                         + orgId, e);
             } catch (NumberFormatException e) {
                 handleException("not a valid organization id: " + orgId, e);
-            } catch (org.hibernate.ObjectNotFoundException e) {
+             
+            }catch (org.hibernate.ObjectNotFoundException e) {
                 handleException("Error: could not find Organisation with id = "
                         + orgId, e);
                 org = fetchOrganization(null);
@@ -1052,7 +1092,8 @@ public class OrganizationHandler {
         String action = readInput("Add [A] or delete [D] domains? (empty input will exit): ");
 
         if (action.toUpperCase().startsWith("A")) {
-            String name = readInput("Enter domain name to add (empty input will exit): ");
+            String inputText = "Enter domain name to add (empty input will exit): ";
+            String name = readInput(inputText);
             while (name.isEmpty() == false) {
                 DomainName tmpDomainName = (DomainName) dbManager
                         .genericLoadObject("DomainName", "Name", name);
@@ -1077,10 +1118,11 @@ public class OrganizationHandler {
                                 + tmpDomainName.getOrganizationId());
                     }
                 }
-                name = readInput("Enter domain name to add (empty input will exit): ");
+                name = readInput(inputText);
             }
         } else if (action.toUpperCase().startsWith("D")) {
-            String name = readInput("Enter domain name to delete (empty input will exit): ");
+            String inputText = "Enter domain name to delete (empty input will exit): ";
+            String name = readInput(inputText);
             while (name.isEmpty() == false) {
                 DomainName tmpDomainName = (DomainName) dbManager
                         .genericLoadObject("DomainName", "Name", name);
@@ -1093,15 +1135,21 @@ public class OrganizationHandler {
                 } else {
                     if (confirm("Domain "
                             + name
-                            + " was found, are you sure that you want to delete it?")) {
-                        org.getDomainNames().remove(tmpDomainName);
+                            + " was found, are you sure that you want to delete it?")) {                        
+                        // Delete the domain from the database.
+                        dbManager.genericDelete(tmpDomainName);
+                        // Remove the domain from the organization object.
+                        org.getDomainNames().remove(tmpDomainName);                                           
                         domainsChanged = true;
                         printInfoMessage("Domain " + name + " had been deleted");
                     }
                 }
-                name = readInput("Enter domain name to delete (empty input will exit): ");
+                name = readInput(inputText);
             }
-        } else {
+        } else if (action.isEmpty() != false) {
+            printErrorMessage("Invalid option, enter [A] to add or [D] to delete domain names.");
+        }
+        else {
             printInfoMessage("Exiting edit domains");
         }
         printInfoMessage("Done edit domains");
@@ -1131,10 +1179,12 @@ public class OrganizationHandler {
         asn = asn.length() == 0 ? TEXT_EMPTY : asn;
 
         printInfoMessage("Current AS-numbers are: " + asn);
-        String action = readInput("Add [A] or delete [D] AS numbers? (empty input will exit): ");
+        String inputText = "Add [A] or delete [D] AS numbers? (empty input will exit): ";
+        String action = readInput(inputText);
 
         if (action.toUpperCase().startsWith("A")) {
-            String number = readInput("Enter AS number to add (empty input will exit): ");
+            inputText = "Enter AS number to add (empty input will exit): ";
+            String number = readInput(inputText);
             while (number.isEmpty() == false) {
                 ASNumber tmpASN = (ASNumber) dbManager.genericLoadObject(
                         "ASNumber", "Number", Long.valueOf(number.trim()));
@@ -1159,10 +1209,11 @@ public class OrganizationHandler {
                                 + tmpASN.getOrganizationId());
                     }
                 }
-                number = readInput("Enter AS number to add (empty input will exit): ");
+                number = readInput(inputText);
             }
         } else if (action.toUpperCase().startsWith("D")) {
-            String number = readInput("Enter AS number to delete (empty input will exit): ");
+            inputText = "Enter AS number to delete (empty input will exit): ";
+            String number = readInput(inputText);
             while (number.isEmpty() == false) {
                 ASNumber tmpASN = (ASNumber) dbManager.genericLoadObject(
                         "ASNumber", "Number", Integer.valueOf(number.trim()));
@@ -1176,22 +1227,16 @@ public class OrganizationHandler {
                     if (confirm("AS number "
                             + number
                             + " was found, are you sure that you want to delete it?")) {
-                        // Funkar inte; fixa:
-                        debug("Number of ASNs in org before: "
-                                + org.getASNumbers().size());
-                        debug("Contains = "
-                                + org.getASNumbers().contains(tmpASN));
-                        Set<ASNumber> newASNs = org.getASNumbers();
-                        newASNs.remove(tmpASN);
-                        org.setASNumbers(newASNs);
-                        debug("Number of ASNs in org after: "
-                                + org.getASNumbers().size());
+                        // Delete the ASN from the database.
+                        dbManager.genericDelete(tmpASN);         
+                        // Remove ASN from the organization object.
+                        org.getASNumbers().remove(tmpASN);                
                         asnChanged = true;
                         printInfoMessage("AS number " + number
                                 + " had been deleted");
                     }
                 }
-                number = readInput("Enter AS number to delete (empty input will exit): ");
+                number = readInput(inputText);
             }
         } else {
             printInfoMessage("Exiting edit AS numbers");
@@ -1203,11 +1248,32 @@ public class OrganizationHandler {
         }
     }
 
-    private void listContacts(Organization org, Set<Contact> contacts) {
+    private void listContacts(Organization org) {
+        
+        if (org == null) {
+            String orgId = this.readInput("Organization to show contacts for (enter id): ");
 
+            try {
+                org = dbManager.getOrganization(Integer.valueOf(orgId));
+            } catch (DbException e) {
+                handleException("could not find an organization with id: "
+                        + orgId, e);
+                return;
+            } catch (NumberFormatException e) {
+                handleException("not a valid organization id: " + orgId,
+                        e);
+                return;
+            } catch (Exception e) {
+                handleException("unknown error", e);
+                return;
+            }
+        }
+
+        Set<Contact> contacts = org.getContacts();
+        
         if (contacts == null || contacts.isEmpty()) {
             println("\nThere are no existing contacts for this organization.");
-        } else {
+        } else {         
             printContactsBanner();
             for (Contact contact : contacts) {
                 showContact(contact);
@@ -1245,7 +1311,7 @@ public class OrganizationHandler {
             // List contacts
             String contactIdStr = null;
             while (contactIdStr == null) {
-                listContacts(org, contacts);
+                listContacts(org);
                 // Fetch contact id
                 contactIdStr = readInput("\nEnter id-number of one of the above contacts or 0 (zero) to add a new contact, (empty or invalid id will exit): ");
                 if (contactIdStr != null && contactIdStr.isEmpty() == false) {
@@ -1431,35 +1497,40 @@ public class OrganizationHandler {
             }
         }
 
-        if (namesAndEmailDone == false) {
-            // First name
-            enterValue("First name", "FirstName", contact, NOT_MANDATORY, "",
-                    null);
-
-            // Last name
-            enterValue("Last name", "LastName", contact, NOT_MANDATORY, "",
-                    null);
-
-            // Email address
-            enterValue("Email address", "EmailAddress", contact, MANDATORY,
-                    "Contact must have an email address.", null);
-        }
-
-        // Role
-        enterValue("Role", "Role", contact, NOT_MANDATORY, "Valid roles are: "
-                + Arrays.toString(this.validRoles), this.validRoles);
-
-        // Phone number
-        enterValue("Phone number", "PhoneNumber", contact, NOT_MANDATORY, "",
-                null);
-
-        // Email type
-        enterValue("Email type", "EmailType", contact, MANDATORY,
-                "Email type is mandatory and must have a value of: "
-                        + Arrays.toString(EMAIL_TYPES), EMAIL_TYPES);
-
-        // Enabled
+        // Enabled        
         editContactEnabled(contact);
+        
+        // Require changes only if the contact is enabled.  
+        // Contact has to be enabled before it can be edited.
+        if (contact.isEnabled() == true){
+
+            if (namesAndEmailDone == false) {
+                // First name
+                enterValue("First name", "FirstName", contact, NOT_MANDATORY, "",
+                        null);
+
+                // Last name
+                enterValue("Last name", "LastName", contact, NOT_MANDATORY, "",
+                        null);
+
+                // Email address
+                enterValue("Email address", "EmailAddress", contact, MANDATORY,
+                        "Contact must have an email address.", null);
+            }
+
+            // Role
+            enterValue("Role", "Role", contact, NOT_MANDATORY, "Valid roles are: "
+                    + Arrays.toString(this.validRoles), this.validRoles);
+
+            // Phone number
+            enterValue("Phone number", "PhoneNumber", contact, NOT_MANDATORY, "",
+                    null);
+
+            // Email type
+            enterValue("Email type", "EmailType", contact, MANDATORY,
+                    "Email type is mandatory and must have a value of: "
+                            + Arrays.toString(EMAIL_TYPES), EMAIL_TYPES);
+        }        
 
         // Comment
         String comment = null;        
@@ -1491,7 +1562,7 @@ public class OrganizationHandler {
 
     private void editIpRanges(Organization org) throws DbException {
         String ranges = "";
-        String inputText = "Enter IP range to add (valid formats x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y, empty input will exit): ";
+        String inputText = "Enter the IP range to add, one at a time (valid formats x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y, empty input will exit): ";
         boolean rangeChanged = false;
         String[] attrNames = { "StartAddress", "EndAddress" };
         ranges = getIpRangesInTextFormat(org);
@@ -1533,14 +1604,13 @@ public class OrganizationHandler {
                                     + Arrays.toString(result.toArray()));
                         }
                     } else {
-                        // Check if object already exists or belongs to another
-                        // org.
+                        // Check if object already exists or belongs to another org.
                         debug("Owning org id: " + range + ", editing org id: "
                                 + org.getId());
 
                         if (tmpRange.getOrganizationId().intValue() == org
                                 .getId().intValue()) {
-                            printErrorMessage("The IP range does already belong to this organization");
+                            printErrorMessage("The IP range does already belong to this organization.");
                         } else {
                             printErrorMessage(inputText
                                     + tmpRange.getOrganizationId());
@@ -1550,6 +1620,7 @@ public class OrganizationHandler {
                 }
             } else if (action.toUpperCase().startsWith("D")) {
 
+                inputText = "Enter IP range to delete (valid formats x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y, empty input will exit): ";
                 String range = readInput(inputText);
 
                 while (range.isEmpty() == false) {
@@ -1567,19 +1638,22 @@ public class OrganizationHandler {
                     } else {
                         if (confirm("IP range "
                                 + range
-                                + " was found, are you sure that you want to delete it?")) {
-                            org.getDomainNames().remove(tmpRange);
+                                + " was found, are you sure that you want to delete it?")) {                            
+                            // Delete the range from the database.
+                            dbManager.genericDelete(tmpRange);
+                            // Remove the range from the organization object.
+                            org.getIpRanges().remove(tmpRange);
                             rangeChanged = true;
                             printInfoMessage("IP range " + range
                                     + " had been deleted");
                         }
                     }
-                    range = readInput("Enter IP range to delete (valid formats x.x.x.x-y.y.y.y, x.x.x.x-y or x.x.x.x/y, empty input will exit): ");
+                    range = readInput(inputText);
                 }
             } else {
-                printInfoMessage("Exiting edit IP ranges");
-            }
-            if (rangeChanged) {
+                printInfoMessage("Exiting edit IP ranges.");
+            }            
+            if (rangeChanged) {                
                 dbManager.updateOrganization(org, this.currentUser);
             }
         } catch (MegatronException e) {
@@ -1730,7 +1804,7 @@ public class OrganizationHandler {
         println("\n");
         printOrganizationBanner();
         println("");        
-        printf(" %-16s: %d\n", "Id", org.getId());
+        printf(" %-16s: %d\n", "Org id", org.getId());
         printf(" %-16s: %s\n", "Name", org.getName());
         printf(" %-16s: %s\n", "Org/Reg no", replaceNullValue(org
                 .getRegistrationNo()));
@@ -1752,7 +1826,7 @@ public class OrganizationHandler {
                 .getLastModified()));
         printf(" %-16s: \n%s\n", "Comments", replaceNullValue(org.getComment()));
         if (debug) {
-            printf(" %-16s: %s\n", "All EmailAddresses", org.getEmailAddresses(
+            printf("\n   %-16s: %s\n", "All EmailAddresses", org.getEmailAddresses(
                     null, false));
             printf(" %-16s: %s\n", "Enabled EmailAddresses", org
                     .getEmailAddresses(null, true));
@@ -1765,16 +1839,17 @@ public class OrganizationHandler {
         }
         println("");
 
-        if (showContacts) {
-            Set<Contact> contacts = org.getContacts();
-            listContacts(org, contacts);
+        if (showContacts) {            
+            listContacts(org);
         }
     }
+    
+
 
     private void showContact(Contact contact) {
 
         println("");
-        printf(" %-18s: %d\n", "Id", contact.getId());
+        printf(" %-18s: %d\n", "Contact id", contact.getId());
         printf(" %-18s: %s\n", "First name", contact.getFirstName());
         printf(" %-18s: %s\n", "Last name", replaceNullValue(contact
                 .getLastName()));
