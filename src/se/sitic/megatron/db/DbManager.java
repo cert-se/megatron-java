@@ -21,9 +21,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import se.sitic.megatron.core.TypedProperties;
-import se.sitic.megatron.db.DbException;
-import se.sitic.megatron.db.DbStatisticsData;
-import se.sitic.megatron.db.ReadOnlyDbManager;
 import se.sitic.megatron.entity.ASNumber;
 import se.sitic.megatron.entity.Contact;
 import se.sitic.megatron.entity.DomainName;
@@ -950,6 +947,7 @@ public class DbManager {
             String sql = "SELECT DISTINCT org_id FROM domain_name WHERE domain_name LIKE ? ORDER BY org_id ASC";            
             Query query = session.createSQLQuery(sql);
             query.setString(0, "%" + domainName + "%");
+            @SuppressWarnings("unchecked")
             List<Object> orgIDs = query.list();
             List<Organization> orgs = new ArrayList<Organization>();    
 
@@ -966,6 +964,34 @@ public class DbManager {
         catch (Exception e) {
             throw handleException(e.getClass().getSimpleName() + " exception in searchOrgForDomainName", e);
         }        
+    }
+    
+    
+    public List<Organization> searchOrganizationByPrioNumber(Integer prioNumber) 
+            throws DbException { 
+        
+        try { 
+            String sql = "SELECT DISTINCT o.id FROM organization o, prio p WHERE o.prio_id = p.id and p.prio = ? ORDER BY id ASC";
+            Query query = session.createSQLQuery(sql);
+            query.setInteger(0, prioNumber);
+            
+            @SuppressWarnings("unchecked")
+            List<Object> orgIDs = query.list();
+            List<Organization> orgs = new ArrayList<Organization>();    
+
+            Iterator<Object> itr = orgIDs.iterator();           
+            while (itr.hasNext()) { 
+                Organization org = getOrganization(((Integer)itr.next()).intValue());
+                if (org != null) {
+                    orgs.add(org);
+                }               
+            }           
+            return orgs;            
+            
+        }
+        catch (Exception e) {
+            throw handleException(e.getClass().getSimpleName() + " exception in searchOrgByPrioNumber", e);
+        }  
     }
 
     public Organization searchOrganizationByASNumber(int asn)
