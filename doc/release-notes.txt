@@ -1,3 +1,17 @@
+v1.1.1
+======
+
+
+* Changes to the command line interface OrganizationHandler
+  - Search organisations by prio number
+  - List contacts for an organization
+  - Possible to enable/disable contact without having go though the
+    editing of all the contact attributes.
+  - Fixed the problem with selection of AS numbers, IP ranges or domain names
+    not being commited to the database.
+
+
+
 v1.1.0
 ======
 
