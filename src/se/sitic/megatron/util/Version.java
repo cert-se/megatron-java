@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 CERT-SE. All rights reserved.
+ * Copyright (c) 2017 CERT-SE. All rights reserved.
  */
 
 package se.sitic.megatron.util;
@@ -12,11 +12,11 @@ package se.sitic.megatron.util;
  */
 public class Version {
     private final static String APP_NAME = "Megatron";
-    private final static String APP_VERSION = "1.1.0";
-    private final static String APP_TAG = "v1.1.0";
-    private final static String BUILD_DATE = "2014-11-17 10:27:17";
-    private final static String ANT_VERSION = "Apache Ant(TM) version 1.8.2 compiled on December 3 2011";
-    private final static String ANT_JAVA_VERSION = "1.7";
+    private final static String APP_VERSION = "1.1.1";
+    private final static String APP_TAG = "v1.1.1";
+    private final static String BUILD_DATE = "2017-03-29 12:32:59";
+    private final static String ANT_VERSION = "Apache Ant(TM) version 1.9.4 compiled on January 27 2015";
+    private final static String ANT_JAVA_VERSION = "1.8";
 
 
     public static String getJavaVersion() {
